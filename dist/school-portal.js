@@ -99,7 +99,7 @@ export function createSchoolPortal({scene,camera,canvas,state,controls,walker,in
    walker.visual.rotation.set(0,motion.turn,0,'YXZ');camera.lookAt(controls.target);return true;
   }
   if(mode==='arrived')return false;
-  const enabled=state.ready&&!state.introRunning&&!state.editorVisible&&walker.report.ready;
+  const enabled=state.ready&&!state.introRunning&&!state.editorVisible&&walker.motionState.ready;
   const wasVisible=starLight.visible;star.hidden=true;starLight.visible=false;if(!enabled||!updateDoor())return wasVisible;
   projected.copy(door).project(camera);
   if(projected.z>=-1&&projected.z<=1&&Math.abs(projected.x)<1&&Math.abs(projected.y)<1){
@@ -127,7 +127,7 @@ export function createSchoolPortal({scene,camera,canvas,state,controls,walker,in
   }
   if(!approach)approach=locateApproach();
   if(approach&&cooldown===0){
-   const w=walker.report,n=new T.Vector3(...w.normal),distance=n.angleTo(approach)*walker.root.position.distanceTo(walker.groundCenter);
+   const w=walker.motionState,n=new T.Vector3(...w.normal),distance=n.angleTo(approach)*walker.root.position.distanceTo(walker.groundCenter);
    if(distance<.19&&(approaching||w.speed>.02))enter();
    else if(approaching&&!w.route.length&&distance>.2){approaching=false;star.classList.remove('is-called')}
   }

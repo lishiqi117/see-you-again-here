@@ -1,8 +1,10 @@
 'use strict';
 (() => {
-  const key = 'lishiqi-sky-layout-v2';
+  // New publication baseline: older online saves must not replace the
+  // recovered author layout. Future edits still persist normally.
+  const key = 'lishiqi-sky-layout-v3';
   const defaults = {
-    'graduation-banner': [50,50,92,84],
+    'graduation-banner': [50,50,84,76],
     scarf: [1.8,2.3,16,58], keys: [16.7,8.3,7.5,29.5],
     'photo-green': [23.8,13.35,17.2,39.7], 'photo-stars': [61.1,19.15,15.7,38.7],
     badge: [76.45,16.1,14,22.5], umbrella: [90.3,12.9,6.9,66.3],
@@ -33,7 +35,8 @@
           (item.layer===undefined || (Number.isInteger(item.layer) && item.layer>=0 && item.layer<1000));
       });
   }
-  let saved = {v:2,savedAt:0,items:initial};
+  const published = {"v":2,"savedAt":1790084596982,"items":{"graduation-banner":{"x":50.9818615021516,"y":73.31105935281529,"size":131},"scarf":{"x":1.8,"y":2.3,"size":78},"keys":{"x":16.550348327676218,"y":8.374241315336164,"size":106},"photo-green":{"x":23.8,"y":13.35,"size":80},"photo-stars":{"x":61.13902962392052,"y":17.66521957159573,"size":90},"badge":{"x":76.45,"y":16.1,"size":104},"umbrella":{"x":90.33902962392052,"y":12.67728285077951,"size":100},"earphones":{"x":36.45061129325876,"y":16.249888641425393,"size":100},"books":{"x":22.124546754332332,"y":-16.01193518888121,"size":138},"math-paper":{"x":76.45609268174341,"y":33.99691711548977,"size":139},"note":{"x":93.75103672654664,"y":18.0790310673926,"size":120},"eraser":{"x":9.042389390692394,"y":-7.081683235117893,"size":130},"pencil":{"x":51.054764340470435,"y":-13.28607726985322,"size":119},"sharpener":{"x":80.54131845931455,"y":4.729358858566513,"size":100},"pen":{"x":92.64468137123494,"y":7.3222828033013485,"size":88},"folded-note":{"x":-22.88742099335171,"y":5.270208615826165,"size":100},"compass":{"x":-21.227819225133775,"y":36.142615153431194,"size":182},"curled-note":{"x":-24.54701190863537,"y":87.64766296169196,"size":133},"triangle":{"x":-11.3651101460682,"y":79.64150081031626,"size":121},"chinese-paper":{"x":7.695832625179376,"y":43.540849757259636,"size":143},"timetable":{"x":-13.444121316414622,"y":16.765582480238436,"size":143},"handbook":{"x":96.9973387881628,"y":73.06400937635638,"size":130},"pen-lower":{"x":83.04283638687875,"y":83.34126147417432,"size":66},"campus-item-0":{"x":13.055498559505615,"y":6.880682453186541,"size":147,"layer":1},"campus-item-1":{"x":-2.767593159063158,"y":68.9939354108902,"size":163,"layer":0},"campus-item-2":{"x":-17.817027129458978,"y":24.855971260706195,"size":138,"layer":3},"campus-item-3":{"x":96.74083227139948,"y":-0.1729094683300949,"size":154,"layer":5},"campus-item-4":{"x":-30,"y":86.156577928155,"size":138,"layer":2},"campus-item-5":{"x":-27.286160827002345,"y":51.316939504951264,"size":138,"layer":8},"campus-item-6":{"x":-2.4898464087970207,"y":12.76743142638873,"size":138,"layer":4},"campus-item-7":{"x":3.608959743007243,"y":75.98366716249754,"size":138,"layer":7},"campus-item-8":{"x":91.72639125821765,"y":35.68724870708474,"size":138,"layer":10},"campus-item-9":{"x":112.76762405355684,"y":85.33556486835741,"size":138,"layer":6},"campus-item-10":{"x":121.68326663855782,"y":64.41155478972397,"size":138,"layer":9}}};
+  let saved = {...published,items:{...initial,...published.items}};
   // The latest local save wins over an older link in the same browser.
   for (const read of [()=>localStorage.getItem(key),()=>new URLSearchParams(location.hash.slice(1)).get('layout')]) {
     try { const candidate = JSON.parse(read()); if(valid(candidate) && candidate.savedAt > saved.savedAt) saved={...candidate,items:{...clone(initial),...candidate.items}}; } catch {}

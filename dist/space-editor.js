@@ -40174,7 +40174,9 @@ void main() {
         status("\u5DF2\u505C\u4E0B\uFF0C\u70B9\u51FB\u5730\u9762\u7EE7\u7EED");
       }
     });
-    return { root, visual, get groundCenter() {
+    return { root, visual, get motionState() {
+      return { ready: ready && state2.ready, normal: normal.toArray(), speed, route };
+    }, get groundCenter() {
       return center.clone();
     }, tick, refresh, plan, blocked, stop, prepareIntro, finishIntro, get report() {
       return { ready: ready && state2.ready, introControlled, visible: root.visible, position: root.position.toArray(), normal: normal.toArray(), speed, route: route.map((n) => n.toArray()), target: target?.toArray() || null, collisions, bones: boneCount, groundError: ready ? root.position.distanceTo(surface(normal)) - 8e-3 : null, blocked: ready ? blocked(normal) : null };
@@ -40587,7 +40589,7 @@ void main() {
         return true;
       }
       if (mode === "arrived") return false;
-      const enabled = state2.ready && !state2.introRunning && !state2.editorVisible && walker.report.ready;
+      const enabled = state2.ready && !state2.introRunning && !state2.editorVisible && walker.motionState.ready;
       const wasVisible = starLight.visible;
       star.hidden = true;
       starLight.visible = false;
@@ -40624,7 +40626,7 @@ void main() {
       }
       if (!approach) approach = locateApproach();
       if (approach && cooldown === 0) {
-        const w = walker.report, n = new Vector3(...w.normal), distance = n.angleTo(approach) * walker.root.position.distanceTo(walker.groundCenter);
+        const w = walker.motionState, n = new Vector3(...w.normal), distance = n.angleTo(approach) * walker.root.position.distanceTo(walker.groundCenter);
         if (distance < 0.19 && (approaching || w.speed > 0.02)) enter();
         else if (approaching && !w.route.length && distance > 0.2) {
           approaching = false;
@@ -42993,6 +42995,10 @@ void main() {
   function renderLoop(frameTime = performance.now()) {
     requestAnimationFrame(renderLoop);
     if (document.hidden || archiveEmbedded && window.frameElement?.hidden) {
+      previousFrameTime = frameTime;
+      return;
+    }
+    if (schoolPortal?.covered) {
       previousFrameTime = frameTime;
       return;
     }

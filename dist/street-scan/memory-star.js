@@ -26,6 +26,8 @@ export function createMemoryStar({root,state,camera,app,bridge,layers,lock,reduc
  const artLUT=new Uint8Array(32768*3);
  for(let key=0;key<32768;key++){const rgb=[key>>10,(key>>5)&31,key&31].map(v=>v*255/31);let best=artPalette[0],score=Infinity;for(const c of artPalette){const delta=(rgb[0]-c[0])**2*.85+(rgb[1]-c[1])**2*1.15+(rgb[2]-c[2])**2;if(delta<score){score=delta;best=c}}artLUT.set(best,key*3)}
  let sharpSource=new Uint8ClampedArray(0);
+ let luminance=new Float64Array(0);
+ const rgb=[0,0,0],ditherPattern=[0,2,3,1];
  const HOLD_MS=900,REVEAL_MS=1400;let origin={x:.5,y:.5};
  let lastUpdate=0,charge=0,spring=1,velocity=0,releaseAt=-10000;
  let mode='gaussian',holding=false,holdStart=0,transition=null,unlocked=false,lastPaint=0,ignoreClick=false;
@@ -57,13 +59,20 @@ export function createMemoryStar({root,state,camera,app,bridge,layers,lock,reduc
   paint.imageSmoothingEnabled=true;paint.imageSmoothingQuality='high';composite(paint,w,h);
   const image=paint.getImageData(0,0,w,h),d=image.data;sharpSource.set(d);const src=sharpSource;
   // Keep the two-pixel grid. Smooth only similar colors, then ink the dark side of major contours.
-  const luma=i=>src[i]*.299+src[i+1]*.587+src[i+2]*.114;
+  // Float64 keeps the original JS arithmetic and thresholds exactly; reuse
+  // each pixel's luminance instead of calculating it for every channel/neighbor.
+  if(luminance.length!==w*h)luminance=new Float64Array(w*h);
+  for(let p=0,i=0;p<luminance.length;p++,i+=4)luminance[p]=src[i]*.299+src[i+1]*.587+src[i+2]*.114;
+  const luma=i=>luminance[i/4];
   for(let y=0;y<h;y++)for(let x=0;x<w;x++){
-   const i=(y*w+x)*4,left=x?i-4:i,right=x<w-1?i+4:i,up=y?i-w*4:i,down=y<h-1?i+w*4:i,L=luma(i),neighbors=[left,right,up,down];
-   let bright=L,dark=L;for(const n of neighbors){const v=luma(n);bright=Math.max(bright,v);dark=Math.min(dark,v)}
+   const i=(y*w+x)*4,left=x?i-4:i,right=x<w-1?i+4:i,up=y?i-w*4:i,down=y<h-1?i+w*4:i,L=luma(i);
+   const ll=luma(left),lr=luma(right),lu=luma(up),ld=luma(down);
+   const bright=Math.max(L,ll,lr,lu,ld),dark=Math.min(L,ll,lr,lu,ld);
+   const al=Math.abs(ll-L)<22,ar=Math.abs(lr-L)<22,au=Math.abs(lu-L)<22,ad=Math.abs(ld-L)<22;
+   const weight=4+al+ar+au+ad;
    const outline=bright-L>42&&L<150&&bright-dark>64;
-   const rgb=[0,0,0];for(let c=0;c<3;c++){let total=src[i+c]*4,weight=4;for(const n of neighbors)if(Math.abs(luma(n)-L)<22){total+=src[n+c];weight++}const smooth=total/weight,detail=src[i+c]-smooth;rgb[c]=smooth+detail*.4}
-   const lum=rgb[0]*.299+rgb[1]*.587+rgb[2]*.114,dither=([0,2,3,1][(y%2)*2+x%2]-1.5)*2.2;
+   for(let c=0;c<3;c++){let total=src[i+c]*4;if(al)total+=src[left+c];if(ar)total+=src[right+c];if(au)total+=src[up+c];if(ad)total+=src[down+c];const smooth=total/weight,detail=src[i+c]-smooth;rgb[c]=smooth+detail*.4}
+   const lum=rgb[0]*.299+rgb[1]*.587+rgb[2]*.114,dither=(ditherPattern[(y%2)*2+x%2]-1.5)*2.2;
    for(let c=0;c<3;c++){let v=lum+(rgb[c]-lum)*1.28;v=v*.92+14+dither;if(outline)v=v*.72;rgb[c]=Math.max(0,Math.min(31,Math.round(v*31/255)))}
    const k=((rgb[0]<<10)|(rgb[1]<<5)|rgb[2])*3;d[i]=artLUT[k];d[i+1]=artLUT[k+1];d[i+2]=artLUT[k+2];d[i+3]=255;
   }

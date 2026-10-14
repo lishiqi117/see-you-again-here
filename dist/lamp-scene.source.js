@@ -29,10 +29,10 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
   if (!screen || !canvas || !hotspot || !beam) return;
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const POSITION_STORAGE_KEY = "memory-street:lamp-position:v1";
-  const LIGHTING_STORAGE_KEY = "memory-street:lamp-lighting:v1";
-  const DEFAULT_POSITION = Object.freeze({ x: -3.9, y: -.24, z: 0 });
-  const DEFAULT_LIGHTING = Object.freeze({ board: .6, lamp: 1.35 });
+  const POSITION_STORAGE_KEY = "memory-street:lamp-position:v2";
+  const LIGHTING_STORAGE_KEY = "memory-street:lamp-lighting:v2";
+  const DEFAULT_POSITION = Object.freeze({ x: -3.3, y: -.44, z: -.4 });
+  const DEFAULT_LIGHTING = Object.freeze({ board: .75, lamp: 1.8 });
   const positionLimits = {
     x: [-6.2, 3.8],
     y: [-2.1, 3.1],
@@ -206,7 +206,8 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
       skeletonVisible: false
     };
     screen.classList.add("model-ready");
-  } catch (_) {
+  } catch (error) {
+    console.error('Lamp model failed to load:', error);
     screen.classList.add("model-unavailable");
   }
 
@@ -584,7 +585,7 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
   window.addEventListener("resize", resize);
 
   let animationFrame = 0;
-  const animationVisible = () => !document.hidden && !document.body.classList.contains('archive-world-active');
+  const animationVisible = () => !document.hidden && screen.classList.contains('active') && !document.body.classList.contains('archive-world-active');
   function wakeAnimation() {
     if (animationVisible() && !animationFrame) animationFrame = requestAnimationFrame(animate);
   }
@@ -642,6 +643,7 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
     bulbWorldPosition.set(0, 0, 0);
     let bulbCount = 0;
     bulbMeshes.forEach((mesh) => {
+      mesh.computeBoundingBox();
       if (!mesh.boundingBox) return;
       mesh.boundingBox.getCenter(bulbLocalCenter);
       mesh.localToWorld(bulbLocalCenter);
@@ -671,6 +673,7 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
 
   document.addEventListener('visibilitychange', wakeAnimation);
   new MutationObserver(wakeAnimation).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  new MutationObserver(wakeAnimation).observe(screen, { attributes: true, attributeFilter: ['class'] });
 
   resize();
   updatePositionReadout();

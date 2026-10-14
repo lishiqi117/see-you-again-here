@@ -10,6 +10,7 @@
   const parallaxRoot = document.documentElement;
   const parallaxStrength = { loading: 1, lampMemory: 0 };
   const parallaxMotion = { targetX: 0, targetY: 0, x: 0, y: 0, lastTime: 0 };
+  let appliedParallaxX = NaN, appliedParallaxY = NaN;
   // Retired chapter links return to the remaining opening experience.
   const url = new URL(location.href);
   url.searchParams.set('part', 'opening');
@@ -40,6 +41,8 @@
     const strength = parallaxStrength[state.screen] ?? .55;
     const x = parallaxMotion.x * strength;
     const y = parallaxMotion.y * strength;
+    if (x === appliedParallaxX && y === appliedParallaxY) return;
+    appliedParallaxX = x; appliedParallaxY = y;
     parallaxRoot.style.setProperty("--parallax-far-x", `${(x * 7.8).toFixed(3)}px`);
     parallaxRoot.style.setProperty("--parallax-far-y", `${(y * 5.8).toFixed(3)}px`);
     parallaxRoot.style.setProperty("--parallax-mid-x", `${(x * 14.6).toFixed(3)}px`);

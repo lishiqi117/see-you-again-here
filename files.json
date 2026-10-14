@@ -61,7 +61,7 @@
   },
   {
     "path": "app.js",
-    "bytes": 4374
+    "bytes": 4542
   },
   {
     "path": "archive-interaction.js",
@@ -841,15 +841,15 @@
   },
   {
     "path": "lamp-reveal.js",
-    "bytes": 8075
+    "bytes": 8415
   },
   {
     "path": "lamp-scene.js",
-    "bytes": 3381402
+    "bytes": 3381611
   },
   {
     "path": "lamp-scene.source.js",
-    "bytes": 28017
+    "bytes": 28256
   },
   {
     "path": "memory-card-credits.js",
@@ -873,7 +873,7 @@
   },
   {
     "path": "planet-walker.js",
-    "bytes": 15595
+    "bytes": 15684
   },
   {
     "path": "portrait-entry-bridge.js",
@@ -1041,7 +1041,7 @@
   },
   {
     "path": "school-portal.js",
-    "bytes": 10149
+    "bytes": 10159
   },
   {
     "path": "shared-assets/04676d56ab6eaa46b4458af0.glb",
@@ -1441,11 +1441,11 @@
   },
   {
     "path": "sims-sky/dist/campus.js",
-    "bytes": 2323
+    "bytes": 2319
   },
   {
     "path": "sims-sky/dist/editor.js",
-    "bytes": 15411
+    "bytes": 18049
   },
   {
     "path": "sims-sky/dist/graduation.js",
@@ -1473,7 +1473,7 @@
   },
   {
     "path": "sims-sky/dist/story.js",
-    "bytes": 3937
+    "bytes": 3933
   },
   {
     "path": "sims-sky/dist/study-layout.js",
@@ -1505,11 +1505,11 @@
   },
   {
     "path": "space-editor.js",
-    "bytes": 1824970
+    "bytes": 1825184
   },
   {
     "path": "space-editor.source.js",
-    "bytes": 81100
+    "bytes": 81182
   },
   {
     "path": "starfield-background.js",
@@ -1697,7 +1697,7 @@
   },
   {
     "path": "street-scan/camera-model.source.js",
-    "bytes": 6968
+    "bytes": 7192
   },
   {
     "path": "street-scan/center-camera-preview.png",
@@ -1769,7 +1769,7 @@
   },
   {
     "path": "street-scan/memory-game.source.js",
-    "bytes": 44872
+    "bytes": 44924
   },
   {
     "path": "street-scan/memory-playback.js",
@@ -1781,7 +1781,7 @@
   },
   {
     "path": "street-scan/memory-star.js",
-    "bytes": 12789
+    "bytes": 13277
   },
   {
     "path": "street-scan/minimal-preview.png",
@@ -1801,11 +1801,11 @@
   },
   {
     "path": "street-scan/pixel-world.source.js",
-    "bytes": 2619
+    "bytes": 3150
   },
   {
     "path": "street-scan/playback-scene.html",
-    "bytes": 3807570
+    "bytes": 3808236
   },
   {
     "path": "street-scan/preview.png",

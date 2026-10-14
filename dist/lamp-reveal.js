@@ -20,6 +20,11 @@
   let pixelRatio = 1;
   let imageReady = false;
   let lastFrameTime = 0;
+  let frame = 0;
+  let inputDirty = false;
+  function wake() {
+    if (!frame && !document.hidden && !document.body.classList.contains('archive-world-active')) frame = requestAnimationFrame(render);
+  }
 
   function resize() {
     viewportWidth = Math.max(1, canvas.clientWidth || innerWidth);
@@ -63,7 +68,8 @@
       pointer.y = pointer.lastY = y;
       pointer.hasPosition = true;
       addBlob(x, y, time);
-      drawRevealFrame(time);
+      inputDirty = true;
+      wake();
       return;
     }
 
@@ -91,7 +97,8 @@
     }
     pointer.x = pointer.lastX = x;
     pointer.y = pointer.lastY = y;
-    drawRevealFrame(time);
+    inputDirty = true;
+    wake();
   }
 
   function traceClientPosition(clientX, clientY, time) {
@@ -188,23 +195,24 @@
   }
 
   function render(time) {
+    frame = 0;
     if (document.hidden || document.body.classList.contains('archive-world-active')) {
       blobs.length = 0;
       pointer.hasPosition = false;
-      requestAnimationFrame(render);
       return;
     }
-    if (lastFrameTime && time - lastFrameTime < 22) {
-      requestAnimationFrame(render);
+    if (!inputDirty && lastFrameTime && time - lastFrameTime < 22) {
+      wake();
       return;
     }
     lastFrameTime = time;
+    inputDirty = false;
     for (let index = blobs.length - 1; index >= 0; index -= 1) {
       if (time - blobs[index].born >= blobs[index].lifetime) blobs.splice(index, 1);
     }
     drawRevealFrame(time);
 
-    requestAnimationFrame(render);
+    if (blobs.length) wake();
   }
 
   window.lampBackgroundReady.then((image) => {
@@ -223,7 +231,9 @@
   });
   window.addEventListener("resize", resize);
   new ResizeObserver(resize).observe(canvas);
+  document.addEventListener('visibilitychange', wake);
+  new MutationObserver(wake).observe(document.body, {attributes:true,attributeFilter:['class']});
 
   resize();
-  requestAnimationFrame(render);
+  wake();
 })();

@@ -183,7 +183,7 @@ async function boot(){
  const memoryStar=createMemoryStar({root,state,camera,app,bridge,reduced,layers:()=>[app.graphicsDevice.canvas,worldCanvas,pixelWorld.canvas],lock:()=>{keys.clear();rightDragging=false}});
  const archiveEnding=createArchiveEnding({state,assets:ASSETS,source:()=>memoryStar.pixel,lock:()=>{keys.clear();rightDragging=false}});
  initEditor();initLensEditor();state.ready=true;renderInventory();
- let last=0;function frame(ms){requestAnimationFrame(frame);const dt=Math.min(.05,(ms-last)/1000||0);last=ms;if(document.body.classList.contains('memory-entered')&&!state.active)activate();worldCanvas.hidden=!state.active;cameraCanvas.hidden=!state.active||state.mode!=='camera';if(!state.active||state.ending)return;clock.value=reduced||state.editor?0:ms/1000;
+ let last=0;function frame(ms){requestAnimationFrame(frame);const dt=Math.min(.05,(ms-last)/1000||0);last=ms;if(document.body.classList.contains('memory-entered')&&!state.active)activate();worldCanvas.hidden=!state.active;cameraCanvas.hidden=!state.active||state.mode!=='camera';if(!state.active||state.ending||document.hidden){handCamera.setState(false,false);return;}clock.value=reduced||state.editor?0:ms/1000;
  for(const a of actors){a.visible=(state.glasses||state.editor)&&a.position.distanceTo(camera.position)<24;}
  models.glasses.visible=state.editor||!state.hasGlasses;drawSelections();
  syncCamera();occlusion.update();renderer.render(scene,camera);pixelWorld.canvas.hidden=false;pixelWorld.render();memoryStar.update(ms);handCamera.setState(state.mode==='camera',keys.size>0,aim);

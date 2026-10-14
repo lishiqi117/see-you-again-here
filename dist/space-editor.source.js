@@ -1976,6 +1976,10 @@ function renderLoop(frameTime = performance.now()) {
     previousFrameTime = frameTime;
     return;
   }
+  if (schoolPortal?.covered) {
+    previousFrameTime = frameTime;
+    return;
+  }
   if (pendingArchiveProgress !== null) {
     const progress = pendingArchiveProgress;
     pendingArchiveProgress = null;

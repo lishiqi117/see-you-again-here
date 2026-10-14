@@ -117,8 +117,11 @@ export async function createHandCamera(canvas, url, {pixelArt = false} = {}) {
   let running = false, walking = false, scanning = false;
   let aimX = 0, aimY = 0, lastTime = 0, walkBlend = 0;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let frame=0;
+  function wake(){if(running&&!document.hidden&&!frame){lastTime=performance.now()/1000;frame=requestAnimationFrame(draw)}}
+  document.addEventListener('visibilitychange',wake);
   function draw(ms) {
-    requestAnimationFrame(draw);
+    frame=0;
     const t = ms / 1000;
     const dt = Math.min(.05, lastTime ? t - lastTime : 0);
     lastTime = t;
@@ -143,8 +146,8 @@ export async function createHandCamera(canvas, url, {pixelArt = false} = {}) {
       renderer.setRenderTarget(null);
       renderer.render(pixelScene, pixelCamera);
     } else renderer.render(scene, camera);
+    if(running&&!document.hidden)frame=requestAnimationFrame(draw);
   }
-  requestAnimationFrame(draw);
   return {
     setState(active, walk, aim = {}) {
       running = active;
@@ -152,6 +155,7 @@ export async function createHandCamera(canvas, url, {pixelArt = false} = {}) {
       scanning = !!aim.scanning;
       aimX = THREE.MathUtils.clamp(aim.x ?? 0, -1, 1);
       aimY = THREE.MathUtils.clamp(aim.y ?? 0, -1, 1);
+      wake();
     },
     scene, pivot, camera, renderer, pixelArt
   };

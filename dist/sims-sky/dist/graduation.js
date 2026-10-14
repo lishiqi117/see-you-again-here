@@ -11,7 +11,7 @@
     html {scrollbar-width:none;} html::-webkit-scrollbar {display:none;}
     .sky {padding-bottom:0!important;}
     #graduation-chapter {position:relative;height:100dvh;margin-top:calc(var(--campus-tail,0px) + 60vh);display:grid;place-items:center;isolation:isolate;}
-    .graduation-banner {position:absolute;left:50%;top:50%;width:92%;height:84%;transform:translate(-50%,-50%);border:0;padding:0;background:none;}
+    .graduation-banner {position:absolute;left:50%;top:50%;width:84%;height:76%;transform:translate(-50%,-50%);border:0;padding:0;background:none;}
     .graduation-banner img {width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none;}
     body.editing .graduation-banner {cursor:move;touch-action:none;}
     body.editing .graduation-banner.selected {outline:2px dashed #fff;outline-offset:5px;}
