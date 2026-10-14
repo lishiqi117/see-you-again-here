@@ -2,7 +2,7 @@
 (() => {
   const key = 'lishiqi-sky-layout-v2';
   const defaults = {
-    'graduation-banner': [50,50,84,76],
+    'graduation-banner': [50,50,92,84],
     scarf: [1.8,2.3,16,58], keys: [16.7,8.3,7.5,29.5],
     'photo-green': [23.8,13.35,17.2,39.7], 'photo-stars': [61.1,19.15,15.7,38.7],
     badge: [76.45,16.1,14,22.5], umbrella: [90.3,12.9,6.9,66.3],

@@ -11,7 +11,7 @@
     cloudLayer.append(image);
   });
   function fit() {
-    const scale=Math.min(viewport.clientWidth/1440,viewport.clientHeight/1320);
+    const scale=Math.min(viewport.clientWidth/1440,viewport.clientHeight/1320)*1.2;
     viewport.style.setProperty('--study-fit',scale);
     viewport.style.setProperty('--study-float',`${5/Math.max(scale,.01)}px`);
     viewport.style.setProperty('--study-perspective',Math.max(400,1600*scale)+'px');

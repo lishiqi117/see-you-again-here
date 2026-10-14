@@ -81,11 +81,19 @@
     });
   }
 
-  function animate(time) {
-    if (document.hidden || document.body.classList.contains('archive-world-active')) { requestAnimationFrame(animate); return; }
-    advanceGlobalParallax(time);
-    requestAnimationFrame(animate);
+  let parallaxFrame = 0;
+  const parallaxVisible = () => !document.hidden && !document.body.classList.contains('archive-world-active');
+  function wakeParallax() {
+    if (parallaxVisible() && !parallaxFrame) parallaxFrame = requestAnimationFrame(animate);
   }
+  function animate(time) {
+    parallaxFrame = 0;
+    if (!parallaxVisible()) { parallaxMotion.lastTime = 0; return; }
+    advanceGlobalParallax(time);
+    wakeParallax();
+  }
+  document.addEventListener('visibilitychange', wakeParallax);
+  new MutationObserver(wakeParallax).observe(document.body, { attributes: true, attributeFilter: ['class'] });
   startMemoryLoading();
-  requestAnimationFrame(animate);
+  wakeParallax();
 })();

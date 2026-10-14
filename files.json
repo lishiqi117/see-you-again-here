@@ -61,7 +61,7 @@
   },
   {
     "path": "app.js",
-    "bytes": 4008
+    "bytes": 4374
   },
   {
     "path": "archive-interaction.js",
@@ -845,11 +845,11 @@
   },
   {
     "path": "lamp-scene.js",
-    "bytes": 3380926
+    "bytes": 3381402
   },
   {
     "path": "lamp-scene.source.js",
-    "bytes": 27595
+    "bytes": 28017
   },
   {
     "path": "memory-card-credits.js",
@@ -1441,7 +1441,7 @@
   },
   {
     "path": "sims-sky/dist/campus.js",
-    "bytes": 2319
+    "bytes": 2323
   },
   {
     "path": "sims-sky/dist/editor.js",
@@ -1473,7 +1473,7 @@
   },
   {
     "path": "sims-sky/dist/story.js",
-    "bytes": 3933
+    "bytes": 3937
   },
   {
     "path": "sims-sky/dist/study-layout.js",
@@ -1505,11 +1505,11 @@
   },
   {
     "path": "space-editor.js",
-    "bytes": 1824710
+    "bytes": 1824970
   },
   {
     "path": "space-editor.source.js",
-    "bytes": 80846
+    "bytes": 81100
   },
   {
     "path": "starfield-background.js",
@@ -1769,7 +1769,7 @@
   },
   {
     "path": "street-scan/memory-game.source.js",
-    "bytes": 44797
+    "bytes": 44872
   },
   {
     "path": "street-scan/memory-playback.js",
@@ -1805,7 +1805,7 @@
   },
   {
     "path": "street-scan/playback-scene.html",
-    "bytes": 3806163
+    "bytes": 3807570
   },
   {
     "path": "street-scan/preview.png",
@@ -1814,6 +1814,10 @@
   {
     "path": "street-scan/printer-flow.js",
     "bytes": 7154
+  },
+  {
+    "path": "street-scan/published-layout.json",
+    "bytes": 3247
   },
   {
     "path": "street-scan/README.md",

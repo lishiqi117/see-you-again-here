@@ -15,7 +15,7 @@
   let resizeFrame=0;
   function fit() {
     resizeFrame=0;
-    viewport.style.setProperty('--campus-fit',Math.min(viewport.clientWidth*.90/1000,viewport.clientHeight*.88/1000));
+    viewport.style.setProperty('--campus-fit',Math.min(viewport.clientWidth*.90/1000,viewport.clientHeight*.88/1000)*1.2);
     // Read saved study positions without modifying them. Reserve space below
     // even oversized/low objects, including the saved handbook and curled paper.
     const bottom=study.getBoundingClientRect().bottom;

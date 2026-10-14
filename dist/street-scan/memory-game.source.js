@@ -10,6 +10,7 @@ import {createHandCamera} from './camera-model.source.js';
 import {createPixelWorld,flattenPixelModel} from './pixel-world.source.js';
 import ASSETS from './game-assets.js';
 import {encounters,keepsakes} from './game-config.js';
+import publishedLayout from './published-layout.json';
 
 const wait = ms=>new Promise(r=>setTimeout(r,ms));
 async function boot(){
@@ -102,7 +103,8 @@ async function boot(){
  addEventListener('resize',()=>{if(state.dialog)paintLine()});
  $('.game-dialog button').onclick=nextLine;
  function canPickGlasses(){if(!models.glasses||state.hasGlasses||distance(glassesPosition)>2.2)return false;syncCamera();const target=new THREE.Box3().setFromObject(models.glasses).getCenter(new THREE.Vector3()).sub(camera.position);return camera.getWorldDirection(new THREE.Vector3()).dot(target.normalize())>.985;}
- const layoutDefaults={},layoutKey='street-memory-layout-v1';let selectedActor='elder1';const selectedAssets=new Set(['elder1']);
+ // Start this release with the captured published positions, then save later edits separately.
+ const layoutDefaults={},layoutKey='street-memory-layout-v2';let selectedActor='elder1';const selectedAssets=new Set(['elder1']);
  const grandmaBoxOffset=new THREE.Vector3(.42,0,-.88);
  const actorNames={elder1:'White-haired elder',elder2:'Elder with fan',elder3:'Chess player',table:'Chess table',grandma:'Grandmother',box:'Grandmother’s box',girl:'Schoolgirl',glasses:'Glasses'};
  function initEditor(){
@@ -112,9 +114,11 @@ async function boot(){
   const select=panel.querySelector('select'),group=document.createElement('optgroup');group.label='Collection assets';
   for(const [k,name] of Object.entries(collectionNames)){const option=document.createElement('option');option.value='collection:'+k;option.textContent=name;group.append(option);}select.append(group);
   for(const k of Object.keys(actorNames)){const o=models[k];if(o)layoutDefaults[k]={position:o.position.toArray(),scale:o.scale.x,rotation:o.rotation.toArray().slice(0,3)};}
-  try{const saved=JSON.parse(localStorage.getItem(layoutKey)||'{}');for(const [k,v] of Object.entries(saved.assets||saved)){if(!layoutDefaults[k]||!Array.isArray(v.position)||v.position.length!==3||!v.position.every(Number.isFinite))continue;const sc=Array.isArray(v.scale)?v.scale:[v.scale,v.scale,v.scale];const rot=Array.isArray(v.rotation)?v.rotation:[0,v.rotation,0];if(sc.length!==3||rot.length!==3||!sc.every(Number.isFinite)||!rot.every(Number.isFinite))continue;models[k].position.fromArray(v.position);models[k].scale.set(...sc.map(n=>layoutDefaults[k].scale*THREE.MathUtils.clamp(n,.05,8)));models[k].rotation.set(...rot.map(n=>saved.version===2?THREE.MathUtils.degToRad(n):n));}}catch{}
-  try{restoreCollection(JSON.parse(localStorage.getItem(layoutKey)||'{}').collection)}catch{}
-  if(models.box){let hasSavedBox=false;try{const saved=JSON.parse(localStorage.getItem(layoutKey)||'{}');hasSavedBox=Array.isArray((saved.assets||saved).box?.position);}catch{}if(!hasSavedBox){models.box.position.copy(models.grandma.position).add(grandmaBoxOffset);layoutDefaults.box.position=models.box.position.toArray();}}
+  let saved=publishedLayout;
+  try{const local=localStorage.getItem(layoutKey);if(local){const parsed=JSON.parse(local);if(parsed&&typeof parsed==='object')saved=parsed;}}catch{}
+  for(const [k,v] of Object.entries(saved.assets||saved)){if(!layoutDefaults[k]||!Array.isArray(v.position)||v.position.length!==3||!v.position.every(Number.isFinite))continue;const sc=Array.isArray(v.scale)?v.scale:[v.scale,v.scale,v.scale];const rot=Array.isArray(v.rotation)?v.rotation:[0,v.rotation,0];if(sc.length!==3||rot.length!==3||!sc.every(Number.isFinite)||!rot.every(Number.isFinite))continue;models[k].position.fromArray(v.position);models[k].scale.set(...sc.map(n=>layoutDefaults[k].scale*THREE.MathUtils.clamp(n,.05,8)));models[k].rotation.set(...rot.map(n=>saved.version===2?THREE.MathUtils.degToRad(n):n));}
+  restoreCollection(saved.collection);
+  if(models.box&&!Array.isArray((saved.assets||saved).box?.position)){models.box.position.copy(models.grandma.position).add(grandmaBoxOffset);layoutDefaults.box.position=models.box.position.toArray();}
   updateEncounterPositions();
   panel.querySelector('select').onchange=e=>{selectAsset(e.target.value)};
   panel.querySelectorAll('[data-transform]').forEach(b=>b.onclick=()=>setTransformMode(b.dataset.transform));

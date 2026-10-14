@@ -183,7 +183,10 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
         material.alphaTest = 0;
         material.needsUpdate = true;
       });
-      if (isBulbMesh) bulbMeshes.push(object);
+      if (isBulbMesh) {
+        object.computeBoundingBox();
+        bulbMeshes.push(object);
+      }
     });
 
     lampRig.add(lampModel);
@@ -580,10 +583,15 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
   });
   window.addEventListener("resize", resize);
 
+  let animationFrame = 0;
+  const animationVisible = () => !document.hidden && !document.body.classList.contains('archive-world-active');
+  function wakeAnimation() {
+    if (animationVisible() && !animationFrame) animationFrame = requestAnimationFrame(animate);
+  }
   function animate(time) {
+    animationFrame = 0;
     if (document.hidden || document.body.classList.contains('archive-world-active')) {
       motion.lastTime = time;
-      requestAnimationFrame(animate);
       return;
     }
     const elapsed = motion.lastTime ? Math.min(50, time - motion.lastTime) : 16;
@@ -634,7 +642,6 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
     bulbWorldPosition.set(0, 0, 0);
     let bulbCount = 0;
     bulbMeshes.forEach((mesh) => {
-      mesh.computeBoundingBox();
       if (!mesh.boundingBox) return;
       mesh.boundingBox.getCenter(bulbLocalCenter);
       mesh.localToWorld(bulbLocalCenter);
@@ -659,12 +666,15 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
     });
 
     renderer.render(scene, camera);
-    requestAnimationFrame(animate);
+    wakeAnimation();
   }
+
+  document.addEventListener('visibilitychange', wakeAnimation);
+  new MutationObserver(wakeAnimation).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
   resize();
   updatePositionReadout();
   applyLighting();
   aimAt(innerWidth * .63, innerHeight * .54, false);
-  requestAnimationFrame(animate);
+  wakeAnimation();
 })();

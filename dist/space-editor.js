@@ -42786,6 +42786,7 @@ void main() {
         }
         state.playerPointerActive = true;
         setInteractionQuality(true);
+        setHoveredAsset(null);
         state.pointerStart = null;
         return;
       }
@@ -42801,6 +42802,7 @@ void main() {
         event.stopImmediatePropagation();
         return;
       }
+      if (state.playerPointerActive) return;
       if (!state.editorVisible && state.ready && !state.introRunning) {
         const asset = assetFromPointer(event);
         setHoveredAsset(asset?.id === "earth" ? null : asset);
@@ -42990,6 +42992,10 @@ void main() {
   var previousRenderedFrameTime = 0;
   function renderLoop(frameTime = performance.now()) {
     requestAnimationFrame(renderLoop);
+    if (document.hidden || archiveEmbedded && window.frameElement?.hidden) {
+      previousFrameTime = frameTime;
+      return;
+    }
     if (pendingArchiveProgress !== null) {
       const progress = pendingArchiveProgress;
       pendingArchiveProgress = null;
@@ -42999,7 +43005,7 @@ void main() {
     const deltaTime = Math.min(Math.max((frameTime - previousFrameTime) / 1e3, 0), 0.05);
     previousFrameTime = frameTime;
     const controlsChanged = !schoolPortal?.active && orbitControls.update();
-    const cameraAdjusted = !schoolPortal?.active && applyPlayerCameraResistance(deltaTime);
+    const cameraAdjusted = !schoolPortal?.active && (state.playerPointerActive || controlsChanged) && applyPlayerCameraResistance(deltaTime);
     const walkerMoving = !schoolPortal?.active && (planetWalker?.tick(deltaTime) || false);
     const portalMoving = schoolPortal?.tick(deltaTime) || false;
     const activelyAnimating = state.introStepAnimating || state.playerPointerActive || state.transformDragging || controlsChanged || cameraAdjusted || walkerMoving || portalMoving;
