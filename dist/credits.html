@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head><script src="shared-assets/fetch-chunks.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#18130d" />
+  <meta name="description" content="The people behind Memory Street. Three characters, three memories." />
+  <title>Character Credits · 记忆街道</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./credits.css" />
+  <link rel="stylesheet" href="./ending.css" />
+  <script src="./vendor/gsap/gsap.min.js" defer></script>
+  <script src="./vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="./credits.js" defer></script>
+  <script src="./memory-card-credits.js" defer></script>
+  <script src="./ending.js" defer></script>
+  <script src="./assets/ending/masks.js"></script>
+</head>
+<body class="credits-page">
+  <div class="memory-backgrounds" aria-hidden="true">
+    <div class="memory-scene" data-scene="0" style="--focus:48% 48%"><img src="./assets/credits/gate.jpg" alt="" /></div>
+    <div class="memory-scene" data-scene="1" style="--focus:65% 52%"><img src="./assets/credits/shop.jpg" alt="" /></div>
+    <div class="memory-scene" data-scene="2" style="--focus:73% 46%"><img src="./assets/credits/street.jpg" alt="" /></div>
+  </div>
+  <div class="memory-shade" aria-hidden="true"></div>
+  <main id="credits">
+    <section class="character" aria-labelledby="onlooker-name">
+      <div class="character-stage">
+        <img src="./public/videos/mens-clean.webp" width="1660" height="1244" alt="The grandfather, dressed in black" />
+        <video autoplay muted loop playsinline preload="auto" width="1660" height="1244" aria-label="Animated grandfather" data-src="./public/videos/mens-clean.webm"></video>
+      </div>
+      <div class="character-copy">
+        <h1 id="onlooker-name" class="prototype">Prototype: My Grandfather</h1>
+        <p class="memory">The man in black is based on my grandfather.<br>When I was a child, I often saw him playing chess with people in the neighborhood.</p>
+      </div>
+    </section>
+    <section class="character character-reverse" aria-labelledby="shopkeeper-name">
+      <div class="character-stage">
+        <img src="./public/videos/girl-clean.webp" width="1176" height="1764" alt="The shopkeeper remembered from the street" loading="lazy" />
+        <video autoplay muted loop playsinline preload="none" width="1176" height="1764" aria-label="Animated shopkeeper" data-src="./public/videos/girl-clean.webm"></video>
+      </div>
+      <div class="character-copy">
+        <h2 id="shopkeeper-name" class="prototype">Prototype: A Shopkeeper I Remember</h2>
+        <p class="memory">She is the person I remember most clearly from this street.<br>Her shop is gone now. When I returned, I could no longer find her there.</p>
+      </div>
+    </section>
+    <section class="character" aria-labelledby="student-name">
+      <div class="character-stage">
+        <img src="./public/videos/little%20girl-clean.webp" width="1244" height="1660" alt="The younger self, a primary school student" loading="lazy" />
+        <video autoplay muted loop playsinline preload="none" width="1244" height="1660" aria-label="Animated primary school student" data-src="./public/videos/little%20girl-clean.webm"></video>
+      </div>
+      <div class="character-copy">
+        <h2 id="student-name" class="prototype">Prototype: My Younger Self</h2>
+        <p class="memory">The student is based on me when I was in primary school.<br>I used to walk along this street every day on my way to and from school.</p>
+      </div>
+    </section>
+  </main>
+  <section id="see-again" class="memory-ending" aria-labelledby="ending-title">
+    <div class="ending-stage">
+      <h2 id="ending-title" class="ending-accessible-title">SEE AGAIN</h2>
+      <div class="ending-field"></div>
+    </div>
+  </section>
+</body>
+</html>
+

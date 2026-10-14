@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="shared-assets/fetch-chunks.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="滚动唤醒一台由复古像素粒子组成的机器。靠近，打散；离开，重聚。">
+<title>像素机器</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23efe8de' d='M0 0h32v32H0z'/%3E%3Cpath fill='%232c2925' d='M4 12h20V7h5v18H4z'/%3E%3Cpath fill='%23efe8de' d='M8 15h13v4H8z'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;background:#efe8de}*{box-sizing:border-box}html,body{margin:0;width:100%;background:#efe8de}html{scrollbar-width:none}html::-webkit-scrollbar{display:none}body{height:300vh;height:300svh;overscroll-behavior:none}canvas{display:block;position:fixed;inset:0;width:100%;height:100%;touch-action:pan-y}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}noscript{position:fixed;inset:45% 10%;text-align:center;color:#37332e}
+</style>
+</head>
+<body>
+<main aria-label="像素机器互动作品"><h1 class="sr-only">像素机器</h1><p class="sr-only">向下滚动或按向下键，粒子从中间向两侧展开，组成机器。鼠标靠近或手指触摸会使局部粒子散开，离开后恢复。向上滚动回到留白。</p><canvas id="scene" role="img" aria-label="由可交互黑色方形粒子组成的复古机器"></canvas></main>
+<noscript>请启用 JavaScript 以体验像素粒子。</noscript>
+<script>
+(() => {
+'use strict';
+// The reference is reconstructed as geometry. No image, cutout, texture, or image asset is loaded.
+const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d',{alpha:false});
+const paper='#efe8de',ink='#302d29';
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
+let seed=91723;
+const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296};
+// This offscreen drawing holds material densities, never visible pixels.
+// Each density is converted to separate square particles with individual spring physics.
+const blueprint=document.createElement('canvas');blueprint.width=1040;blueprint.height=510;
+const b=blueprint.getContext('2d',{willReadFrequently:true});
+function poly(points,density,edge=0.82,line=2){b.beginPath();points.forEach(([x,y],i)=>i?b.lineTo(x,y):b.moveTo(x,y));b.closePath();b.fillStyle=`rgb(${density*255},${density*255},${density*255})`;b.fill();if(line){b.strokeStyle=`rgb(${edge*255},${edge*255},${edge*255})`;b.lineWidth=line;b.stroke()}}
+function rect(x,y,w,h,d,edge=d,line=0){poly([[x,y],[x+w,y],[x+w,y+h],[x,y+h]],d,edge,line)}
+function circle(x,y,r,d,edge,line){b.beginPath();b.arc(x,y,r,0,Math.PI*2);b.fillStyle=`rgb(${d*255},${d*255},${d*255})`;b.fill();b.strokeStyle=`rgb(${edge*255},${edge*255},${edge*255})`;b.lineWidth=line;b.stroke()}
+// Plinth and chassis.
+poly([[41,444],[1003,444],[991,478],[975,490],[57,490],[41,475]],.91);
+rect(56,480,915,5,.76);
+poly([[25,359],[1006,359],[1012,449],[24,449]],.36);
+rect(31,401,976,4,.88);rect(30,410,976,4,.06);
+// Long rear lid: three separate folded metal planes.
+poly([[244,100],[790,100],[804,117],[231,117]],.2);
+poly([[231,118],[803,118],[815,181],[209,181]],.11);
+rect(223,169,591,9,.32);rect(210,181,607,11,.96);
+// Recessed printing bed and rails.
+rect(206,193,618,125,.95);
+rect(234,199,548,17,.86);rect(235,217,548,8,.48);
+rect(238,227,540,10,.97);rect(233,248,547,27,.82);
+rect(245,251,230,6,.65);rect(526,251,245,6,.65);
+rect(224,284,571,18,.88);rect(208,308,615,11,.45);
+rect(486,193,23,111,.48);rect(509,194,9,111,.78);
+rect(484,198,3,96,.26);
+rect(236,221,241,4,.21);rect(529,221,239,4,.21);
+rect(236,228,241,5,.7);rect(529,228,239,5,.7);
+rect(469,252,15,21,.53);rect(528,252,15,21,.51);
+poly([[214,276],[228,268],[242,272],[244,307],[211,313]],.69);
+rect(219,281,18,16,.37);rect(224,300,26,8,.79);
+poly([[783,276],[797,269],[811,276],[819,309],[783,313]],.71);
+rect(789,283,16,15,.36);
+// Front paper ramp and fascia.
+poly([[210,317],[817,317],[825,390],[195,390]],.12);
+rect(215,319,595,5,.035);
+poly([[195,390],[825,390],[826,421],[195,421]],.43);
+rect(197,418,628,4,.87);
+rect(194,427,635,35,.35);rect(195,424,632,3,.045);
+// Left housing with the angled upper lid and projecting foot.
+poly([[38,173],[102,101],[239,101],[209,173]],.1);
+poly([[102,101],[238,101],[234,107],[104,107],[46,174],[39,174]],.35,.5,1);
+poly([[38,175],[208,175],[202,334],[179,400],[23,400]],.28);
+poly([[38,179],[47,179],[34,391],[24,398]],.13,.16,0);
+poly([[208,177],[220,169],[214,328],[202,357],[184,413],[176,400]],.76);
+poly([[25,402],[178,402],[178,450],[25,450]],.39);
+poly([[139,365],[199,365],[185,401],[124,401]],.09);
+poly([[124,401],[184,401],[184,463],[123,463]],.31);
+poly([[185,401],[199,365],[195,452],[184,463]],.61);
+// Right control housing; recognizable elevated display, paired round buttons.
+poly([[821,166],[972,166],[1000,225],[836,225]],.18);
+poly([[836,225],[1000,225],[1010,386],[841,386]],.3);
+poly([[824,192],[836,225],[841,464],[825,464]],.39);
+poly([[841,386],[1010,386],[1009,450],[916,450],[904,464],[842,464]],.4);
+rect(842,372,160,14,.12);
+poly([[813,49],[824,39],[967,39],[976,48],[979,213],[823,213]],.09);
+poly([[814,52],[822,48],[829,202],[976,202],[979,213],[823,213]],.36);
+poly([[837,60],[955,60],[950,127],[844,127]],.67);
+poly([[837,60],[848,77],[851,109],[844,127]],.78);
+poly([[848,77],[947,77],[942,105],[851,105]],.53);
+poly([[955,60],[947,77],[942,105],[950,127]],.79);
+rect(851,105,92,22,.97);rect(855,112,85,3,.79);
+poly([[878,145],[911,145],[895,160]],.92,.92,1);
+circle(881,305,24,.9,.8,2);circle(880,302,20,.16,.9,2);circle(879,300,17,.2,.35,1);
+circle(956,305,24,.91,.84,2);circle(955,302,20,.73,.98,2);circle(954,299,16,.64,.68,1);
+rect(871,337,20,19,.9);rect(875,341,12,11,.36);
+rect(946,337,20,19,.91);rect(950,341,12,11,.57);
+// Ordered dithering keeps the monochrome print texture structured rather than photographic.
+const pixels=b.getImageData(0,0,1040,510).data;
+const matrix=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
+const particles=[];const step=1.85;
+for(let row=0,y=38;y<493;y+=step,row++)for(let col=0,x=22;x<1013;x+=step,col++){
+ const idx=(Math.floor(y)*1040+Math.floor(x))*4;if(!pixels[idx+3])continue;
+ const density=pixels[idx]/255;
+ const threshold=(matrix[(row%4)*4+col%4]+.5)/16;
+ if(density<threshold+(random()-.5)*.095)continue;
+ particles.push({x:x-520,y:y-264,dx:0,dy:0,vx:0,vy:0,size:1.12+density*.67+random()*.14,phase:random()*6.283,delay:random()*.1});
+}
+const dust=[];
+for(let y=-18;y<=18;y++)for(let x=-45;x<=45;x++){
+ if(random()>.48+.14*Math.sin(x*.7+y*.5))continue;
+ dust.push({x:x*22,y:y*22,size:8+random()*5,delay:random()*.18,phase:random()*6.283});
+}
+let w=0,h=0,scale=1,dpr=1,progress=0,last=0,raf=0,frameMs=16;
+const pointer={x:-9999,y:-9999,active:false};
+function resize(){w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);scale=Math.min(w*.91/1040,h*.66/510,1.42);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.imageSmoothingEnabled=false}
+function targetProgress(){return clamp(scrollY/(Math.max(1,document.documentElement.scrollHeight-h)*.84))}
+function frame(now){
+ const dt=Math.min((now-last)/16.667||1,2);last=now;frameMs=frameMs*.95+Math.min(dt*16.667,100)*.05;
+ const target=targetProgress();progress=reduced.matches?target:progress+(target-progress)*(1-Math.pow(.82,dt));if(Math.abs(target-progress)<.0001)progress=target;
+ ctx.fillStyle=paper;ctx.globalAlpha=1;ctx.fillRect(0,0,w,h);
+ if(progress>.0005){
+  const cx=w/2,cy=h*.51;
+  // Broad, coarse pixels radiate from the center before resolving into fine ink pixels.
+  const spread=smooth(progress/.66),dustFade=smooth(progress/.1)*(1-smooth((progress-.62)/.34));
+  if(dustFade>.002){ctx.fillStyle='#b5afa5';for(const p of dust){
+   const a=smooth((progress-Math.abs(p.x)/1000*.24-p.delay*.2)/.16)*dustFade*.43;
+   if(a<.005)continue;ctx.globalAlpha=a;
+   const px=cx+p.x*spread*(w/1600),py=cy+p.y*(.12+.88*spread)*Math.min(h/850,1);
+   const size=p.size*(.65+.35*spread);ctx.fillRect(Math.round(px),Math.round(py),size,size);
+  }}
+  ctx.fillStyle=ink;
+  const assemble=smooth((progress-.18)/.73),radius=Math.max(48,Math.min(105,w*.09))*.7;
+  const featherRadius=radius*1.4;
+  const stiffness=reduced.matches?.27:.068,damping=Math.pow(reduced.matches?.58:.79,dt);
+  for(const p of particles){
+   const distance=Math.abs(p.x)/520;
+   const visibility=smooth((progress-.16-distance*.29-p.delay)/.2);
+   if(visibility<=0)continue;
+   const unfold=smooth((assemble-distance*.16)/.84);
+   const tx=cx+p.x*scale*(.08+.92*unfold),ty=cy+p.y*scale*(.16+.84*unfold)+(1-unfold)*Math.sin(p.phase)*27;
+   const mx=tx-pointer.x,my=ty-pointer.y,dist=Math.sqrt(mx*mx+my*my);
+   let pushX=0,pushY=0;
+   if(pointer.active&&dist<featherRadius&&visibility>.5){
+    // A wider, gently tapered fringe and per-particle variation soften the circular boundary.
+    const falloff=Math.pow(1-dist/featherRadius,2.2);
+    const softness=.86+.14*Math.sin(p.phase);
+    const force=falloff*(reduced.matches?22:115)*.7*softness;
+    const angle=dist>.1?Math.atan2(my,mx):p.phase;
+    pushX=Math.cos(angle)*force+Math.sin(p.phase)*force*.2;pushY=Math.sin(angle)*force+Math.cos(p.phase)*force*.2;
+   }
+   p.vx=(p.vx+(pushX-p.dx)*stiffness*dt)*damping;p.vy=(p.vy+(pushY-p.dy)*stiffness*dt)*damping;
+   p.dx+=p.vx*dt;p.dy+=p.vy*dt;
+   if(Math.abs(p.dx)+Math.abs(p.dy)+Math.abs(p.vx)+Math.abs(p.vy)<.015){p.dx=0;p.dy=0;p.vx=0;p.vy=0}
+   ctx.globalAlpha=visibility;
+   const size=Math.max(.65,p.size*scale)*(1+(1-unfold)*1.6);
+   ctx.fillRect(Math.round((tx+p.dx)*dpr)/dpr,Math.round((ty+p.dy)*dpr)/dpr,size,size);
+  }
+ }
+ ctx.globalAlpha=1;raf=requestAnimationFrame(frame);
+}
+addEventListener('resize',resize);
+addEventListener('pointermove',e=>{pointer.x=e.clientX;pointer.y=e.clientY;pointer.active=true},{passive:true});
+addEventListener('pointerdown',e=>{pointer.x=e.clientX;pointer.y=e.clientY;pointer.active=true},{passive:true});
+addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')pointer.active=false},{passive:true});
+addEventListener('pointercancel',()=>pointer.active=false);
+document.addEventListener('pointerleave',()=>pointer.active=false);
+addEventListener('blur',()=>pointer.active=false);
+document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(raf);if(!document.hidden){last=performance.now();raf=requestAnimationFrame(frame)}});
+// Read-only diagnostics for interaction and performance verification.
+Object.defineProperty(window,'pixelMachine',{value:{get state(){let displaced=0,maxOffset=0;for(const p of particles){const d=Math.hypot(p.dx,p.dy);if(d>1)displaced++;maxOffset=Math.max(maxOffset,d)}return{particles:particles.length,progress,displaced,maxOffset,frameMs,width:w,height:h}},get canvas(){return canvas}}});
+history.scrollRestoration='manual';scrollTo(0,0);resize();raf=requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

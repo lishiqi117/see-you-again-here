@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="shared-assets/fetch-chunks.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#59b8df" />
+  <title>蜡笔校园</title>
+  <link rel="icon" href="data:," />
+  <link rel="preload" as="image" href="./assets/crayon-world/school-close.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="./assets/crayon-world/school-clean-plate-v3.png" />
+  <link rel="stylesheet" href="./crayon-world.css" />
+</head>
+<body>
+  <main id="sceneViewport" class="scene-viewport">
+    <div
+      id="sceneArtboard"
+      class="scene-artboard"
+      role="application"
+      aria-label="可点击的蜡笔校园插画"
+    >
+      <img
+        id="cleanPlate"
+        class="clean-plate"
+        src="./assets/crayon-world/school-clean-plate-v3.png"
+        alt=""
+        draggable="false"
+      />
+      <div id="objectLayers" class="object-layers" aria-hidden="true"></div>
+      <img
+        id="originalPoster"
+        class="original-poster"
+        src="./assets/crayon-world/school-close.png"
+        alt="蓝天下有校园、太阳、云朵、小鸟、树木、花朵和草地的蜡笔画"
+        draggable="false"
+        fetchpriority="high"
+      />
+    </div>
+  </main>
+
+  <noscript>
+    <img class="noscript-poster" src="./assets/crayon-world/school-close.png" alt="蜡笔校园画" />
+  </noscript>
+
+  <script src="./vendor/gsap/gsap.min.js"></script>
+  <script src="./crayon-world.js"></script>
+</body>
+</html>

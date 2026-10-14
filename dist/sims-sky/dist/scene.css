@@ -1,0 +1,79 @@
+/* Reference-led scene. Design variance 8, motion intensity 3, visual density 3.
+   Native CSS composition, bright sky palette, no additional interface chrome. */
+:root { color-scheme: light; background: #78b8fb; }
+[hidden] { display: none !important; }
+.layout-editor { position: fixed; z-index: 50; right: 20px; top: 20px; width: 302px; max-height: calc(100dvh - 40px); overflow: auto; padding: 20px; background: #fffbee; border: 2px solid #e5c46e; border-radius: 12px; box-shadow: 0 12px 35px #244a7833; color: #263d55; font: 14px/1.6 system-ui, sans-serif; }
+.layout-editor header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.layout-editor strong { font-size: 20px; }
+.layout-editor p { margin: 10px 0; }
+.layout-editor label { display: block; margin-top: 12px; }
+.layout-editor input, .layout-editor select, .layout-editor button { font: inherit; }
+.layout-editor input:not([type=range]), .layout-editor select { width: 100%; padding: 7px; border: 1px solid #b4bdc8; border-radius: 5px; background: white; color: #263d55; }
+.layout-editor input[type=range] { width: 100%; accent-color: #2868b9; }
+.layout-editor output { float: right; font-variant-numeric: tabular-nums; }
+.position-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.layout-editor button { cursor: pointer; padding: 8px 10px; border: 1px solid #a9bbcd; background: #fff; color: #263d55; border-radius: 6px; }
+.layout-editor button:focus-visible, .layout-editor input:focus-visible, .layout-editor select:focus-visible { outline: 3px solid #2868b9; outline-offset: 2px; }
+.editor-actions { display: grid; gap: 8px; margin-top: 18px; }
+.editor-actions #save-layout { background: #2868b9; border-color: #2868b9; color: white; }
+.layout-editor .subtle-button { background: transparent; margin-top: 8px; width: 100%; }
+.editor-help, .editor-note { color: #536478; font-size: 12px; }
+.layout-editor .multi-switch, .layout-editor .multi-list label { display: flex; align-items: center; gap: 8px; }
+.layout-editor input[type=checkbox] { width: auto; accent-color: #2868b9; }
+.multi-list { max-height: 155px; overflow-y: auto; padding: 0 8px 8px; border: 1px solid #d5d9db; border-radius: 5px; }
+.layer-controls { margin: 14px 0 0; padding: 10px; border: 1px solid #d5d9db; border-radius: 5px; }
+.layer-ordered { transform-style: flat !important; }
+.layout-editor .multi-list label { margin-top: 7px; font-size: 12px; }
+#editor-status { font-size: 13px; min-height: 22px; }
+body.editing .object { --hover-scale: 1 !important; filter: none !important; transition: none; cursor: grab; touch-action: none; }
+body.editing .object.selected { outline: 2px dashed #fffbe7; outline-offset: 5px; }
+body.editing .object:active { cursor: grabbing; }
+.touch-editor-toggle { display: none; position: fixed; left: 12px; bottom: 12px; z-index: 40; padding: 9px 14px; border: 1px solid #e5c46e; border-radius: 6px; background: #fffbee; color: #263d55; }
+@media (pointer: coarse) { .touch-editor-toggle { display: block; } }
+@media (max-width: 620px) { .layout-editor { top: auto; bottom: 12px; right: 12px; width: 280px; max-height: 53dvh; padding: 14px; } }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; min-height: 100%; }
+body { overflow-x: hidden; }
+.sky { min-height: 100svh; min-height: 100dvh; position: relative; overflow: hidden; background: #67adfa url('assets/sky.webp') center / cover no-repeat; }
+.scene { position: relative; width: 100%; aspect-ratio: 1448 / 1086; min-height: 100svh; min-height: 100dvh; isolation: isolate; }
+.clouds { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.cloud { position: absolute; height: auto; opacity: .94; user-select: none; }
+.cloud-top { width: 35%; left: 55%; top: -7%; transform: rotate(-12deg); }
+.cloud-left { width: 22%; left: -16%; top: 28%; }
+.cloud-middle { width: 28%; left: 34%; top: 48%; transform: rotate(-9deg); }
+.cloud-bottom-left { width: 33%; left: -1%; top: 65%; }
+.cloud-bottom-right { width: 42%; left: 59%; top: 68%; transform: rotate(-8deg); }
+.cloud-low { width: 24%; left: 26%; top: 88%; }
+.cloud-corner { width: 25%; left: -12%; top: 88%; }
+.rope { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; fill: none; }
+.rope-edge { stroke: #976222; stroke-width: calc(var(--rope-width,18px) + 2px); }
+.rope-fiber { stroke: url(#rope-twist); stroke-width: var(--rope-width,18px); }
+.rope-light { stroke: #ffe4a1; stroke-opacity: .35; stroke-width: calc(var(--rope-width,18px) * .22); }
+.rope-hit { stroke: transparent; stroke-width: max(32px, calc(var(--rope-width,18px) + 20px)); pointer-events: stroke; cursor: pointer; touch-action: manipulation; outline: none; }
+.rope-hit:focus-visible { stroke: #fff4ce; stroke-opacity: .45; outline: none; }
+body.editing .rope-hit { pointer-events: none; cursor: default; }
+.object { --hover-scale: 1; position: absolute; z-index: 2; border: 0; padding: 0; margin: 0; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; transform-origin: var(--pivot-x,50%) var(--pivot-y,5%); transform: translate3d(var(--wind-x,0px),var(--wind-y,0px),0) rotate(var(--sway,0deg)); scale: var(--hover-scale); transition: scale 280ms ease, filter 280ms ease; outline: none; touch-action: manipulation; }
+.object img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; pointer-events: none; }
+.object.is-lifted, .object:focus-visible { --hover-scale: 1.018; filter: drop-shadow(2px 16px 8px rgb(24 60 107 / .23)); }
+.object:focus-visible { outline: 2px dashed #fff6d5; outline-offset: 7px; border-radius: 3px; }
+@media (hover: hover) { .object:hover { --hover-scale: 1.018; filter: drop-shadow(2px 16px 8px rgb(24 60 107 / .23)); } }
+.scarf { left: 1.8%; top: 2.3%; width: 16%; height: 58%; }
+.keys { left: 16.7%; top: 8.3%; width: 7.5%; height: 29.5%; }
+.photo-green { left: 23.8%; top: 13.35%; width: 17.2%; height: 39.7%; }
+.photo-stars { left: 61.1%; top: 19.15%; width: 15.7%; height: 38.7%; }
+.badge { left: 76.45%; top: 16.1%; width: 14%; height: 22.5%; }
+.umbrella { left: 90.3%; top: 12.9%; width: 6.9%; height: 66.3%; }
+.earphones { left: 36.5%; top: 13.8%; width: 30%; height: 20%; z-index: 4; }
+/* The scene always spans the viewport, including ultrawide fullscreen. */
+.scene { width: 100%; height: 100dvh; min-height: 0; aspect-ratio: auto; margin-inline: 0; }
+#photo-viewer { position: fixed; inset: 0; width: 100vw; max-width: none; height: 100dvh; max-height: none; border: 0; margin: 0; padding: 60px 24px 24px; background: transparent; overflow: hidden; }
+#photo-viewer[open] { display: grid; place-items: center; }
+#photo-viewer::backdrop { background: rgb(12 30 53 / .78); }
+#viewer-image { display: block; max-width: min(86vw,1000px); max-height: calc(100dvh - 100px); object-fit: contain; filter: drop-shadow(0 14px 24px #0004); }
+/* Match the scarf silhouette to suppress residual alpha bloom outside the cutout. */
+#viewer-image[src="assets/scarf-detail-cutout.png"] { filter: none; clip-path: polygon(46.2% 2.5%,51.3% 2.5%,60.2% 9.7%,63.5% 25.9%,59.6% 32.4%,56.1% 35.4%,57.3% 35.9%,58% 41%,56.6% 41.8%,79.8% 69.8%,81.7% 96.2%,68% 85%,48.3% 68.6%,46.9% 58.1%,41.8% 79.2%,26.5% 90.6%,21% 90.8%,25.8% 81.7%,21.7% 64.3%,38.2% 45%,41.8% 41.7%,40.8% 40.1%,40.8% 37.7%,41.7% 36.7%,30.6% 30.6%,29.1% 16.9%); }
+#close-viewer { position: absolute; top: 18px; right: 20px; border: 1px solid #ffffff88; border-radius: 6px; background: #fffbee; color: #263d55; font: 15px system-ui,sans-serif; padding: 10px 16px; cursor: pointer; }
+body.viewing { overflow: hidden; }
+@media (max-width: 620px) { .scene { width: 100%; height: auto; margin: 18svh 0 0; min-height: 0; aspect-ratio: 1448 / 1086; } }
+@media (prefers-reduced-motion: reduce) { .object { transition: none; } .object:hover, .object:focus-visible, .object.is-lifted { --hover-scale: 1; } }
+

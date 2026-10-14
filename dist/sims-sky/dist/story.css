@@ -1,0 +1,41 @@
+/* Continuous sky; all objects retain their original cutout material. */
+.sky { background-attachment: fixed; }
+body.editing .study-node { transform: none !important; }
+@media (max-width:620px) { #study-chapter { margin-top: max(0px, calc(82svh - 75vw)) !important; } }
+#study-chapter { position: relative; margin-top: 0; }
+.study-viewport { position: relative; width: 100%; height: 100svh; overflow: visible; isolation: isolate; }
+/* Objects and clouds share an open boundary between the two chapters. */
+.study-camera-clip { position: absolute; inset: 0; overflow: visible; perspective: var(--study-perspective,1600px); perspective-origin: 50% 50%; pointer-events: none; }
+.study-fit { position: absolute; width: 1240px; height: 1240px; left: 50%; top: 50%; transform-origin: center; transform: translate(-50%,-50%) scale(var(--study-fit,.6)); transform-style: preserve-3d; pointer-events: none; }
+.study-camera { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transform-origin: center; pointer-events: none; }
+.study-node { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
+.study-object { --pivot-x: 50%; --pivot-y: 50%; --hover-scale: 1; pointer-events: auto; transform: rotate(var(--study-angle,0deg)); scale: var(--hover-scale); transition: transform 650ms cubic-bezier(.22,.61,.36,1),scale 650ms cubic-bezier(.22,.61,.36,1),filter 650ms ease; }
+.study-artwork { display: block; position: relative; width: 100%; height: 100%; pointer-events: none; animation: study-float var(--float-period,8s) ease-in-out var(--float-delay,0s) infinite; }
+/* Compensate for the scene's responsive scale: 10px total travel on screen. */
+@keyframes study-float { 0%,100% { transform: translateY(calc(-1 * var(--study-float,5px))); } 50% { transform: translateY(var(--study-float,5px)); } }
+.book-artwork { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.study-artwork .book-source { opacity: 0; }
+.book-cover { transform: matrix(1,0,0,1,0,0); transition: transform 750ms cubic-bezier(.22,.61,.36,1); }
+/* Keep the diagonal binding fixed while lifting the free edge visibly.
+   All artwork is sampled from the untouched original. */
+.study-object:focus-visible, .study-object.is-lifted { --hover-scale: 1.04; --study-angle: var(--study-tilt); filter: drop-shadow(0 3px 3px rgb(24 60 107 / .10)); }
+.books:focus-visible .book-cover, .books.is-lifted .book-cover { transform: matrix(1,-.07,0,1.054,0,-2.76); }
+@media (hover: hover) and (pointer: fine) {
+  .study-object:hover { --hover-scale: 1.04; --study-angle: var(--study-tilt); filter: drop-shadow(0 3px 3px rgb(24 60 107 / .10)); }
+  .books:hover .book-cover { transform: matrix(1,-.07,0,1.054,0,-2.76); }
+}
+.study-object:is(.pencil,.pen,.pen-lower) .study-artwork img { transform-origin: 20% 88%; }
+.compass .study-artwork img { transform-origin: 50% 50%; }
+body.editing .study-object { --study-angle: 0deg; }
+body.editing .study-artwork { animation: none; }
+body.editing .book-cover { transform: none !important; transition: none; }
+.study-viewport:not(.motion-visible) .study-artwork { animation-play-state: paused; }
+.study-clouds { position: absolute; inset: 0; pointer-events: none; }
+.study-clouds img { position: absolute; width: var(--cloud-size); left: var(--cloud-x); top: var(--cloud-y); opacity: var(--cloud-opacity,.85); user-select: none; }
+@media (prefers-reduced-motion: reduce) {
+  .study-camera,.study-clouds img { will-change: auto; }
+  .study-object { transition: none; }
+  .study-object:hover,.study-object:focus-visible,.study-object.is-lifted { --study-angle: 0deg; --hover-scale: 1; }
+  .study-artwork { animation: none; }
+  .book-cover { transform: none !important; transition: none; }
+}

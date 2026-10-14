@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head><script src="../shared-assets/fetch-chunks.js"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Street Scan</title><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css"></head>
+<body>
+<main id="view" tabindex="0" aria-label="Street Scan">
+<iframe id="street" src="lowpoly.html" title="3D street scene" tabindex="-1"></iframe>
+<canvas id="camera-model" aria-hidden="true"></canvas>
+<section id="entry" class="game-panel">
+<div class="entry-content">
+<p class="instructions">W Walk forward · A / D Sidestep<br>Mouse Look around · Hold left click Scan · Esc Pause</p>
+<button id="start" class="game-button" disabled>Loading street…</button></div>
+</section>
+<aside id="record-hud" class="game-panel" aria-label="Recording status"><div class="hud-heading"><span id="record-status">Camera recording</span><span id="progress-value">0%</span></div>
+<div id="progress" role="progressbar" aria-label="Scan progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+</aside>
+<aside id="finish-notice" class="game-panel" hidden aria-label="Scan objective reached"><p id="finish-message" role="status">Goal reached!</p><p>You can keep scanning to 100%.</p><button id="finish-scan" class="game-button">Finish scan</button></aside>
+<dialog id="result" class="reward-dialog" aria-labelledby="result-title" aria-describedby="result-description">
+<div class="reward-rays" aria-hidden="true"></div><div id="reward-confetti" aria-hidden="true"></div>
+<div class="reward-content"><h2 id="result-title">A memory to keep</h2>
+<p id="result-description">Click the SD card</p>
+<button id="reward-card" aria-label="Street memory SD card. Show collection options." aria-expanded="false" aria-controls="collect-options" autofocus><img src="assets/memory-card.png" alt="SD card with a golden street scene" draggable="false"></button>
+<div id="collect-options" class="game-panel" hidden><button id="collect-card" class="game-button">Collect</button><button id="collect-cancel" class="game-button secondary">Back</button></div>
+<div id="collected-details" hidden><p id="collection-status" role="status">Added to your collection</p><p class="reward-stat">Captured <strong id="result-percent">75%</strong><span id="result-count"></span></p>
+<div class="result-actions"><button id="review" class="game-button">View street</button><button id="restart" class="game-button secondary">Scan again</button></div></div>
+</div>
+</dialog>
+</main>
+<section id="print-flow" hidden aria-label="Print your street memory" data-phase="idle">
+<div id="printer-stage" aria-label="Printer scene">
+<div id="printer-machine">
+<img id="printer-image" src="assets/printer.png" alt="Vintage cream printer with an SD slot at the upper right" draggable="false">
+<button id="sd-slot" aria-label="Insert SD card into the upper-right slot" disabled></button>
+<div id="sd-insertion" hidden aria-hidden="true"><img src="assets/memory-card.png" alt="" draggable="false"></div>
+<span id="printer-led" aria-hidden="true"></span><span id="printer-led-orange" aria-hidden="true"></span>
+<div id="receipt-window"><div id="receipt" aria-label="Printed receipt with a play symbol"><button id="receipt-play" aria-label="Play street memory" disabled><span class="play-symbol" aria-hidden="true"></span></button></div></div>
+</div></div>
+<button id="sd-dock" aria-label="Collected SD card" hidden><img src="assets/memory-card.png" alt="Collected street memory SD card" draggable="false"></button>
+<button id="print-hint" type="button" hidden></button>
+<p id="print-announcement" class="visually-hidden" aria-live="polite"></p>
+</section>
+<section id="memory-playback" hidden aria-label="Street memory playback" data-phase="idle">
+<div id="memory-screen"></div>
+<div id="memory-loading"><div class="game-panel memory-loading-panel"><p id="memory-loading-title">Loading memory</p><div id="memory-load-progress" role="progressbar" aria-label="Loading street memory" aria-valuemin="0" aria-valuemax="100"><span id="memory-load-fill"></span></div><p id="memory-load-status" role="status">Reading SD card…</p><button id="memory-retry" class="game-button" hidden>Retry</button></div></div>
+</section>
+<script type="module" src="app.js"></script>
+</body></html>

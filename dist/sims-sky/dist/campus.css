@@ -1,0 +1,45 @@
+/* A self-contained third chapter, sharing the original sky and cloud assets. */
+#campus-chapter { position: relative; margin-top: var(--campus-gap,20vh); isolation: isolate; }
+.sky { padding-bottom: max(65svh,var(--campus-tail,0px)); }
+.campus-viewport { position: relative; height: 100svh; width: 100%; overflow: visible; isolation: isolate; }
+.campus-clouds { position: absolute; inset: 0; pointer-events: none; }
+.campus-cloud { position: absolute; width: var(--size); left: var(--x); top: var(--y); opacity: var(--opacity,.85); user-select: none; }
+.campus-fit { position: absolute; left: 50%; top: 50%; width: 1000px; height: 1000px; transform: translate(-50%,-50%) scale(var(--campus-fit,.7)); pointer-events: none; }
+.campus-perspective { width: 100%; height: 100%; perspective: 1800px; perspective-origin: 50% 50%; }
+#campus-camera { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transform-origin: 50% 50%; transform: translateZ(-70px) rotateY(-4deg) rotateX(2deg); }
+.campus-depth { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
+.campus-object { --pivot-x: 50%; --pivot-y: 50%; transform: none; pointer-events: auto; transition: scale 500ms ease, filter 500ms ease; }
+.campus-object img { object-fit: contain; }
+body.editing .campus-object { pointer-events: auto; }
+/* Flatten only while editing so pointer movement maps exactly to saved x/y. */
+body.editing #campus-camera, body.editing .campus-depth { transform: none !important; }
+#campus-chapter.camera-active #campus-camera { will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  #campus-camera { will-change: auto !important; }
+  .campus-object { transition: none; }
+}
+.campus-interactive-art { display: block; position: relative; width: 100%; height: 100%; pointer-events: none; transform-origin: 50% 50%; transition: transform 650ms cubic-bezier(.22,.61,.36,1); }
+.campus-object:is(.campus-backpack,.campus-computer) { --hover-scale: 1; scale: 1; filter: none; }
+.campus-backpack:focus-visible .campus-interactive-art { transform: translateY(calc(-1 * var(--bag-lift,6px))) rotate(-1deg) scale(1.03); }
+@media (hover: hover) and (pointer: fine) {
+  .campus-backpack:hover .campus-interactive-art { transform: translateY(calc(-1 * var(--bag-lift,6px))) rotate(-1deg) scale(1.03); }
+}
+.campus-computer:is(.is-near,:focus-visible) .campus-interactive-art { transform: scale(1.015); }
+.crt-screen { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.crt-light { opacity: .012; transition: opacity 700ms ease-out; }
+.campus-computer:is(.is-near,:focus-visible) .crt-light { opacity: .095; }
+.crt-scan { opacity: .035; }
+.crt-visible .crt-scan { animation: crt-breathe 6.7s ease-in-out infinite; }
+@keyframes crt-breathe { 0%,100% { opacity: .025; } 43% { opacity: .048; } 49% { opacity: .03; } 72% { opacity: .04; } }
+.crt-power { opacity: 0; }
+.campus-object.gentle-decoration { opacity: 1; filter: none; --hover-scale: 1; scale: 1; }
+.petal-flight-plane { clip-path: inset(-140px -200% var(--flight-bottom,-100px) -200%); }
+body.editing .petal-flight-plane { clip-path: none; }
+body.editing .campus-interactive-art { transform: none !important; transition: none; }
+body.editing .crt-screen { visibility: hidden; }
+body.editing .crt-scan { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .campus-interactive-art { transform: none !important; transition: none; }
+  .crt-scan { animation: none !important; }
+  .crt-light { transition: none; }
+}

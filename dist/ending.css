@@ -1,0 +1,34 @@
+.memory-ending { position: relative; z-index: 3; height: 510svh; padding-top: 30svh; }
+.ending-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; }
+.ending-sunlight { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: #bd7c48; }
+.ending-sunlight img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.ending-field { position: absolute; inset: 0; perspective: 1100px; }
+.ending-letter { position: absolute; top: 0; left: 0; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ending-letter:focus-visible { outline: 1px solid #e6cfaa; outline-offset: 12px; border-radius: 5px; }
+.letter-body { position: absolute; inset: 0; z-index: 2; transform-style: preserve-3d; filter: drop-shadow(1px 2px 1px rgba(57,32,13,.4)); transition: filter .45s ease; }
+.ending-letter:hover .letter-body, .ending-letter:focus-visible .letter-body { filter: drop-shadow(5px 9px 5px rgba(57,32,13,.35)); }
+.letter-face, .letter-depth { position: absolute; inset: 0; mask: var(--letter-mask) center / 100% 100% no-repeat; -webkit-mask: var(--letter-mask) center / 100% 100% no-repeat; }
+.letter-face { background-image: var(--letter-photo); background-size: cover; background-position: var(--photo-focus, center); backface-visibility: hidden; transform: translateZ(1px); filter: contrast(1.22) saturate(1.24) sepia(.10) brightness(1.02); }
+.letter-depth { background: linear-gradient(135deg,#e2bd7d 0%,#a27a49 35%,#604329 100%); transform: translate3d(calc(var(--depth)*.8px),calc(var(--depth)*-.24px),calc(var(--depth)*-1px)); }
+.letter-face::after { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg,rgba(255,213,142,.12),rgba(255,191,104,.035) 40%,rgba(66,29,8,.12)); box-shadow: inset 1px 1px 2px #ffe6a666; }
+.letter-sun-shadow { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: #452b19; mask: var(--letter-mask) center / 100% 100% no-repeat; -webkit-mask: var(--letter-mask) center / 100% 100% no-repeat; opacity: calc(var(--sunlight,0)*.34); transform-origin: 50% 100%; transform: matrix(1,0,-.65,.16,0,-1); filter: blur(2px); transition: transform .65s ease,filter .65s ease; }
+.letter-contact-shadow { position: absolute; z-index: 1; pointer-events: none; bottom: -4px; left: 5%; width: 98%; height: 8px; background: radial-gradient(ellipse,rgba(57,29,9,.64),rgba(57,29,9,0) 72%); opacity: var(--sunlight,0); transition: opacity .65s ease, transform .65s ease; }
+.ending-letter:hover .letter-sun-shadow { transform: matrix(1,0,-.70,.18,3,-2); filter: blur(5px); }
+.ending-letter:hover .letter-contact-shadow { opacity: calc(var(--sunlight,0)*.45); transform: scale(1.1); }
+.ending-accessible-title { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .letter-body { transition: none; } }
+.ending-editor { position: fixed; z-index: 20; top: 18px; right: 18px; width: min(310px, calc(100vw - 36px)); padding: 18px; color: #eee3cd; background: #191a18; border: 1px solid #756d5d; border-radius: 8px; font: 14px/1.6 system-ui, sans-serif; box-shadow: 0 12px 35px #0006; }
+.ending-editor[hidden] { display: none; }
+.editor-canvas-navigation { display: block; margin: 12px 0; }
+.editor-canvas-navigation[hidden] { display: none; }
+.editor-canvas-navigation input { display: block; width: 100%; margin: 8px 0; accent-color: #d6bf90; }
+.editor-canvas-navigation small { display: block; }
+.ending-editor header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.ending-editor button { cursor: pointer; color: inherit; background: #30312d; border: 1px solid #666459; border-radius: 4px; padding: 6px 10px; }
+.ending-editor button[aria-pressed="true"] { background: #d6bf90; color: #201b12; }
+.ending-editor .editor-actions { display: flex; gap: 8px; margin: 10px 0; }
+.ending-editor p { margin: 10px 0; }
+.ending-editor output { display: block; min-height: 24px; color: #d6bf90; }
+.is-editing .ending-letter { cursor: grab; touch-action: none; outline: 1px dashed #eee5; outline-offset: 7px; }
+.is-editing .ending-letter.is-selected { outline: 2px solid #edca80; }
+.is-editing .ending-letter:active { cursor: grabbing; }

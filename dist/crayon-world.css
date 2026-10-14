@@ -1,0 +1,109 @@
+:root {
+  color-scheme: light;
+  --sky: #58b9df;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--sky);
+}
+
+body {
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.scene-viewport {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  overflow: hidden;
+  background: var(--sky);
+}
+
+.scene-artboard {
+  position: relative;
+  width: min(100vw, calc(100dvh * 1.7768331562));
+  max-width: 100vw;
+  aspect-ratio: 1672 / 941;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: default;
+  touch-action: manipulation;
+}
+
+.clean-plate,
+.object-layers,
+.original-poster {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.clean-plate {
+  z-index: 0;
+  visibility: hidden;
+}
+
+.object-layers {
+  z-index: 2;
+}
+
+.original-poster {
+  z-index: 1;
+}
+
+.clean-plate,
+.original-poster,
+.object-layer canvas {
+  -webkit-user-drag: none;
+}
+
+.object-layer {
+  position: absolute;
+  visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  transform-origin: 50% 54%;
+  pointer-events: none;
+}
+
+.object-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.object-layer.is-wiggling {
+  visibility: visible;
+  will-change: transform;
+}
+
+.noscript-poster {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--sky);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .object-layer {
+    transform: none !important;
+  }
+}

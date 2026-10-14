@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="../../shared-assets/fetch-chunks.js"></script>
+  <meta charset="utf-8">
+  <script>
+    if (window === window.top && !new URLSearchParams(location.search).has('preview')) {
+      location.replace(new URL('../../index.html?part=opening', location.href));
+    }
+  </script>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#559df3">
+  <meta name="description" content="蓝天、白云，和挂在晴天里的小小收藏。">
+  <title>LiShiQi · 晴天收藏</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23559df3' d='M0 0h32v32H0z'/%3E%3Cpath fill='%23fff4ce' d='m16 4 3 8 9 1-7 6 2 9-7-5-8 5 3-9-7-6 9-1z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="scene.css">
+  <link rel="stylesheet" href="story.css">
+  <link rel="stylesheet" href="campus.css">
+</head>
+<body>
+  <main class="sky" aria-label="LiShiQi 的晴天收藏">
+    <div class="scene" role="group" aria-label="悬挂在蓝天里的物件，鼠标移入或轻触即可抬起">
+      <div class="clouds" aria-hidden="true">
+        <img class="cloud cloud-top" src="assets/cloud.webp" alt="">
+        <img class="cloud cloud-left" src="assets/cloud.webp" alt="">
+        <img class="cloud cloud-middle" src="assets/cloud.webp" alt="">
+        <img class="cloud cloud-bottom-left" src="assets/cloud.webp" alt="">
+        <img class="cloud cloud-bottom-right" src="assets/cloud.webp" alt="">
+        <img class="cloud cloud-low" src="assets/cloud.webp" alt="">
+        <img class="cloud cloud-corner" src="assets/cloud.webp" alt="">
+      </div>
+      <svg class="rope" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="rope-twist" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)">
+            <rect width="22" height="22" fill="#e6af43"/>
+            <rect width="7" height="22" fill="#f8d77b"/>
+            <rect x="16" width="6" height="22" fill="#bb7e27"/>
+          </pattern>
+          <path id="wind-rope-path" d="M -40 10 C 500 180 900 420 1488 120"/>
+        </defs>
+        <use href="#wind-rope-path" class="rope-edge"/>
+        <use href="#wind-rope-path" class="rope-fiber"/>
+        <use href="#wind-rope-path" class="rope-light"/>
+        <use href="#wind-rope-path" class="rope-hit" role="button" tabindex="0" aria-label="吹起一阵风，持续五秒"/>
+      </svg>
+      <button class="object scarf" data-full="assets/scarf-detail-cutout.png" aria-haspopup="dialog" aria-label="放大红色格纹领巾"><img src="assets/scarf-user.webp" alt="夹着红色格纹领巾的木夹子" draggable="false"></button>
+      <button class="object keys" data-full="assets/keys-detail-cutout.png" aria-haspopup="dialog" aria-label="放大钥匙与蓝色星星挂件"><img src="assets/keys-user.svg" alt="木夹子上的钥匙、蓝眼睛和星星挂件" draggable="false"></button>
+      <button class="object photo-green" data-full="assets/photo1.webp" aria-haspopup="dialog" aria-label="放大绿色相框照片"><img src="assets/photo-green-user.svg" alt="木夹子夹着的绿色相框照片" draggable="false"></button>
+      <button class="object photo-stars" data-full="assets/photo2.webp" aria-haspopup="dialog" aria-label="放大星星相框照片"><img src="assets/photo-stars-user.webp" alt="木夹子夹着的星星相框照片" draggable="false"></button>
+      <button class="object badge" data-full="assets/badge-detail-user.webp" aria-haspopup="dialog" aria-label="放大学生证"><img src="assets/badge-user.webp" alt="木夹子夹着的学生证" draggable="false"></button>
+      <button class="object umbrella" data-full="assets/umbrella.webp" aria-haspopup="dialog" aria-label="放大红黄菱格雨伞"><img src="assets/umbrella-v2.webp" alt="收起的红黄菱格低多边形雨伞" draggable="false"></button>
+      <button class="object earphones" data-full="assets/earphones-complete.png" aria-haspopup="dialog" aria-label="放大 LiShiQi 耳机与播放器"><img src="assets/earphones-complete.png" alt="LiShiQi 字样的白色耳机与播放器" draggable="false"></button>
+    </div>
+    <section id="study-chapter" aria-label="学习时光">
+      <div class="study-viewport">
+        <div class="study-clouds" aria-hidden="true"></div>
+        <div class="study-camera-clip"><div class="study-fit"><div class="study-camera" id="study-scene" role="group" aria-label="漂浮在天空中的书本、试卷和文具"></div></div></div>
+      </div>
+    </section>
+    <section id="campus-chapter" aria-label="书包与电脑的天空收藏">
+      <div class="campus-viewport">
+        <div class="campus-clouds" aria-hidden="true"></div>
+        <div class="campus-fit"><div class="campus-perspective"><div id="campus-camera" role="group" aria-label="蓝天中的书包、电脑与文具"></div></div></div>
+      </div>
+    </section>
+  </main>
+  <button class="touch-editor-toggle" type="button" aria-controls="layout-editor" aria-expanded="false">调整布局</button>
+  <aside id="layout-editor" class="layout-editor" aria-label="照片布局编辑器" hidden>
+    <header><strong>布置晴天</strong><button id="close-editor" type="button">隐藏 · Q</button></header>
+    <p class="editor-help">点击物件后拖动，或在下方精确调整。</p>
+    <label>选中物件<select id="edit-object"></select></label>
+    <label class="multi-switch"><input id="edit-multi" type="checkbox"> 多选物件</label>
+    <div id="multi-controls" hidden>
+      <p class="editor-help">勾选列表或点击画面中的物件。统一缩放保持各物件的大小比例，位置不变。</p>
+      <div id="multi-list" class="multi-list" aria-label="多选物件列表"></div>
+    </div>
+    <p id="selection-count" class="editor-help" aria-live="polite">已选 1 个物件</p>
+    <div class="position-fields">
+      <label>水平位置 %<input id="edit-x" type="number" min="-30" max="130" step="0.1"></label>
+      <label>垂直位置 %<input id="edit-y" type="number" min="-30" max="130" step="0.1"></label>
+    </div>
+    <label><span id="size-label">大小</span> <output id="size-value"></output><input id="edit-size" type="range" min="20" max="300" step="1"></label>
+    <div id="multi-size-actions" class="position-fields" hidden><button id="shrink-selection" type="button">一起缩小 10%</button><button id="grow-selection" type="button">一起放大 10%</button></div>
+    <fieldset class="layer-controls"><legend>上下层关系</legend>
+      <div class="position-fields"><button id="layer-up" type="button">上移一层</button><button id="layer-down" type="button">下移一层</button><button id="layer-top" type="button">置于顶层</button><button id="layer-bottom" type="button">置于底层</button></div>
+      <p id="layer-status" class="editor-help">调整同一区域内的遮挡顺序，多选时一起调整。</p>
+    </fieldset>
+    <div class="editor-actions"><button id="save-layout" type="button">保存布局</button><button id="copy-layout" type="button">复制已保存链接</button></div>
+    <button id="revert-layout" class="subtle-button" type="button">撤销未保存修改</button>
+    <p id="editor-status" role="status" aria-live="polite">尚未修改</p>
+    <label id="copy-fallback" hidden>链接已准备好，请手动复制<input id="saved-link" type="text" readonly></label>
+    <p class="editor-note">链接只包含已保存的布局。本地文件链接需在有这份网页的电脑上打开。</p>
+  </aside>
+  <dialog id="photo-viewer" aria-label="独立图片放大查看">
+    <button id="close-viewer" type="button" aria-label="关闭放大图片">关闭 ×</button>
+    <img id="viewer-image" alt="">
+  </dialog>
+  <script src="school-entry.js?v=20261009-continuous-layout"></script>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="study-layout.js"></script>
+  <script src="campus-layout.js"></script>
+  <script src="scene.js"></script>
+  <script src="graduation.js?v=20260924-offline-rain"></script>
+  <script src="editor.js?v=20261009-continuous-layout"></script>
+  <script src="wind.js"></script>
+  <script src="story.js"></script>
+  <script src="campus.js"></script>
+  <script src="campus-interactions.js"></script>
+</body>
+</html>

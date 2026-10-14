@@ -1,0 +1,23 @@
+.cat-loader{position:fixed;inset:0;z-index:10000;overflow:hidden;background:#000;isolation:isolate}
+.cat-loader-stage{position:absolute;width:1668px;height:943px;left:50%;top:50%;transform-origin:50% 50%;overflow:visible}
+.cat-loader-backdrop{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none}
+.cat-loader-cat{position:absolute;bottom:397px;width:142px;height:183.15px;transform-origin:50% 96%;filter:drop-shadow(2px 3px 2px #30231555)}
+.cat-loader-ginger{left:692px}
+.cat-loader-tuxedo{left:849px;width:146px}
+.cat-loader-body{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.cat-loader-paw{position:absolute;pointer-events:none;will-change:transform;z-index:1}
+/* Bury the upper arm beneath the chest, with the pivot inside that overlap.
+   Keep the resting paws on the ledge while extending the shoulder connection. */
+.cat-loader-ginger .cat-loader-paw{width:38.0054%;height:62.605%;left:46%;top:34%;transform-origin:42% 19%;mask-image:linear-gradient(to bottom,transparent 14%,#000 23%,#000 100%)}
+.cat-loader-tuxedo .cat-loader-paw{width:23.722%;height:54.23%;left:22%;top:44%;transform-origin:76% 22%}
+.cat-loader-ground-shadow{position:absolute;left:705px;top:536px;width:282px;height:12px;background:radial-gradient(ellipse,#211b1566,transparent 68%);pointer-events:none}
+.cat-loader-ball-shadow{position:absolute;left:0;top:539px;width:23px;height:5px;border-radius:50%;background:#261b17;filter:blur(2px);opacity:.43;will-change:transform}
+.cat-loader-ball{position:absolute;left:0;top:0;width:27px;height:27px;z-index:5;border-radius:50%;will-change:transform;transform-origin:50% 50%}
+.cat-loader-ball img{position:absolute;inset:-5.5%;width:111%;height:111%;pointer-events:none}
+.cat-loader-progress{position:absolute;left:696px;top:552px;width:279px;height:19px;display:grid;grid-template-columns:repeat(20,1fr);gap:3px;box-sizing:border-box;padding:2px 3px;border-radius:8px;overflow:hidden;background:#d9c8a7;box-shadow:inset 0 1px 3px #6a472e55}
+.cat-loader-segment{border-radius:1px;background:#b49a72;box-shadow:inset 0 1px 1px #e9dabc;position:relative}
+.cat-loader-segment:after{content:"";position:absolute;inset:0;background:linear-gradient(#d1a15f,#a96c36 48%,#87522e);box-shadow:inset 0 1px #efd29b99;opacity:var(--lit,0)}
+.cat-loader-caption{position:absolute;left:680px;top:596px;width:310px;display:flex;justify-content:center;gap:15px;color:#4b3825;font:500 10px/1.5 Georgia,'Microsoft YaHei',serif;letter-spacing:2px;text-shadow:0 1px #e8d5b480}
+.cat-loader-caption output{font-variant-numeric:tabular-nums;letter-spacing:1px;min-width:30px}
+.cat-loader-blackout{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:10}
+.cat-loader-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><script src="../../shared-assets/fetch-chunks.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="雨一直下。移动蓝色毛巾，让手机里的画面一点点显现。">
+  <title>雨中 · 擦见</title>
+  <link rel="stylesheet" href="style.css?v=20260923-continuous-phone">
+</head>
+<body>
+  <main id="scene" aria-label="用毛巾擦亮手机屏幕" tabindex="0" aria-describedby="hint">
+    <canvas id="phone" role="img" aria-label="空白手机，擦过的位置逐渐显现新闻画面"></canvas>
+    <canvas id="rain" aria-hidden="true"></canvas>
+    <canvas id="towel" aria-hidden="true"></canvas>
+  </main>
+  <details id="editor" open hidden aria-keyshortcuts="l">
+    <summary>雨滴编辑器</summary>
+    <div class="editor-body">
+      <label for="rain-size">大小 <output id="size-value" for="rain-size"></output></label>
+      <input id="rain-size" type="range" min="0.25" max="4" step="0.05" value="1">
+      <label for="rain-count">数量 <output id="count-value" for="rain-count"></output></label>
+      <input id="rain-count" type="range" min="0" max="160" step="1" value="40">
+      <label for="rain-speed">速度 <output id="speed-value" for="rain-speed"></output></label>
+      <input id="rain-speed" type="range" min="0" max="3" step="0.05" value="1">
+      <p id="settings-note">实时生效，自动保存在此浏览器</p>
+      <button id="rain-defaults" type="button">恢复默认雨滴</button>
+    </div>
+  </details>
+  <footer>
+    <p id="hint" role="status">正在准备雨滴与毛巾…</p>
+    <div class="controls"><span id="progress" aria-label="擦亮进度">0%</span><button id="reset" type="button">重新擦拭</button></div>
+  </footer>
+  <script src="../../sound-effects.js?v=20261011-tight-effects"></script>
+  <script src="app.js?v=20261011-gentle-wipe"></script>
+  <script src="street-transition.js?v=20261007-80-percent"></script>
+</body>
+</html>

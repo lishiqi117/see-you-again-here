@@ -1,0 +1,1974 @@
+[
+  {
+    "path": ".nojekyll",
+    "bytes": 0
+  },
+  {
+    "path": "01-开场.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过-2012.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过-2013.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过-2014.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过-2015.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过-2016.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过-2017.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过-2018.html",
+    "bytes": 516
+  },
+  {
+    "path": "02-经过.html",
+    "bytes": 516
+  },
+  {
+    "path": "03-消失.html",
+    "bytes": 516
+  },
+  {
+    "path": "04-记录.html",
+    "bytes": 516
+  },
+  {
+    "path": "05-重返.html",
+    "bytes": 516
+  },
+  {
+    "path": "06-留存.html",
+    "bytes": 516
+  },
+  {
+    "path": "3D场景编辑器.html",
+    "bytes": 6515
+  },
+  {
+    "path": "app.js",
+    "bytes": 4008
+  },
+  {
+    "path": "archive-interaction.js",
+    "bytes": 5263
+  },
+  {
+    "path": "archive-objects.js",
+    "bytes": 8275
+  },
+  {
+    "path": "assets/audio/background-music-v2.mp3",
+    "bytes": 3989888
+  },
+  {
+    "path": "assets/audio/background-music.mp3",
+    "bytes": 2939139
+  },
+  {
+    "path": "assets/audio/effects/archive.mp3",
+    "bytes": 9454
+  },
+  {
+    "path": "assets/audio/effects/click.mp3",
+    "bytes": 20739
+  },
+  {
+    "path": "assets/audio/effects/drawer-tight.mp3",
+    "bytes": 18934
+  },
+  {
+    "path": "assets/audio/effects/drawer.mp3",
+    "bytes": 44562
+  },
+  {
+    "path": "assets/audio/effects/lamp.mp3",
+    "bytes": 15723
+  },
+  {
+    "path": "assets/audio/effects/printer.mp3",
+    "bytes": 285307
+  },
+  {
+    "path": "assets/audio/effects/shutter-original.mp3",
+    "bytes": 31396
+  },
+  {
+    "path": "assets/audio/effects/shutter.mp3",
+    "bytes": 11362
+  },
+  {
+    "path": "assets/audio/effects/wipe-tight.mp3",
+    "bytes": 10948
+  },
+  {
+    "path": "assets/audio/effects/wipe.mp3",
+    "bytes": 29516
+  },
+  {
+    "path": "assets/crayon-world/cloud-angry-states-cutout.png",
+    "bytes": 1649988
+  },
+  {
+    "path": "assets/crayon-world/cloud-sad-states-cutout.png",
+    "bytes": 1229509
+  },
+  {
+    "path": "assets/crayon-world/cloud-surprised-states-cutout.png",
+    "bytes": 1769645
+  },
+  {
+    "path": "assets/crayon-world/planet-reactions.png",
+    "bytes": 3134326
+  },
+  {
+    "path": "assets/crayon-world/planet-surface-mobile.png",
+    "bytes": 1656715
+  },
+  {
+    "path": "assets/crayon-world/planet-surface.png",
+    "bytes": 3652575
+  },
+  {
+    "path": "assets/crayon-world/planet-wide.png",
+    "bytes": 3084158
+  },
+  {
+    "path": "assets/crayon-world/school-clean-plate-v2.png",
+    "bytes": 3060709
+  },
+  {
+    "path": "assets/crayon-world/school-clean-plate-v3.png",
+    "bytes": 2948223
+  },
+  {
+    "path": "assets/crayon-world/school-close.png",
+    "bytes": 3056549
+  },
+  {
+    "path": "assets/crayon-world/school-reactions.png",
+    "bytes": 3103689
+  },
+  {
+    "path": "assets/crayon-world/sun-states-cutout.png",
+    "bytes": 2359535
+  },
+  {
+    "path": "assets/credits/camera.js",
+    "bytes": 1767
+  },
+  {
+    "path": "assets/credits/gate.jpg",
+    "bytes": 595242
+  },
+  {
+    "path": "assets/credits/scanned-scene.html",
+    "bytes": 2990304
+  },
+  {
+    "path": "assets/credits/shop.jpg",
+    "bytes": 625201
+  },
+  {
+    "path": "assets/credits/street.jpg",
+    "bytes": 460928
+  },
+  {
+    "path": "assets/ending/01-gate.png",
+    "bytes": 271779
+  },
+  {
+    "path": "assets/ending/02-friends.png",
+    "bytes": 218003
+  },
+  {
+    "path": "assets/ending/03-classroom.png",
+    "bytes": 100062
+  },
+  {
+    "path": "assets/ending/04-school.png",
+    "bytes": 291746
+  },
+  {
+    "path": "assets/ending/05-street.png",
+    "bytes": 365055
+  },
+  {
+    "path": "assets/ending/06-shadows.png",
+    "bytes": 189655
+  },
+  {
+    "path": "assets/ending/07-corridor.png",
+    "bytes": 221527
+  },
+  {
+    "path": "assets/ending/08-cat.png",
+    "bytes": 230989
+  },
+  {
+    "path": "assets/ending/letter-1-S.png",
+    "bytes": 152812
+  },
+  {
+    "path": "assets/ending/letter-2-E.png",
+    "bytes": 181595
+  },
+  {
+    "path": "assets/ending/letter-3-E.png",
+    "bytes": 138105
+  },
+  {
+    "path": "assets/ending/letter-4-A.png",
+    "bytes": 134691
+  },
+  {
+    "path": "assets/ending/letter-5-G.png",
+    "bytes": 202780
+  },
+  {
+    "path": "assets/ending/letter-6-A.png",
+    "bytes": 131356
+  },
+  {
+    "path": "assets/ending/letter-7-I.png",
+    "bytes": 90484
+  },
+  {
+    "path": "assets/ending/letter-8-N.png",
+    "bytes": 162078
+  },
+  {
+    "path": "assets/ending/letter-masks.png",
+    "bytes": 286946
+  },
+  {
+    "path": "assets/ending/mask-0.png",
+    "bytes": 6532
+  },
+  {
+    "path": "assets/ending/mask-1.png",
+    "bytes": 6053
+  },
+  {
+    "path": "assets/ending/mask-2.png",
+    "bytes": 6022
+  },
+  {
+    "path": "assets/ending/mask-3.png",
+    "bytes": 6663
+  },
+  {
+    "path": "assets/ending/mask-4.png",
+    "bytes": 6946
+  },
+  {
+    "path": "assets/ending/mask-5.png",
+    "bytes": 6655
+  },
+  {
+    "path": "assets/ending/mask-6.png",
+    "bytes": 2972
+  },
+  {
+    "path": "assets/ending/mask-7.png",
+    "bytes": 5930
+  },
+  {
+    "path": "assets/ending/masks.js",
+    "bytes": 63935
+  },
+  {
+    "path": "assets/ending/masks.json",
+    "bytes": 362
+  },
+  {
+    "path": "assets/ending/README.md",
+    "bytes": 1829
+  },
+  {
+    "path": "assets/ending/sunlit-steps.png",
+    "bytes": 2734470
+  },
+  {
+    "path": "assets/envelope-closed.png",
+    "bytes": 2871816
+  },
+  {
+    "path": "assets/envelope-open.png",
+    "bytes": 2967713
+  },
+  {
+    "path": "assets/final-2013.gif",
+    "bytes": 2190785
+  },
+  {
+    "path": "assets/finalone-2012.gif",
+    "bytes": 2169761
+  },
+  {
+    "path": "assets/finaltwo-2014.gif",
+    "bytes": 1805597
+  },
+  {
+    "path": "assets/lamp/archive-cover.jpg",
+    "bytes": 330028
+  },
+  {
+    "path": "assets/lamp/archive-desk.png",
+    "bytes": 100144
+  },
+  {
+    "path": "assets/lamp/archive-items/book-full.png",
+    "bytes": 298824
+  },
+  {
+    "path": "assets/lamp/archive-items/book-pocket.png",
+    "bytes": 172184
+  },
+  {
+    "path": "assets/lamp/archive-items/character.png",
+    "bytes": 925482
+  },
+  {
+    "path": "assets/lamp/archive-items/folder.png",
+    "bytes": 3380242
+  },
+  {
+    "path": "assets/lamp/archive-items/map.png",
+    "bytes": 418688
+  },
+  {
+    "path": "assets/lamp/archive-items/newspaper.png",
+    "bytes": 293170
+  },
+  {
+    "path": "assets/lamp/archive-items/portrait.png",
+    "bytes": 57470
+  },
+  {
+    "path": "assets/lamp/archive-items/ticket.png",
+    "bytes": 133524
+  },
+  {
+    "path": "assets/lamp/archive-opening.mp4",
+    "bytes": 13354014
+  },
+  {
+    "path": "assets/lamp/memory-board-revealed.png",
+    "bytes": 2312320
+  },
+  {
+    "path": "assets/lamp/memory-board.png",
+    "bytes": 2707978
+  },
+  {
+    "path": "assets/lamp/memory-room-dark.jpg",
+    "bytes": 371559
+  },
+  {
+    "path": "assets/lamp/memory-room-light.png",
+    "bytes": 1729354
+  },
+  {
+    "path": "assets/lamp/portrait-entry.jpg",
+    "bytes": 135881
+  },
+  {
+    "path": "assets/lamp/portrait-transition.mp4",
+    "bytes": 3872589
+  },
+  {
+    "path": "assets/lamp/Tischlampe_rigged.fbx",
+    "bytes": 1500044
+  },
+  {
+    "path": "assets/oneoneone1.gif",
+    "bytes": 1895677
+  },
+  {
+    "path": "assets/passage-2012-pastel.png",
+    "bytes": 2884228
+  },
+  {
+    "path": "assets/passage-2012.png",
+    "bytes": 2249553
+  },
+  {
+    "path": "assets/passage-2013-pastel.png",
+    "bytes": 2935534
+  },
+  {
+    "path": "assets/passage-2013.png",
+    "bytes": 2164431
+  },
+  {
+    "path": "assets/passage-2014-pastel.png",
+    "bytes": 2516678
+  },
+  {
+    "path": "assets/passage-2014.png",
+    "bytes": 2039824
+  },
+  {
+    "path": "assets/passage-2015-pastel.png",
+    "bytes": 2911338
+  },
+  {
+    "path": "assets/passage-2015.png",
+    "bytes": 2684813
+  },
+  {
+    "path": "assets/passage-2016-pastel.png",
+    "bytes": 2890909
+  },
+  {
+    "path": "assets/passage-2016.png",
+    "bytes": 2690833
+  },
+  {
+    "path": "assets/passage-2017-pastel.png",
+    "bytes": 3031283
+  },
+  {
+    "path": "assets/passage-2017.png",
+    "bytes": 2734735
+  },
+  {
+    "path": "assets/passage-2018-pastel.png",
+    "bytes": 3007306
+  },
+  {
+    "path": "assets/passage-2018.png",
+    "bytes": 2802732
+  },
+  {
+    "path": "assets/passage-character-2012-finalone.png",
+    "bytes": 6401812
+  },
+  {
+    "path": "assets/passage-character-2012-gif.png",
+    "bytes": 4318239
+  },
+  {
+    "path": "assets/passage-character-2012.png",
+    "bytes": 1802209
+  },
+  {
+    "path": "assets/passage-character-2013-final.png",
+    "bytes": 6334564
+  },
+  {
+    "path": "assets/passage-character-2013.png",
+    "bytes": 1703253
+  },
+  {
+    "path": "assets/passage-character-2014-finaltwo.png",
+    "bytes": 4910176
+  },
+  {
+    "path": "assets/passage-character-2014.png",
+    "bytes": 2010838
+  },
+  {
+    "path": "assets/passage-character-2015.png",
+    "bytes": 1827477
+  },
+  {
+    "path": "assets/passage-character-2016.png",
+    "bytes": 1825707
+  },
+  {
+    "path": "assets/passage-character-2017.png",
+    "bytes": 1658999
+  },
+  {
+    "path": "assets/passage-character-2018.png",
+    "bytes": 2120920
+  },
+  {
+    "path": "assets/reference-flare.mp4",
+    "bytes": 10846316
+  },
+  {
+    "path": "assets/space-editor/crayon-space-background.png",
+    "bytes": 2879702
+  },
+  {
+    "path": "assets/space-editor/default-layout.json",
+    "bytes": 2239
+  },
+  {
+    "path": "assets/space-editor/models/apple-tree.glb",
+    "bytes": 10405464
+  },
+  {
+    "path": "assets/space-editor/models/bird.glb",
+    "bytes": 7264220
+  },
+  {
+    "path": "assets/space-editor/models/cartoon-tree-a.glb",
+    "bytes": 11604516
+  },
+  {
+    "path": "assets/space-editor/models/cartoon-tree-b.glb",
+    "bytes": 8183952
+  },
+  {
+    "path": "assets/space-editor/models/cloud-blob.glb",
+    "bytes": 10512056
+  },
+  {
+    "path": "assets/space-editor/models/cloud-slime.glb",
+    "bytes": 7636292
+  },
+  {
+    "path": "assets/space-editor/models/earth.glb",
+    "bytes": 3331308
+  },
+  {
+    "path": "assets/space-editor/models/grass.glb",
+    "bytes": 12455180
+  },
+  {
+    "path": "assets/space-editor/models/moon.glb",
+    "bytes": 11345040
+  },
+  {
+    "path": "assets/space-editor/models/school.glb",
+    "bytes": 10195924
+  },
+  {
+    "path": "assets/space-editor/models/star.glb",
+    "bytes": 9267232
+  },
+  {
+    "path": "assets/space-editor/models/stylized-tree-a.glb",
+    "bytes": 12933760
+  },
+  {
+    "path": "assets/space-editor/models/stylized-tree-b.glb",
+    "bytes": 10009904
+  },
+  {
+    "path": "assets/space-editor/models/sun.glb",
+    "bytes": 8378324
+  },
+  {
+    "path": "assets/space-editor/models-optimized/apple-tree.glb",
+    "bytes": 1327904
+  },
+  {
+    "path": "assets/space-editor/models-optimized/bird.glb",
+    "bytes": 1187716
+  },
+  {
+    "path": "assets/space-editor/models-optimized/btoy-rigged.glb",
+    "bytes": 9192724
+  },
+  {
+    "path": "assets/space-editor/models-optimized/btoy.glb",
+    "bytes": 8841876
+  },
+  {
+    "path": "assets/space-editor/models-optimized/cartoon-tree-a.glb",
+    "bytes": 1600620
+  },
+  {
+    "path": "assets/space-editor/models-optimized/cartoon-tree-b.glb",
+    "bytes": 1433780
+  },
+  {
+    "path": "assets/space-editor/models-optimized/cloud-blob.glb",
+    "bytes": 1224080
+  },
+  {
+    "path": "assets/space-editor/models-optimized/cloud-slime.glb",
+    "bytes": 1032080
+  },
+  {
+    "path": "assets/space-editor/models-optimized/earth.glb",
+    "bytes": 538200
+  },
+  {
+    "path": "assets/space-editor/models-optimized/grass.glb",
+    "bytes": 1550304
+  },
+  {
+    "path": "assets/space-editor/models-optimized/moon.glb",
+    "bytes": 1797792
+  },
+  {
+    "path": "assets/space-editor/models-optimized/school.glb",
+    "bytes": 1512888
+  },
+  {
+    "path": "assets/space-editor/models-optimized/schoolgirl-rigged.glb",
+    "bytes": 5621580
+  },
+  {
+    "path": "assets/space-editor/models-optimized/star.glb",
+    "bytes": 1272644
+  },
+  {
+    "path": "assets/space-editor/models-optimized/stylized-tree-a.glb",
+    "bytes": 1472496
+  },
+  {
+    "path": "assets/space-editor/models-optimized/stylized-tree-b.glb",
+    "bytes": 1634228
+  },
+  {
+    "path": "assets/space-editor/models-optimized/sun.glb",
+    "bytes": 1342868
+  },
+  {
+    "path": "assets/space-editor/school-approved-ending.png",
+    "bytes": 4128748
+  },
+  {
+    "path": "assets/space-editor/school-continuation.mp4",
+    "bytes": 10444993
+  },
+  {
+    "path": "assets/space-editor/school-scroll.mp4",
+    "bytes": 12182849
+  },
+  {
+    "path": "assets/space-editor/school-transition-continuous-20261011.mp4",
+    "bytes": 16938310
+  },
+  {
+    "path": "assets/space-editor/school-transition-first-20261009.png",
+    "bytes": 1891887
+  },
+  {
+    "path": "assets/space-editor/school-transition-smooth-20261009.mp4",
+    "bytes": 17202922
+  },
+  {
+    "path": "assets/thread-wall-clean.png",
+    "bytes": 2973415
+  },
+  {
+    "path": "background-music.js",
+    "bytes": 604
+  },
+  {
+    "path": "cat-loading/assets/background.jpg",
+    "bytes": 261238
+  },
+  {
+    "path": "cat-loading/assets/ball.png",
+    "bytes": 1161705
+  },
+  {
+    "path": "cat-loading/assets/ginger-paw.png",
+    "bytes": 75568
+  },
+  {
+    "path": "cat-loading/assets/ginger.png",
+    "bytes": 840027
+  },
+  {
+    "path": "cat-loading/assets/tuxedo-paw.png",
+    "bytes": 58796
+  },
+  {
+    "path": "cat-loading/assets/tuxedo.png",
+    "bytes": 702668
+  },
+  {
+    "path": "cat-loading/gsap.min.js",
+    "bytes": 72927
+  },
+  {
+    "path": "cat-loading/index.html",
+    "bytes": 1642
+  },
+  {
+    "path": "cat-loading/loader.css",
+    "bytes": 2836
+  },
+  {
+    "path": "cat-loading/loader.js",
+    "bytes": 6765
+  },
+  {
+    "path": "cat-loading/README.md",
+    "bytes": 1343
+  },
+  {
+    "path": "character-flight-rig.js",
+    "bytes": 8442
+  },
+  {
+    "path": "crayon-world.css",
+    "bytes": 1595
+  },
+  {
+    "path": "crayon-world.js",
+    "bytes": 17728
+  },
+  {
+    "path": "credits.css",
+    "bytes": 3845
+  },
+  {
+    "path": "credits.html",
+    "bytes": 3973
+  },
+  {
+    "path": "credits.js",
+    "bytes": 7191
+  },
+  {
+    "path": "dream-home/animationConfig.js",
+    "bytes": 1829
+  },
+  {
+    "path": "dream-home/assets/clean-plate-prompt.txt",
+    "bytes": 961
+  },
+  {
+    "path": "dream-home/assets/clean-plate.png",
+    "bytes": 2604597
+  },
+  {
+    "path": "dream-home/assets/reference.png",
+    "bytes": 3050594
+  },
+  {
+    "path": "dream-home/build.cjs",
+    "bytes": 290
+  },
+  {
+    "path": "dream-home/index.html",
+    "bytes": 735
+  },
+  {
+    "path": "dream-home/package.json",
+    "bytes": 175
+  },
+  {
+    "path": "dream-home/pnpm-lock.yaml",
+    "bytes": 946
+  },
+  {
+    "path": "dream-home/scene.css",
+    "bytes": 1614
+  },
+  {
+    "path": "dream-home/scene.js",
+    "bytes": 279265
+  },
+  {
+    "path": "dream-home/src/artwork.js",
+    "bytes": 4154
+  },
+  {
+    "path": "dream-home/src/components/Artwork.jsx",
+    "bytes": 4731
+  },
+  {
+    "path": "dream-home/src/components/CloudLayer.jsx",
+    "bytes": 1198
+  },
+  {
+    "path": "dream-home/src/components/DreamScene.jsx",
+    "bytes": 7013
+  },
+  {
+    "path": "dream-home/src/components/FloatingCat.jsx",
+    "bytes": 685
+  },
+  {
+    "path": "dream-home/src/components/GrainOverlay.jsx",
+    "bytes": 562
+  },
+  {
+    "path": "dream-home/src/components/MouseParallax.js",
+    "bytes": 1474
+  },
+  {
+    "path": "dream-home/src/components/Planet.jsx",
+    "bytes": 1116
+  },
+  {
+    "path": "dream-home/src/components/Star.jsx",
+    "bytes": 693
+  },
+  {
+    "path": "dream-home/src/main.jsx",
+    "bytes": 321
+  },
+  {
+    "path": "dream-home/src/preciseContours.js",
+    "bytes": 1782
+  },
+  {
+    "path": "dream-home/使用说明.md",
+    "bytes": 5932
+  },
+  {
+    "path": "ending.css",
+    "bytes": 4377
+  },
+  {
+    "path": "ending.js",
+    "bytes": 13383
+  },
+  {
+    "path": "index.html",
+    "bytes": 6242
+  },
+  {
+    "path": "lamp-background.js",
+    "bytes": 6863
+  },
+  {
+    "path": "lamp-reveal.js",
+    "bytes": 8075
+  },
+  {
+    "path": "lamp-scene.js",
+    "bytes": 3380926
+  },
+  {
+    "path": "lamp-scene.source.js",
+    "bytes": 27595
+  },
+  {
+    "path": "memory-card-credits.js",
+    "bytes": 1187
+  },
+  {
+    "path": "memory-scene.html",
+    "bytes": 3030021
+  },
+  {
+    "path": "pixel-star-site/dist/index.html",
+    "bytes": 1181
+  },
+  {
+    "path": "pixel-star-site/dist/pixel-stars.css",
+    "bytes": 2973
+  },
+  {
+    "path": "pixel-star-site/dist/pixel-stars.js",
+    "bytes": 8054
+  },
+  {
+    "path": "planet-walker.js",
+    "bytes": 15595
+  },
+  {
+    "path": "portrait-entry-bridge.js",
+    "bytes": 230
+  },
+  {
+    "path": "portrait-transition.js",
+    "bytes": 6486
+  },
+  {
+    "path": "print-postprocessing.js",
+    "bytes": 4931
+  },
+  {
+    "path": "public/videos/girl-clean.webm",
+    "bytes": 12898889
+  },
+  {
+    "path": "public/videos/girl-clean.webp",
+    "bytes": 56282
+  },
+  {
+    "path": "public/videos/girl.png",
+    "bytes": 7251677
+  },
+  {
+    "path": "public/videos/girl.webm",
+    "bytes": 13080133
+  },
+  {
+    "path": "public/videos/girl.webp",
+    "bytes": 140590
+  },
+  {
+    "path": "public/videos/little girl-clean.webm",
+    "bytes": 20685796
+  },
+  {
+    "path": "public/videos/little girl-clean.webp",
+    "bytes": 62374
+  },
+  {
+    "path": "public/videos/little girl.png",
+    "bytes": 6537509
+  },
+  {
+    "path": "public/videos/little girl.webm",
+    "bytes": 21138650
+  },
+  {
+    "path": "public/videos/little girl.webp",
+    "bytes": 162450
+  },
+  {
+    "path": "public/videos/men-clean.webm",
+    "bytes": 13823988
+  },
+  {
+    "path": "public/videos/men-clean.webp",
+    "bytes": 99328
+  },
+  {
+    "path": "public/videos/men.png",
+    "bytes": 6661726
+  },
+  {
+    "path": "public/videos/men.webm",
+    "bytes": 13891126
+  },
+  {
+    "path": "public/videos/men.webp",
+    "bytes": 122542
+  },
+  {
+    "path": "public/videos/mens-clean.webm",
+    "bytes": 19670720
+  },
+  {
+    "path": "public/videos/mens-clean.webp",
+    "bytes": 174438
+  },
+  {
+    "path": "public/videos/README.md",
+    "bytes": 2833
+  },
+  {
+    "path": "rain-phone/dist/app.js",
+    "bytes": 14493
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-2.png",
+    "bytes": 10252
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-3.png",
+    "bytes": 29639
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-4.png",
+    "bytes": 8567
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-5.png",
+    "bytes": 29176
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-6.png",
+    "bytes": 9158
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-7.png",
+    "bytes": 23908
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-8.png",
+    "bytes": 34759
+  },
+  {
+    "path": "rain-phone/dist/assets/drop-9.png",
+    "bytes": 9392
+  },
+  {
+    "path": "rain-phone/dist/assets/phone-empty.png",
+    "bytes": 904662
+  },
+  {
+    "path": "rain-phone/dist/assets/phone-entry.png",
+    "bytes": 761300
+  },
+  {
+    "path": "rain-phone/dist/assets/phone-revealed.png",
+    "bytes": 1087085
+  },
+  {
+    "path": "rain-phone/dist/assets/street-transition.mp4",
+    "bytes": 496239
+  },
+  {
+    "path": "rain-phone/dist/assets/towel.png",
+    "bytes": 586037
+  },
+  {
+    "path": "rain-phone/dist/file-assets.js",
+    "bytes": 4659182
+  },
+  {
+    "path": "rain-phone/dist/index.html",
+    "bytes": 2099
+  },
+  {
+    "path": "rain-phone/dist/street-transition.js",
+    "bytes": 5213
+  },
+  {
+    "path": "rain-phone/dist/style.css",
+    "bytes": 3023
+  },
+  {
+    "path": "scene-layout-link.js",
+    "bytes": 1593
+  },
+  {
+    "path": "school-continuation.js",
+    "bytes": 7331
+  },
+  {
+    "path": "school-portal.js",
+    "bytes": 10149
+  },
+  {
+    "path": "shared-assets/04676d56ab6eaa46b4458af0.glb",
+    "bytes": 2378460
+  },
+  {
+    "path": "shared-assets/098cf04c96bbf15fc4d075a2.glb",
+    "bytes": 2163088
+  },
+  {
+    "path": "shared-assets/0aee7385b4bda3a008a04078.png",
+    "bytes": 2915657
+  },
+  {
+    "path": "shared-assets/0e9ea20982b4072fd0479b2f.glb",
+    "bytes": 1719140
+  },
+  {
+    "path": "shared-assets/15f1dfba797888d5abdefa73.bin.part0",
+    "bytes": 16777216
+  },
+  {
+    "path": "shared-assets/15f1dfba797888d5abdefa73.bin.part1",
+    "bytes": 16777216
+  },
+  {
+    "path": "shared-assets/15f1dfba797888d5abdefa73.bin.part2",
+    "bytes": 11074565
+  },
+  {
+    "path": "shared-assets/16ba921ec43370baf1ff612b.glb",
+    "bytes": 2895796
+  },
+  {
+    "path": "shared-assets/18d3bf3081a138df6a5af19f.glb",
+    "bytes": 1031292
+  },
+  {
+    "path": "shared-assets/1afd0386b74f33ac8718bb39.glb",
+    "bytes": 2773416
+  },
+  {
+    "path": "shared-assets/1d88358b67bc4c994405b65d.png",
+    "bytes": 466368
+  },
+  {
+    "path": "shared-assets/2c52571d5db18df5b25ff03f.png",
+    "bytes": 1624499
+  },
+  {
+    "path": "shared-assets/34e288a72daae2607c335be8.png",
+    "bytes": 388415
+  },
+  {
+    "path": "shared-assets/4bbafde549d94b0fafa53ee6.png",
+    "bytes": 57470
+  },
+  {
+    "path": "shared-assets/5cc478b77aa33b8037f133b0.glb",
+    "bytes": 1961084
+  },
+  {
+    "path": "shared-assets/5ff37c1acdc39ed4c556327d.png",
+    "bytes": 792525
+  },
+  {
+    "path": "shared-assets/6a75a9c17ae3d1e802aad6e7.png",
+    "bytes": 133524
+  },
+  {
+    "path": "shared-assets/6daad66e9d664040cf8b3663.png",
+    "bytes": 234174
+  },
+  {
+    "path": "shared-assets/6deaef4445a6085f6318ee0c.png",
+    "bytes": 293170
+  },
+  {
+    "path": "shared-assets/6e38ec8bf69f429e3aeb5b56.png",
+    "bytes": 3380242
+  },
+  {
+    "path": "shared-assets/7351bac8284174d82ca6d940.glb.part0",
+    "bytes": 16777216
+  },
+  {
+    "path": "shared-assets/7351bac8284174d82ca6d940.glb.part1",
+    "bytes": 1279116
+  },
+  {
+    "path": "shared-assets/7b5b1c3b24478925a85d7cea.glb",
+    "bytes": 1663868
+  },
+  {
+    "path": "shared-assets/89299a7b5e843fbc3f5ffd0c.png",
+    "bytes": 298824
+  },
+  {
+    "path": "shared-assets/95c21b0994af046126c97347.png",
+    "bytes": 1164793
+  },
+  {
+    "path": "shared-assets/a262b430a3fa6dd18f573639.png",
+    "bytes": 7885
+  },
+  {
+    "path": "shared-assets/ac49539523633898aa360f92.png",
+    "bytes": 6768
+  },
+  {
+    "path": "shared-assets/cd4956923e48ae8ad165dede.png",
+    "bytes": 1308771
+  },
+  {
+    "path": "shared-assets/cf4de751ada78ceac033dbe1.ttf",
+    "bytes": 153116
+  },
+  {
+    "path": "shared-assets/d0d5e07a2910cbc64278ba7c.glb",
+    "bytes": 2492024
+  },
+  {
+    "path": "shared-assets/d2ed2c03a3c7357744e5e15d.png",
+    "bytes": 418688
+  },
+  {
+    "path": "shared-assets/daaf1b1b44b858511f99627c.png",
+    "bytes": 2011726
+  },
+  {
+    "path": "shared-assets/dc96a7cf0685da988a0fb0e9.png",
+    "bytes": 866171
+  },
+  {
+    "path": "shared-assets/e8d707cb7817cc471d3aae6e.png",
+    "bytes": 172184
+  },
+  {
+    "path": "shared-assets/f6831597325d1a751f3275ca.glb",
+    "bytes": 8455936
+  },
+  {
+    "path": "shared-assets/fetch-chunks.js",
+    "bytes": 1617
+  },
+  {
+    "path": "sims-sky/dist/assets/badge-detail-user.webp",
+    "bytes": 978168
+  },
+  {
+    "path": "sims-sky/dist/assets/badge-user.webp",
+    "bytes": 633804
+  },
+  {
+    "path": "sims-sky/dist/assets/badge-v2.webp",
+    "bytes": 144018
+  },
+  {
+    "path": "sims-sky/dist/assets/badge.webp",
+    "bytes": 46492
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/backpack.webp",
+    "bytes": 191628
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/computer.svg",
+    "bytes": 2358400
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/gem-1.webp",
+    "bytes": 40986
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/gem-2.webp",
+    "bytes": 48038
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/gem-3.webp",
+    "bytes": 56432
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/pen.webp",
+    "bytes": 70034
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/plane.webp",
+    "bytes": 59618
+  },
+  {
+    "path": "sims-sky/dist/assets/campus/ruler.webp",
+    "bytes": 91346
+  },
+  {
+    "path": "sims-sky/dist/assets/cloud.webp",
+    "bytes": 48812
+  },
+  {
+    "path": "sims-sky/dist/assets/earphones-complete.png",
+    "bytes": 682906
+  },
+  {
+    "path": "sims-sky/dist/assets/earphones.webp",
+    "bytes": 81776
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/balloon-1.png",
+    "bytes": 164209
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/balloon-2.png",
+    "bytes": 173707
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/balloon-3.png",
+    "bytes": 169267
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/balloon-4.png",
+    "bytes": 165198
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/balloon-5.png",
+    "bytes": 158476
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/balloon-6.png",
+    "bytes": 163697
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/banner.png",
+    "bytes": 667781
+  },
+  {
+    "path": "sims-sky/dist/assets/graduation/scene.mp4",
+    "bytes": 7685989
+  },
+  {
+    "path": "sims-sky/dist/assets/keys-detail-cutout.png",
+    "bytes": 741564
+  },
+  {
+    "path": "sims-sky/dist/assets/keys-detail.png",
+    "bytes": 1738205
+  },
+  {
+    "path": "sims-sky/dist/assets/keys-user.svg",
+    "bytes": 1741988
+  },
+  {
+    "path": "sims-sky/dist/assets/keys-v2.webp",
+    "bytes": 143594
+  },
+  {
+    "path": "sims-sky/dist/assets/keys.webp",
+    "bytes": 85582
+  },
+  {
+    "path": "sims-sky/dist/assets/photo-green-user.svg",
+    "bytes": 1811698
+  },
+  {
+    "path": "sims-sky/dist/assets/photo-green-v2.webp",
+    "bytes": 247168
+  },
+  {
+    "path": "sims-sky/dist/assets/photo-stars-user.webp",
+    "bytes": 690034
+  },
+  {
+    "path": "sims-sky/dist/assets/photo-stars-v2.webp",
+    "bytes": 215982
+  },
+  {
+    "path": "sims-sky/dist/assets/photo1.webp",
+    "bytes": 155390
+  },
+  {
+    "path": "sims-sky/dist/assets/photo2.webp",
+    "bytes": 139726
+  },
+  {
+    "path": "sims-sky/dist/assets/player.webp",
+    "bytes": 68216
+  },
+  {
+    "path": "sims-sky/dist/assets/rope-v2.webp",
+    "bytes": 76476
+  },
+  {
+    "path": "sims-sky/dist/assets/rope.webp",
+    "bytes": 81912
+  },
+  {
+    "path": "sims-sky/dist/assets/scarf-detail-cutout.png",
+    "bytes": 1293437
+  },
+  {
+    "path": "sims-sky/dist/assets/scarf-user.webp",
+    "bytes": 404026
+  },
+  {
+    "path": "sims-sky/dist/assets/scarf-v2.webp",
+    "bytes": 113456
+  },
+  {
+    "path": "sims-sky/dist/assets/scarf.webp",
+    "bytes": 68524
+  },
+  {
+    "path": "sims-sky/dist/assets/school/books.webp",
+    "bytes": 262790
+  },
+  {
+    "path": "sims-sky/dist/assets/school/chinese-paper.webp",
+    "bytes": 175434
+  },
+  {
+    "path": "sims-sky/dist/assets/school/compass.webp",
+    "bytes": 113378
+  },
+  {
+    "path": "sims-sky/dist/assets/school/curled-note.webp",
+    "bytes": 130122
+  },
+  {
+    "path": "sims-sky/dist/assets/school/eraser.webp",
+    "bytes": 96240
+  },
+  {
+    "path": "sims-sky/dist/assets/school/folded-note.webp",
+    "bytes": 130058
+  },
+  {
+    "path": "sims-sky/dist/assets/school/handbook.webp",
+    "bytes": 247120
+  },
+  {
+    "path": "sims-sky/dist/assets/school/math-paper.webp",
+    "bytes": 195792
+  },
+  {
+    "path": "sims-sky/dist/assets/school/note.webp",
+    "bytes": 141760
+  },
+  {
+    "path": "sims-sky/dist/assets/school/pen.webp",
+    "bytes": 64486
+  },
+  {
+    "path": "sims-sky/dist/assets/school/pencil.webp",
+    "bytes": 69340
+  },
+  {
+    "path": "sims-sky/dist/assets/school/sharpener.webp",
+    "bytes": 135270
+  },
+  {
+    "path": "sims-sky/dist/assets/school/timetable.webp",
+    "bytes": 187146
+  },
+  {
+    "path": "sims-sky/dist/assets/school/triangle.webp",
+    "bytes": 113824
+  },
+  {
+    "path": "sims-sky/dist/assets/school-video-end.png",
+    "bytes": 3368123
+  },
+  {
+    "path": "sims-sky/dist/assets/sky-approved-opening.png",
+    "bytes": 5834138
+  },
+  {
+    "path": "sims-sky/dist/assets/sky.webp",
+    "bytes": 14490
+  },
+  {
+    "path": "sims-sky/dist/assets/umbrella-v2.webp",
+    "bytes": 84902
+  },
+  {
+    "path": "sims-sky/dist/assets/umbrella.webp",
+    "bytes": 89694
+  },
+  {
+    "path": "sims-sky/dist/campus-interactions.js",
+    "bytes": 5391
+  },
+  {
+    "path": "sims-sky/dist/campus-layout.js",
+    "bytes": 3209
+  },
+  {
+    "path": "sims-sky/dist/campus.css",
+    "bytes": 3538
+  },
+  {
+    "path": "sims-sky/dist/campus.js",
+    "bytes": 2319
+  },
+  {
+    "path": "sims-sky/dist/editor.js",
+    "bytes": 15411
+  },
+  {
+    "path": "sims-sky/dist/graduation.js",
+    "bytes": 8686
+  },
+  {
+    "path": "sims-sky/dist/index.html",
+    "bytes": 8574
+  },
+  {
+    "path": "sims-sky/dist/scene.css",
+    "bytes": 7922
+  },
+  {
+    "path": "sims-sky/dist/scene.js",
+    "bytes": 1202
+  },
+  {
+    "path": "sims-sky/dist/school-entry.js",
+    "bytes": 3911
+  },
+  {
+    "path": "sims-sky/dist/story.css",
+    "bytes": 3751
+  },
+  {
+    "path": "sims-sky/dist/story.js",
+    "bytes": 3933
+  },
+  {
+    "path": "sims-sky/dist/study-layout.js",
+    "bytes": 3295
+  },
+  {
+    "path": "sims-sky/dist/vendor/gsap.min.js",
+    "bytes": 72927
+  },
+  {
+    "path": "sims-sky/dist/vendor/ScrollTrigger.min.js",
+    "bytes": 44575
+  },
+  {
+    "path": "sims-sky/dist/wind.js",
+    "bytes": 6633
+  },
+  {
+    "path": "sound-effects.js",
+    "bytes": 1666
+  },
+  {
+    "path": "sound-effects.source.js",
+    "bytes": 1520
+  },
+  {
+    "path": "space-editor.css",
+    "bytes": 18521
+  },
+  {
+    "path": "space-editor.js",
+    "bytes": 1824710
+  },
+  {
+    "path": "space-editor.source.js",
+    "bytes": 80846
+  },
+  {
+    "path": "starfield-background.js",
+    "bytes": 5181
+  },
+  {
+    "path": "street-scan/3d-camera-center.png",
+    "bytes": 1176755
+  },
+  {
+    "path": "street-scan/3d-camera-turn.png",
+    "bytes": 1159167
+  },
+  {
+    "path": "street-scan/app.js",
+    "bytes": 12733
+  },
+  {
+    "path": "street-scan/archive-ending.js",
+    "bytes": 6484
+  },
+  {
+    "path": "street-scan/assets/camera.glb",
+    "bytes": 18056332
+  },
+  {
+    "path": "street-scan/assets/game/archive-desk.png",
+    "bytes": 2011726
+  },
+  {
+    "path": "street-scan/assets/game/archive-file.png",
+    "bytes": 2915657
+  },
+  {
+    "path": "street-scan/assets/game/archive-folder.png",
+    "bytes": 3380242
+  },
+  {
+    "path": "street-scan/assets/game/archive-handbook-crop.png",
+    "bytes": 172184
+  },
+  {
+    "path": "street-scan/assets/game/archive-handbook.png",
+    "bytes": 298824
+  },
+  {
+    "path": "street-scan/assets/game/archive-id.png",
+    "bytes": 234174
+  },
+  {
+    "path": "street-scan/assets/game/archive-map.png",
+    "bytes": 418688
+  },
+  {
+    "path": "street-scan/assets/game/archive-news.png",
+    "bytes": 293170
+  },
+  {
+    "path": "street-scan/assets/game/archive-portrait.png",
+    "bytes": 57470
+  },
+  {
+    "path": "street-scan/assets/game/archive-ticket.png",
+    "bytes": 133524
+  },
+  {
+    "path": "street-scan/assets/game/basket.png",
+    "bytes": 1624499
+  },
+  {
+    "path": "street-scan/assets/game/box.glb",
+    "bytes": 1719140
+  },
+  {
+    "path": "street-scan/assets/game/camera-icon.png",
+    "bytes": 792525
+  },
+  {
+    "path": "street-scan/assets/game/chess.glb",
+    "bytes": 2895796
+  },
+  {
+    "path": "street-scan/assets/game/elder1.glb",
+    "bytes": 2492024
+  },
+  {
+    "path": "street-scan/assets/game/elder2.glb",
+    "bytes": 8455936
+  },
+  {
+    "path": "street-scan/assets/game/elder3.glb",
+    "bytes": 1663868
+  },
+  {
+    "path": "street-scan/assets/game/envelope.png",
+    "bytes": 1164793
+  },
+  {
+    "path": "street-scan/assets/game/folder-icon.png",
+    "bytes": 1308771
+  },
+  {
+    "path": "street-scan/assets/game/girl-confirmed.glb",
+    "bytes": 2773416
+  },
+  {
+    "path": "street-scan/assets/game/girl.glb",
+    "bytes": 2378460
+  },
+  {
+    "path": "street-scan/assets/game/glasses-icon.png",
+    "bytes": 466368
+  },
+  {
+    "path": "street-scan/assets/game/glasses.glb",
+    "bytes": 1031292
+  },
+  {
+    "path": "street-scan/assets/game/grandma.glb",
+    "bytes": 2378460
+  },
+  {
+    "path": "street-scan/assets/game/left-hand.fbx",
+    "bytes": 258784
+  },
+  {
+    "path": "street-scan/assets/game/lens-left.png",
+    "bytes": 7885
+  },
+  {
+    "path": "street-scan/assets/game/lens-right.png",
+    "bytes": 6768
+  },
+  {
+    "path": "street-scan/assets/game/memory-star.png",
+    "bytes": 388415
+  },
+  {
+    "path": "street-scan/assets/game/photo-frame.png",
+    "bytes": 866171
+  },
+  {
+    "path": "street-scan/assets/game/pixel-ui-LICENSE.txt",
+    "bytes": 4367
+  },
+  {
+    "path": "street-scan/assets/game/pixel-ui.ttf",
+    "bytes": 153116
+  },
+  {
+    "path": "street-scan/assets/game/right-hand.fbx",
+    "bytes": 262336
+  },
+  {
+    "path": "street-scan/assets/game/student.glb",
+    "bytes": 1961084
+  },
+  {
+    "path": "street-scan/assets/game/table.glb",
+    "bytes": 2163088
+  },
+  {
+    "path": "street-scan/assets/memory-card.png",
+    "bytes": 1719643
+  },
+  {
+    "path": "street-scan/assets/printer.png",
+    "bytes": 1242406
+  },
+  {
+    "path": "street-scan/assets/street.sog.part0",
+    "bytes": 16777216
+  },
+  {
+    "path": "street-scan/assets/street.sog.part1",
+    "bytes": 16777216
+  },
+  {
+    "path": "street-scan/assets/street.sog.part2",
+    "bytes": 11074565
+  },
+  {
+    "path": "street-scan/camera-model.js",
+    "bytes": 1262259
+  },
+  {
+    "path": "street-scan/camera-model.source.js",
+    "bytes": 6968
+  },
+  {
+    "path": "street-scan/center-camera-preview.png",
+    "bytes": 1159089
+  },
+  {
+    "path": "street-scan/color-fixed.png",
+    "bytes": 918715
+  },
+  {
+    "path": "street-scan/config.js",
+    "bytes": 513
+  },
+  {
+    "path": "street-scan/game-assets.js",
+    "bytes": 798
+  },
+  {
+    "path": "street-scan/game-config.js",
+    "bytes": 1421
+  },
+  {
+    "path": "street-scan/gsap.js",
+    "bytes": 70696
+  },
+  {
+    "path": "street-scan/highlight.png",
+    "bytes": 969497
+  },
+  {
+    "path": "street-scan/in-progress.png",
+    "bytes": 853585
+  },
+  {
+    "path": "street-scan/index.html",
+    "bytes": 4346
+  },
+  {
+    "path": "street-scan/live.png",
+    "bytes": 986023
+  },
+  {
+    "path": "street-scan/lowpoly-preview.png",
+    "bytes": 866763
+  },
+  {
+    "path": "street-scan/lowpoly-scene.js",
+    "bytes": 1097129
+  },
+  {
+    "path": "street-scan/lowpoly-scene.source.js",
+    "bytes": 11810
+  },
+  {
+    "path": "street-scan/lowpoly.html",
+    "bytes": 472
+  },
+  {
+    "path": "street-scan/map.png",
+    "bytes": 1474997
+  },
+  {
+    "path": "street-scan/memory-card-transition.js",
+    "bytes": 4076
+  },
+  {
+    "path": "street-scan/memory-game.css",
+    "bytes": 229323
+  },
+  {
+    "path": "street-scan/memory-game.source.js",
+    "bytes": 44797
+  },
+  {
+    "path": "street-scan/memory-playback.js",
+    "bytes": 4239
+  },
+  {
+    "path": "street-scan/memory-reveal.glsl",
+    "bytes": 3748
+  },
+  {
+    "path": "street-scan/memory-star.js",
+    "bytes": 12789
+  },
+  {
+    "path": "street-scan/minimal-preview.png",
+    "bytes": 1083175
+  },
+  {
+    "path": "street-scan/mobile-active.png",
+    "bytes": 237665
+  },
+  {
+    "path": "street-scan/mobile-preview.png",
+    "bytes": 179254
+  },
+  {
+    "path": "street-scan/pixel-photo.js",
+    "bytes": 2524
+  },
+  {
+    "path": "street-scan/pixel-world.source.js",
+    "bytes": 2619
+  },
+  {
+    "path": "street-scan/playback-scene.html",
+    "bytes": 3806163
+  },
+  {
+    "path": "street-scan/preview.png",
+    "bytes": 874564
+  },
+  {
+    "path": "street-scan/printer-flow.js",
+    "bytes": 7154
+  },
+  {
+    "path": "street-scan/README.md",
+    "bytes": 7025
+  },
+  {
+    "path": "street-scan/recorded-preview.png",
+    "bytes": 504645
+  },
+  {
+    "path": "street-scan/retro-preview.png",
+    "bytes": 1777493
+  },
+  {
+    "path": "street-scan/retro-style.js",
+    "bytes": 1860
+  },
+  {
+    "path": "street-scan/route-end.png",
+    "bytes": 1656488
+  },
+  {
+    "path": "street-scan/route-start.png",
+    "bytes": 1766709
+  },
+  {
+    "path": "street-scan/route.js",
+    "bytes": 1318
+  },
+  {
+    "path": "street-scan/scan-left.png",
+    "bytes": 968999
+  },
+  {
+    "path": "street-scan/scanner.js",
+    "bytes": 2793
+  },
+  {
+    "path": "street-scan/scene.html",
+    "bytes": 2989888
+  },
+  {
+    "path": "street-scan/server.cjs",
+    "bytes": 1065
+  },
+  {
+    "path": "street-scan/splat-reveal-runtime.js",
+    "bytes": 6622
+  },
+  {
+    "path": "street-scan/street-occlusion.js",
+    "bytes": 3450
+  },
+  {
+    "path": "street-scan/style.css",
+    "bytes": 14222
+  },
+  {
+    "path": "street-scan/unclipped-bottom.png",
+    "bytes": 481869
+  },
+  {
+    "path": "street-scan/unclipped-left.png",
+    "bytes": 678873
+  },
+  {
+    "path": "street-scan/video-later-frames.png",
+    "bytes": 800608
+  },
+  {
+    "path": "street-scan/video-opening-frames.png",
+    "bytes": 398613
+  },
+  {
+    "path": "street-scan/video-request-frames.png",
+    "bytes": 1094827
+  },
+  {
+    "path": "street-scan/video-star-detail.png",
+    "bytes": 1120549
+  },
+  {
+    "path": "street-scan/video-star-reference.png",
+    "bytes": 1231998
+  },
+  {
+    "path": "street-scan/video-transition-frames.png",
+    "bytes": 1234294
+  },
+  {
+    "path": "street-scan/启动街道扫描.ps1",
+    "bytes": 608
+  },
+  {
+    "path": "street-scan/打开街道扫描.cmd",
+    "bytes": 112
+  },
+  {
+    "path": "styles.css",
+    "bytes": 67047
+  },
+  {
+    "path": "vendor/gsap/gsap.min.js",
+    "bytes": 72927
+  },
+  {
+    "path": "vendor/gsap/ScrollTrigger.min.js",
+    "bytes": 44575
+  },
+  {
+    "path": "vendor/three/examples/jsm/curves/NURBSCurve.js",
+    "bytes": 3907
+  },
+  {
+    "path": "vendor/three/examples/jsm/curves/NURBSUtils.js",
+    "bytes": 10821
+  },
+  {
+    "path": "vendor/three/examples/jsm/libs/fflate.module.js",
+    "bytes": 89384
+  },
+  {
+    "path": "vendor/three/examples/jsm/loaders/FBXLoader.js",
+    "bytes": 104895
+  },
+  {
+    "path": "vendor/three/examples/jsm/loaders/GLTFLoader.js",
+    "bytes": 114758
+  },
+  {
+    "path": "vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
+    "bytes": 35558
+  },
+  {
+    "path": "vendor/three/LICENSE",
+    "bytes": 1081
+  },
+  {
+    "path": "vendor/three/three.core.js",
+    "bytes": 1403455
+  },
+  {
+    "path": "vendor/three/three.module.js",
+    "bytes": 603113
+  },
+  {
+    "path": "像素机器-双击打开.html",
+    "bytes": 11180
+  },
+  {
+    "path": "蜡笔星球.html",
+    "bytes": 1592
+  },
+  {
+    "path": "街道扫描-双击打开.html",
+    "bytes": 208
+  }
+]

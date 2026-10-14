@@ -1,0 +1,6 @@
+{
+  "name": "dream-home",
+  "private": true,
+  "scripts": { "build": "node build.cjs", "qa": "node qa.cjs" },
+  "dependencies": { "react": "19.1.1", "react-dom": "19.1.1" }
+}

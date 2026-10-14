@@ -1,0 +1,4 @@
+.sites-state/
+node_modules/
+*.zip
+*.tar.gz
