@@ -20,4 +20,7 @@
 .cat-loader-caption{position:absolute;left:680px;top:596px;width:310px;display:flex;justify-content:center;gap:15px;color:#4b3825;font:500 10px/1.5 Georgia,'Microsoft YaHei',serif;letter-spacing:2px;text-shadow:0 1px #e8d5b480}
 .cat-loader-caption output{font-variant-numeric:tabular-nums;letter-spacing:1px;min-width:30px}
 .cat-loader-blackout{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:10}
+.site-loading-status{position:absolute;left:5%;right:5%;bottom:8%;margin:0;text-align:center;color:#fff;font:14px/1.6 'Microsoft YaHei',sans-serif;text-shadow:0 1px 4px #000}
+.site-loading-retry{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);padding:8px 22px;border:1px solid #dac8a9;border-radius:6px;background:#ead9bd;color:#4b3825;cursor:pointer}
+.site-loading-retry[hidden]{display:none}
 .cat-loader-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}

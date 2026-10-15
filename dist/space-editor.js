@@ -43035,6 +43035,7 @@ void main() {
     setupPointerSelection();
     renderLoop();
     const templates = await loadModelTemplates();
+    if (archiveEmbedded && state.failedModels.length) throw new Error("\u573A\u666F\u6A21\u578B\u672A\u80FD\u5168\u90E8\u8F7D\u5165");
     INITIAL_LAYOUT.forEach((config3) => {
       const template = templates.get(config3.model);
       if (template) createSceneAsset(config3, template);
@@ -43065,6 +43066,7 @@ void main() {
         }
       });
     } catch (error) {
+      if (archiveEmbedded) throw error;
       console.error(error);
       showToast("\u4EBA\u7269\u52A0\u8F7D\u5931\u8D25\uFF0C\u8BF7\u5237\u65B0\u91CD\u8BD5");
     }
@@ -43075,6 +43077,7 @@ void main() {
     if (archiveEmbedded) {
       printPostprocessing.prepareScene(scene);
       if (renderer.compileAsync) await renderer.compileAsync(scene, camera);
+      printPostprocessing.render(scene, camera);
     }
     await startOpeningSequence(restoredSavedLayout);
   }
@@ -43193,6 +43196,7 @@ void main() {
     resetCamera
   };
   init4().catch((error) => {
+    if (archiveEmbedded) parent.postMessage({ type: "archive:scene-error" }, "*");
     loadingText.textContent = "\u573A\u666F\u542F\u52A8\u5931\u8D25";
     loadingBar.style.width = "100%";
     console.error(error);

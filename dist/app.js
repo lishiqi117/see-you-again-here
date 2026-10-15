@@ -63,12 +63,12 @@
 
   // Reuse the supplied cat opening, including its ball-to-black ending.
   function startMemoryLoading() {
-    new CatLoader({
+    const loader = new CatLoader({
       container: memoryLoader,
       assetBase: './cat-loading/assets/',
-      demo: true,
+      demo: false,
       async onComplete(loader) {
-        await window.lampBackgroundReady;
+
         lampMemory.classList.add('active');
         state.screen = 'lampMemory';
         const fade = loader.root.animate([{ opacity: 1 }, { opacity: 0 }], {
@@ -82,6 +82,18 @@
         memoryLoader.setAttribute('aria-hidden', 'true');
       }
     });
+    const status=document.createElement('p');status.className='site-loading-status';status.setAttribute('role','status');
+    const retry=document.createElement('button');retry.className='site-loading-retry';retry.type='button';retry.textContent='重试加载';retry.hidden=true;
+    loader.root.append(status,retry);
+    async function prepare(){
+      retry.hidden=true;loader.root.dataset.state='loading';
+      try{
+        await loader.ready;
+        await window.prepareWholeSite((value,message)=>{loader.setProgress(value);status.textContent=message;});
+        loader.root.dataset.state='ready';
+      }catch(error){loader.root.dataset.state='error';status.textContent=error.message;retry.hidden=false;console.error(error);}
+    }
+    retry.addEventListener('click',prepare);prepare();
   }
 
   let parallaxFrame = 0;

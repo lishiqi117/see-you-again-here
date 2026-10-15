@@ -32,6 +32,27 @@
     if (world.hasAttribute('src')) return;
     world.src='./3D场景编辑器.html?embedded=archive';
   }
+  let preparing=null;
+  window.preparePortraitScene=()=>{
+    if(sceneReady)return Promise.resolve();
+    if(preparing)return preparing;
+    preparing=new Promise((resolve,reject)=>{
+      archive.classList.add('preparing-scene');dialog.classList.add('preparing-scene');
+      const timer=setTimeout(()=>finish(new Error('3D 场景准备超时，请重试')),120000);
+      function finish(error){
+        clearTimeout(timer);window.removeEventListener('message',onMessage);
+        archive.classList.remove('preparing-scene');dialog.classList.remove('preparing-scene');
+        if(error){world.removeAttribute('src');sceneReady=false;reject(error);}else resolve();
+      }
+      function onMessage(event){
+        if(event.source!==world.contentWindow)return;
+        if(event.data?.type==='archive:scene-ready')finish();
+        if(event.data?.type==='archive:scene-error')finish(new Error('3D 场景准备失败，请重试'));
+      }
+      window.addEventListener('message',onMessage);prepareWorld();
+    }).finally(()=>{preparing=null;});
+    return preparing;
+  };
   function syncLayers() {
     // Both photo and film use cover + the SAME zoom, with no letterbox bars.
     const zoom=1.45 + Math.min(position,1)*.45;
@@ -89,11 +110,12 @@
     target=clamp(target+delta/PIXELS,0,END);
     wake();
   }
-  function reset(){
+  function reset(releaseWorld=false){
     cancelAnimationFrame(frame);frame=0;lastTime=0;target=0;position=0;touchY=null;
     video.pause();resetting=true;canvas.classList.remove('visible');
     if(!seeking&&video.readyState>=2){seeking=true;video.currentTime=0;}
-    if(!dialog.open && world.hasAttribute('src'))world.removeAttribute('src');
+    if(releaseWorld && world.hasAttribute('src'))world.removeAttribute('src');
+    sceneFinished=false;
     if(!world.hasAttribute('src')){sceneReady=false;sceneFinished=false;}
     paintedTime=-1;
     lastScene=-1;lastVisible=null;syncLayers();
@@ -135,6 +157,6 @@
   },{passive:false});
   dialog.addEventListener('contextmenu',event=>event.preventDefault());
   dialog.addEventListener('close',event=>{
-    event.stopPropagation();document.body.classList.remove('archive-world-active');reset();archive.querySelector('[data-object="portrait"]')?.focus({preventScroll:true});
+    event.stopPropagation();document.body.classList.remove('archive-world-active');reset(true);archive.querySelector('[data-object="portrait"]')?.focus({preventScroll:true});
   });
 })();

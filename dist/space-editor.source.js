@@ -2030,6 +2030,7 @@ async function init() {
   renderLoop();
 
   const templates = await loadModelTemplates();
+  if(archiveEmbedded && state.failedModels.length)throw new Error("场景模型未能全部载入");
   INITIAL_LAYOUT.forEach((config) => {
     const template = templates.get(config.model);
     if (template) createSceneAsset(config, template);
@@ -2052,7 +2053,7 @@ async function init() {
         return frame;
       }
     });
-  } catch (error) { console.error(error); showToast("人物加载失败，请刷新重试"); }
+  } catch (error) { if(archiveEmbedded)throw error;console.error(error); showToast("人物加载失败，请刷新重试"); }
   clearSelection();
   if (!restoredSavedLayout) resetCamera();
   setEditorVisible(false);
@@ -2061,6 +2062,8 @@ async function init() {
     // Compile ink materials while hidden, before individual models enter view.
     printPostprocessing.prepareScene(scene);
     if (renderer.compileAsync) await renderer.compileAsync(scene, camera);
+    // Upload textures and geometry behind the loader before the first visible frame.
+    printPostprocessing.render(scene, camera);
   }
   await startOpeningSequence(restoredSavedLayout);
 }
@@ -2147,6 +2150,7 @@ window.__spaceEditor = {
 };
 
 init().catch((error) => {
+  if(archiveEmbedded)parent.postMessage({type:'archive:scene-error'},'*');
   loadingText.textContent = "场景启动失败";
   loadingBar.style.width = "100%";
   console.error(error);

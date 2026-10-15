@@ -1580,6 +1580,8 @@ html.parallax-enabled .lamp-memory-screen .lamp-room-photo {
 .portrait-entry-close:is(:hover,:focus-visible) { background: #403020; outline: 2px solid #d7b982; }
 .portrait-transition.entering :is(.portrait-entry-hint,.portrait-entry-close) { opacity: 0; pointer-events: none; }
 
+/* Keep prewarming iframe laid out while the loader covers it. No modal is opened. */
+.desk-archive-dialog.preparing-scene, .portrait-transition.preparing-scene { display:block; opacity:0; pointer-events:none; }
 /* The photo, transition and prepared 3D world share one full-screen surface. */
 .portrait-transition { background: #060605; }
 .portrait-entry-image, .portrait-transition canvas {

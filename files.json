@@ -61,7 +61,7 @@
   },
   {
     "path": "app.js",
-    "bytes": 4523
+    "bytes": 5292
   },
   {
     "path": "archive-interaction.js",
@@ -701,7 +701,7 @@
   },
   {
     "path": "cat-loading/loader.css",
-    "bytes": 2836
+    "bytes": 3246
   },
   {
     "path": "cat-loading/loader.js",
@@ -833,7 +833,7 @@
   },
   {
     "path": "index.html",
-    "bytes": 6248
+    "bytes": 6353
   },
   {
     "path": "lamp-background.js",
@@ -881,7 +881,7 @@
   },
   {
     "path": "portrait-transition.js",
-    "bytes": 7563
+    "bytes": 8682
   },
   {
     "path": "print-postprocessing.js",
@@ -1505,11 +1505,11 @@
   },
   {
     "path": "space-editor.js",
-    "bytes": 1825712
+    "bytes": 1826019
   },
   {
     "path": "space-editor.source.js",
-    "bytes": 81479
+    "bytes": 81819
   },
   {
     "path": "starfield-background.js",
@@ -1921,7 +1921,7 @@
   },
   {
     "path": "styles.css",
-    "bytes": 67047
+    "bytes": 67259
   },
   {
     "path": "vendor/gsap/gsap.min.js",
@@ -1982,5 +1982,17 @@
   {
     "path": "assets/lamp/portrait-scrub.mp4",
     "bytes": 15337808
+  },
+  {
+    "path": "site-preload.js",
+    "bytes": 6445
+  },
+  {
+    "path": "site-cache-worker.js",
+    "bytes": 2591
+  },
+  {
+    "path": "precache-manifest.js",
+    "bytes": 63962
   }
 ]
