@@ -5,67 +5,67 @@
   },
   {
     "path": "01-开场.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过-2012.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过-2013.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过-2014.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过-2015.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过-2016.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过-2017.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过-2018.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "02-经过.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "03-消失.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "04-记录.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "05-重返.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "06-留存.html",
-    "bytes": 516
+    "bytes": 490
   },
   {
     "path": "3D场景编辑器.html",
-    "bytes": 6515
+    "bytes": 6512
   },
   {
     "path": "app.js",
-    "bytes": 4542
+    "bytes": 4523
   },
   {
     "path": "archive-interaction.js",
-    "bytes": 5263
+    "bytes": 5781
   },
   {
     "path": "archive-objects.js",
@@ -177,7 +177,7 @@
   },
   {
     "path": "assets/credits/scanned-scene.html",
-    "bytes": 2990304
+    "bytes": 2990305
   },
   {
     "path": "assets/credits/shop.jpg",
@@ -697,7 +697,7 @@
   },
   {
     "path": "cat-loading/index.html",
-    "bytes": 1642
+    "bytes": 1626
   },
   {
     "path": "cat-loading/loader.css",
@@ -729,7 +729,7 @@
   },
   {
     "path": "credits.html",
-    "bytes": 3973
+    "bytes": 3958
   },
   {
     "path": "credits.js",
@@ -757,7 +757,7 @@
   },
   {
     "path": "dream-home/index.html",
-    "bytes": 735
+    "bytes": 741
   },
   {
     "path": "dream-home/package.json",
@@ -833,7 +833,7 @@
   },
   {
     "path": "index.html",
-    "bytes": 6242
+    "bytes": 6248
   },
   {
     "path": "lamp-background.js",
@@ -841,15 +841,15 @@
   },
   {
     "path": "lamp-reveal.js",
-    "bytes": 8415
+    "bytes": 8648
   },
   {
     "path": "lamp-scene.js",
-    "bytes": 3381611
+    "bytes": 3381839
   },
   {
     "path": "lamp-scene.source.js",
-    "bytes": 28256
+    "bytes": 28475
   },
   {
     "path": "memory-card-credits.js",
@@ -857,11 +857,11 @@
   },
   {
     "path": "memory-scene.html",
-    "bytes": 3030021
+    "bytes": 3030022
   },
   {
     "path": "pixel-star-site/dist/index.html",
-    "bytes": 1181
+    "bytes": 1187
   },
   {
     "path": "pixel-star-site/dist/pixel-stars.css",
@@ -881,7 +881,7 @@
   },
   {
     "path": "portrait-transition.js",
-    "bytes": 6486
+    "bytes": 6616
   },
   {
     "path": "print-postprocessing.js",
@@ -961,7 +961,7 @@
   },
   {
     "path": "rain-phone/dist/app.js",
-    "bytes": 14493
+    "bytes": 14768
   },
   {
     "path": "rain-phone/dist/assets/drop-2.png",
@@ -1021,11 +1021,11 @@
   },
   {
     "path": "rain-phone/dist/index.html",
-    "bytes": 2099
+    "bytes": 2101
   },
   {
     "path": "rain-phone/dist/street-transition.js",
-    "bytes": 5213
+    "bytes": 5368
   },
   {
     "path": "rain-phone/dist/style.css",
@@ -1449,11 +1449,11 @@
   },
   {
     "path": "sims-sky/dist/graduation.js",
-    "bytes": 8686
+    "bytes": 8827
   },
   {
     "path": "sims-sky/dist/index.html",
-    "bytes": 8574
+    "bytes": 8569
   },
   {
     "path": "sims-sky/dist/scene.css",
@@ -1733,7 +1733,7 @@
   },
   {
     "path": "street-scan/index.html",
-    "bytes": 4346
+    "bytes": 4353
   },
   {
     "path": "street-scan/live.png",
@@ -1753,7 +1753,7 @@
   },
   {
     "path": "street-scan/lowpoly.html",
-    "bytes": 472
+    "bytes": 478
   },
   {
     "path": "street-scan/map.png",
@@ -1805,7 +1805,7 @@
   },
   {
     "path": "street-scan/playback-scene.html",
-    "bytes": 3808257
+    "bytes": 3808258
   },
   {
     "path": "street-scan/preview.png",
@@ -1857,7 +1857,7 @@
   },
   {
     "path": "street-scan/scene.html",
-    "bytes": 2989888
+    "bytes": 2989889
   },
   {
     "path": "street-scan/server.cjs",
@@ -1965,14 +1965,14 @@
   },
   {
     "path": "像素机器-双击打开.html",
-    "bytes": 11180
+    "bytes": 11186
   },
   {
     "path": "蜡笔星球.html",
-    "bytes": 1592
+    "bytes": 1598
   },
   {
     "path": "街道扫描-双击打开.html",
-    "bytes": 208
+    "bytes": 214
   }
 ]

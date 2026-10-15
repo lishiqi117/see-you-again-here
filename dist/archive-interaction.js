@@ -14,6 +14,7 @@
   const clamp = value => Math.max(0, Math.min(1, value));
   let start = 1.05, end = 5, target = 0, position = 0;
   let ready = false, seeking = false, resetting = true, raf = 0, lastTime = 0;
+  let paintedFrame = -1;
   let touchY = null;
   video.muted = true;
   video.pause();
@@ -22,7 +23,11 @@
     if (video.readyState < 2) return;
     // Do not flash a frame from the last visit while resetting to the cover.
     if (resetting && Math.abs(video.currentTime - start) > .035) return;
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const decodedFrame = Math.floor((video.currentTime + 1e-6) * 24);
+    if (decodedFrame !== paintedFrame) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      paintedFrame = decodedFrame;
+    }
     canvas.classList.add('ready');
     resetting = false;
     dialog.dispatchEvent(new CustomEvent('archive:frame', { detail: {
@@ -32,7 +37,10 @@
 
   function requestFrame(time) {
     if (!ready || seeking) return;
-    if (Math.abs(video.currentTime - time) < .008) { paint(); return; }
+    // The source is 24 fps. Different times inside one frame display the same
+    // pixels, but assigning currentTime decodes the GOP again. Keep endpoints exact.
+    const sameFrame = Math.floor((video.currentTime + 1e-6) * 24) === Math.floor((time + 1e-6) * 24);
+    if (Math.abs(video.currentTime - time) < .008 || (sameFrame && time !== start && time !== end)) { paint(); return; }
     seeking = true;
     video.currentTime = time;
   }
@@ -89,6 +97,7 @@
     cancelAnimationFrame(raf);
     raf = 0; lastTime = 0; target = 0; position = 0; touchY = null;
     resetting = true;
+    paintedFrame = -1;
     dialog.dispatchEvent(new CustomEvent('archive:frame', { detail: { complete: false } }));
     video.pause();
     canvas.classList.remove('ready');

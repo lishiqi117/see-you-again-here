@@ -39,7 +39,8 @@
     layer.hidden = position <= 0;
     layer.style.opacity = smooth(position / 600);
     const time = clamp((position - 1000) / 520, 0, duration());
-    if (!video.seeking && Math.abs(time - video.currentTime) > .018) { requested = time; video.currentTime = time; }
+    const sameFrame = Math.floor((video.currentTime + 1e-6) * 25) === Math.floor((time + 1e-6) * 25);
+    if (!video.seeking && Math.abs(time - video.currentTime) > .018 && (!sameFrame || time === 0 || time === duration())) { requested = time; video.currentTime = time; }
     video.style.opacity = smooth((position - 600) / 400) * (1 - smooth((position - filmEnd()) / 600));
     street.style.opacity = smooth((position - filmEnd() - 600) / 800);
     hint.style.opacity = position > filmEnd() + 600 ? '0' : '1';

@@ -76,7 +76,8 @@
   function seek() {
     if(!mediaReady || video.seeking)return;
     const time = Math.max(0,Math.min(1,(progress-TRANSITION)/FILM)) * Math.max(0,video.duration-1/24);
-    if(Math.abs(video.currentTime-time)>1/48)video.currentTime = time;
+    const sameFrame=Math.floor((video.currentTime+1e-6)*24)===Math.floor((time+1e-6)*24);
+    if(Math.abs(video.currentTime-time)>1/48&&(!sameFrame||progress>=END||progress<=TRANSITION))video.currentTime = time;
   }
   video.addEventListener('seeked',()=>{seek();enterRain();});
   function resize() {

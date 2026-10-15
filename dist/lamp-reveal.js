@@ -22,8 +22,9 @@
   let lastFrameTime = 0;
   let frame = 0;
   let inputDirty = false;
+  const archiveDialog = document.querySelector('#deskArchiveDialog');
   function wake() {
-    if (!frame && !document.hidden && !document.body.classList.contains('archive-world-active')) frame = requestAnimationFrame(render);
+    if (!frame && !document.hidden && !archiveDialog?.open && !document.body.classList.contains('archive-world-active')) frame = requestAnimationFrame(render);
   }
 
   function resize() {
@@ -196,7 +197,7 @@
 
   function render(time) {
     frame = 0;
-    if (document.hidden || document.body.classList.contains('archive-world-active')) {
+    if (document.hidden || archiveDialog?.open || document.body.classList.contains('archive-world-active')) {
       blobs.length = 0;
       pointer.hasPosition = false;
       return;
@@ -233,6 +234,7 @@
   new ResizeObserver(resize).observe(canvas);
   document.addEventListener('visibilitychange', wake);
   new MutationObserver(wake).observe(document.body, {attributes:true,attributeFilter:['class']});
+  if (archiveDialog) new MutationObserver(wake).observe(archiveDialog, {attributes:true,attributeFilter:['open']});
 
   resize();
   wake();

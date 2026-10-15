@@ -169,6 +169,9 @@
   }
   function frame(time){
     const dt=Math.min((time-lastTime)/1000||0,.035);lastTime=time;
+    // At 600 the following layer's opaque black background covers this page.
+    // Stop rain simulation/drawing until scrolling back exposes it again.
+    if(document.hidden || (window.streetTransition?.getState().position ?? 0)>=600){requestAnimationFrame(frame);return;}
     if(ready){if(dirty)drawPhone();if(!activated){requestAnimationFrame(frame);return;}if(time-lastProgress>250){updateProgress();lastProgress=time;}
       rainTime+=dt*settings.speed*(reduced.matches?.35:1);
       rc.clearRect(0,0,width,height);

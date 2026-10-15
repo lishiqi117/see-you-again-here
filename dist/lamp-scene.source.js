@@ -585,7 +585,8 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
   window.addEventListener("resize", resize);
 
   let animationFrame = 0;
-  const animationVisible = () => !document.hidden && screen.classList.contains('active') && !document.body.classList.contains('archive-world-active');
+  const archiveDialog = document.querySelector('#deskArchiveDialog');
+  const animationVisible = () => !document.hidden && screen.classList.contains('active') && !archiveDialog?.open && !document.body.classList.contains('archive-world-active');
   function wakeAnimation() {
     if (animationVisible() && !animationFrame) animationFrame = requestAnimationFrame(animate);
   }
@@ -674,6 +675,7 @@ import lampFbx from "./assets/lamp/Tischlampe_rigged.fbx";
   document.addEventListener('visibilitychange', wakeAnimation);
   new MutationObserver(wakeAnimation).observe(document.body, { attributes: true, attributeFilter: ['class'] });
   new MutationObserver(wakeAnimation).observe(screen, { attributes: true, attributeFilter: ['class'] });
+  if (archiveDialog) new MutationObserver(wakeAnimation).observe(archiveDialog, {attributes:true,attributeFilter:['open']});
 
   resize();
   updatePositionReadout();

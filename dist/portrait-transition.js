@@ -67,7 +67,8 @@
     if(Math.abs(goal-position)<.001)position=goal;
     if(video.readyState>=2 && !seeking && (position<=1.18 || resetting)){
       const time=resetting?0:clamp(position,0,1)*(video.duration-.055);
-      if(Math.abs(video.currentTime-time)>.012){seeking=true;video.currentTime=time;}
+      const sameFrame=Math.floor((video.currentTime+1e-6)*24)===Math.floor((time+1e-6)*24);
+      if(Math.abs(video.currentTime-time)>.012&&(!sameFrame||resetting||position>=1)){seeking=true;video.currentTime=time;}
       else paint();
     }
     syncLayers();

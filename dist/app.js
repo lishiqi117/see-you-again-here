@@ -16,7 +16,7 @@
   url.searchParams.set('part', 'opening');
   url.searchParams.delete('year');
   try { history.replaceState({ part: 'opening' }, '', url); } catch (_) {}
-  document.title = '开场 · 童年档案｜记忆街道';
+  document.title = 'SEE YOU AGAIN HERE';
 
   function setParallaxTarget(clientX, clientY, pointerType = "mouse") {
     if (!parallaxEnabled || pointerType === "touch") return;
