@@ -210,13 +210,15 @@ async function boot(){
   const animated=state.editor||actors.some(a=>a.visible)||state.transitioning;
   if(animated||key!==overlayKey){occlusion.update();renderer.render(scene,camera);overlayKey=key;}
  }
- let last=0;function frame(ms){requestAnimationFrame(frame);const dt=Math.min(.05,(ms-last)/1000||0);last=ms;if(document.body.classList.contains('memory-entered')&&!state.active)activate();worldCanvas.hidden=!state.active;cameraCanvas.hidden=!state.active||state.mode!=='camera';if(!state.active||state.ending||document.hidden){handCamera.setState(false,false);return;}clock.value=reduced||state.editor?0:ms/1000;
+ let last=0;function frame(ms){const dt=Math.min(.05,(ms-last)/1000||0);last=ms;if(document.body.classList.contains('memory-entered')&&!state.active)activate();worldCanvas.hidden=!state.active;cameraCanvas.hidden=!state.active||state.mode!=='camera';if(!state.active||state.ending||document.hidden){handCamera.setState(false,false);return;}clock.value=reduced||state.editor?0:ms/1000;
+ syncCamera();
  for(const a of actors){a.visible=(state.glasses||state.editor)&&a.position.distanceTo(camera.position)<24;}
  models.glasses.visible=state.editor||!state.hasGlasses;drawSelections();
- syncCamera();renderOverlay();pixelWorld.canvas.hidden=false;pixelWorld.render();memoryStar.update(ms);handCamera.setState(state.mode==='camera',keys.size>0,aim);
+ renderOverlay();pixelWorld.canvas.hidden=false;pixelWorld.render();memoryStar.update(ms);handCamera.setState(state.mode==='camera',keys.size>0,aim);
  if(!state.ending&&!state.transitioning&&!state.charging&&!state.dialog&&!state.inspect&&!state.album&&!state.drawer&&!state.editor&&!state.lensEditor){const n=nearest();const prompt=$('.game-prompt');if(!state.hasGlasses&&canPickGlasses()){prompt.hidden=false;prompt.textContent='';prompt.setAttribute('aria-label','Pick up glasses');prompt.classList.add('icon-prompt')}else if(state.glasses&&n&&n.d<n.e.radius+1){prompt.hidden=false;prompt.textContent='';prompt.setAttribute('aria-label','Talk');prompt.classList.add('icon-prompt');if(n.d<1.85&&camera.getWorldDirection(new THREE.Vector3()).dot(new THREE.Vector3(...n.e.position).sub(camera.position).normalize())>.1&&!state.items.includes(n.e.reward)&&lastAuto!==n.e.id&&ms>autoCooldown)startDialog(n.e)}else{prompt.hidden=true;if(n&&n.d>n.e.radius+2)lastAuto=null}}else $('.game-prompt').hidden=true;
  }
- requestAnimationFrame(frame);
+ // Match overlays to the Gaussian camera after its update/render, including idle UI ticks.
+ app.on('frameend',()=>frame(performance.now()));
  window.streetGame={archiveEnding,memoryStar,occlusion,state,models,actors,encounters,scene,camera,renderer,glassesPosition,interact,setMode,takePhoto,setDrawer,startDialog,nextLine,ready:true,lensSettings,setLensEditor,setEditor,getLayout,selectAsset,transform,pivot,selectedAssets,canPickGlasses,teleport(x,y,z,target){const c=viewer.cameraManager.camera;c.position.set(x,y,z);if(target){yaw=Math.atan2(x-target[0],z-target[2]);pitch=Math.atan2(target[1]-y,Math.hypot(x-target[0],z-target[2]))}keys.clear();app.renderNextFrame=true;}};
 }
 boot().catch(error=>{console.error('Game failed to load',error);const div=document.createElement('div');div.textContent='Could not load characters. Please refresh.';div.style='position:fixed;bottom:18px;left:25%;z-index:20000;color:white;background:#30291f;padding:12px';document.body.append(div);window.streetGameError=error.message;});
