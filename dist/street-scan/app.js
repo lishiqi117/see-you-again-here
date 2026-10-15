@@ -82,7 +82,10 @@ function positionCursor(x, y) {
   lookAim.x = axis(x / innerWidth * 2 - 1);
   lookAim.y = axis(y / innerHeight * 2 - 1);
 }
+let lastProgress=-1,lastFinished=null;
 function updateUI() {
+  if(scanner.progress===lastProgress && finished===lastFinished)return;
+  lastProgress=scanner.progress;lastFinished=finished;
   const percent = scanner.progress * 100;
   fill.style.width = `${percent}%`;
   progress.setAttribute('aria-label', `Captured ${Math.floor(percent)}%`);
@@ -116,7 +119,11 @@ document.querySelector('#finish-scan').addEventListener('click', complete);
 document.querySelector('#review').addEventListener('click', review);
 document.querySelector('#restart').addEventListener('click', () => { result.close(); finished = true; start(); });
 result.addEventListener('cancel', event => { event.preventDefault(); review(); });
+let lastCameraPose='';
 function setCamera() {
+  const pose=[...route.pose().position,pitch,yaw].join(',');
+  if(pose===lastCameraPose)return;
+  lastCameraPose=pose;
   engine.viewer.global.camera.setPosition(...route.pose().position);
   engine.viewer.global.camera.setEulerAngles(pitch, yaw, 0);
   engine.viewer.global.app.renderNextFrame = true;
@@ -209,7 +216,7 @@ function tick(ms) {
     if (Math.abs(pitch) < .01 && lookAim.y === 0) pitch = 0;
     setCamera(); sample(now);
     const stable = sampledPose && Math.abs(yaw-sampledPose.yaw) < 3 && Math.abs(pitch-sampledPose.pitch) < 3 && Math.abs(route.distance-sampledPose.distance) < .3;
-    scanner.update(scanHeld && stable && now-hitTime < 1.5 ? scanner.identify(hit) : -1, config.dwellSeconds);
+    if(scanner.update(scanHeld && stable && now-hitTime < 1.5 ? scanner.identify(hit) : -1, config.dwellSeconds))engine.viewer.global.app.renderNextFrame=true;
     updateUI();
   }
   handCamera?.setState(active, keys.has('KeyW'), {

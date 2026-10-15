@@ -30942,33 +30942,87 @@ function createAreaLightMaterial(intensity) {
   return material;
 }
 
-// street-scan/camera-model.source.js
-async function createHandCamera(canvas, url) {
-  const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+// qa/smooth-site/dist/street-scan/camera-model.source.js
+async function createHandCamera(canvas, url, { pixelArt = false } = {}) {
+  const renderer = new WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: !pixelArt,
+    preserveDrawingBuffer: pixelArt
+  });
+  renderer.setPixelRatio(pixelArt ? 1 : Math.min(devicePixelRatio, 1.5));
   renderer.toneMapping = ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   const scene = new Scene();
   const camera = new PerspectiveCamera(36, 1, 0.01, 100);
   camera.position.set(0, 0.18, 3.9);
   camera.lookAt(0, 0, 0);
-  const environment = new RoomEnvironment();
-  const pmrem = new PMREMGenerator(renderer);
-  const environmentTarget = pmrem.fromScene(environment, 0.05);
-  scene.environment = environmentTarget.texture;
-  scene.environmentIntensity = 0.65;
-  environment.dispose();
-  pmrem.dispose();
-  scene.add(new HemisphereLight(15201261, 3749678, 1.5));
-  const key = new DirectionalLight(16772823, 3);
-  key.position.set(-3, 4, 5);
-  scene.add(key);
-  const rim = new DirectionalLight(12378606, 2);
-  rim.position.set(4, 2, -3);
-  scene.add(rim);
+  if (!pixelArt) {
+    const environment = new RoomEnvironment();
+    const pmrem = new PMREMGenerator(renderer);
+    const environmentTarget = pmrem.fromScene(environment, 0.05);
+    scene.environment = environmentTarget.texture;
+    scene.environmentIntensity = 0.65;
+    environment.dispose();
+    pmrem.dispose();
+    scene.add(new HemisphereLight(15201261, 3749678, 1.5));
+    const key = new DirectionalLight(16772823, 3);
+    key.position.set(-3, 4, 5);
+    scene.add(key);
+    const rim = new DirectionalLight(12378606, 2);
+    rim.position.set(4, 2, -3);
+    scene.add(rim);
+  }
+  let pixelTarget, pixelScene, pixelCamera;
+  if (pixelArt) {
+    canvas.style.imageRendering = "pixelated";
+    canvas.dataset.renderStyle = "pixel-art";
+    pixelTarget = new WebGLRenderTarget(1, 1, {
+      minFilter: NearestFilter,
+      magFilter: NearestFilter,
+      generateMipmaps: false
+    });
+    pixelScene = new Scene();
+    pixelCamera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    pixelScene.add(new Mesh(new PlaneGeometry(2, 2), new ShaderMaterial({
+      uniforms: { image: { value: pixelTarget.texture } },
+      vertexShader: "varying vec2 uvPixel; void main(){uvPixel=uv;gl_Position=vec4(position.xy,0.,1.);}",
+      fragmentShader: `uniform sampler2D image; varying vec2 uvPixel;
+        void main(){
+          vec4 source=texture2D(image,uvPixel);
+          if(source.a<0.5) discard;
+          vec3 color=pow(max(source.rgb,vec3(0.)),vec3(1.0/2.2));
+          float ink=dot(color,vec3(.299,.587,.114));
+          vec3 palette=ink<.18?vec3(19.,18.,17.):
+            ink<.40?vec3(53.,50.,48.):
+            ink<.68?vec3(130.,117.,105.):vec3(231.,224.,206.);
+          gl_FragColor=vec4(palette/255.,1.);
+        }`,
+      depthTest: false,
+      depthWrite: false,
+      toneMapped: false
+    })));
+  }
   const gltf = await new GLTFLoader().loadAsync(url);
   gltf.scene.traverse((object) => {
     if (object.isMesh && !object.name.startsWith("Final500K")) object.visible = false;
+    if (pixelArt && object.isMesh) {
+      const flatten2 = (material) => {
+        const map = material.map?.clone() || null;
+        if (map) {
+          map.minFilter = map.magFilter = NearestFilter;
+          map.generateMipmaps = false;
+          map.needsUpdate = true;
+        }
+        return new MeshBasicMaterial({
+          map,
+          color: material.color,
+          side: material.side,
+          toneMapped: false
+        });
+      };
+      object.material = Array.isArray(object.material) ? object.material.map(flatten2) : flatten2(object.material);
+    }
   });
   const box = new Box3();
   gltf.scene.updateMatrixWorld(true);
@@ -30987,7 +31041,10 @@ async function createHandCamera(canvas, url) {
   scene.add(pivot);
   const resize = () => {
     const w = canvas.clientWidth, h = canvas.clientHeight;
-    renderer.setSize(w, h, false);
+    const renderWidth = pixelArt ? Math.max(1, Math.ceil(w / 6)) : w;
+    const renderHeight = pixelArt ? Math.max(1, Math.ceil(h / 6)) : h;
+    renderer.setSize(renderWidth, renderHeight, false);
+    if (pixelTarget) pixelTarget.setSize(renderWidth, renderHeight);
     const portrait = w <= 600;
     const framingWidth = portrait ? w * 0.9 : Math.min(680, Math.max(280, w * 0.44));
     const framingHeight = h * (portrait ? 0.32 : 0.4);
@@ -31000,8 +31057,16 @@ async function createHandCamera(canvas, url) {
   let running = false, walking = false, scanning = false;
   let aimX = 0, aimY = 0, lastTime = 0, walkBlend = 0;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let frame = 0;
+  function wake() {
+    if (running && !document.hidden && !frame) {
+      lastTime = performance.now() / 1e3;
+      frame = requestAnimationFrame(draw);
+    }
+  }
+  document.addEventListener("visibilitychange", wake);
   function draw(ms) {
-    requestAnimationFrame(draw);
+    frame = 0;
     const t = ms / 1e3;
     const dt = Math.min(0.05, lastTime ? t - lastTime : 0);
     lastTime = t;
@@ -31019,9 +31084,14 @@ async function createHandCamera(canvas, url) {
     pivot.position.x += (aimX * 0.16 + sway - pivot.position.x) * follow;
     pivot.position.y += (-aimY * 0.08 + breath + Math.abs(sway) - pivot.position.y) * follow;
     pivot.position.z += ((scanning ? 0.12 : 0) - pivot.position.z) * follow;
-    renderer.render(scene, camera);
+    if (pixelArt) {
+      renderer.setRenderTarget(pixelTarget);
+      renderer.render(scene, camera);
+      renderer.setRenderTarget(null);
+      renderer.render(pixelScene, pixelCamera);
+    } else renderer.render(scene, camera);
+    if (running && !document.hidden) frame = requestAnimationFrame(draw);
   }
-  requestAnimationFrame(draw);
   return {
     setState(active, walk, aim = {}) {
       running = active;
@@ -31029,10 +31099,13 @@ async function createHandCamera(canvas, url) {
       scanning = !!aim.scanning;
       aimX = MathUtils.clamp(aim.x ?? 0, -1, 1);
       aimY = MathUtils.clamp(aim.y ?? 0, -1, 1);
+      wake();
     },
     scene,
     pivot,
-    camera
+    camera,
+    renderer,
+    pixelArt
   };
 }
 export {

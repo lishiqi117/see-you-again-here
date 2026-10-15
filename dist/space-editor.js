@@ -1,5 +1,5 @@
 (() => {
-  // starfield-background.js
+  // qa/smooth-site/dist/starfield-background.js
   function createStarfieldBackground(canvas2, viewport2) {
     const ctx = canvas2.getContext("2d");
     const mask = document.createElement("canvas");
@@ -121,11 +121,14 @@
     return painter;
   }
 
-  // print-postprocessing.js
+  // qa/smooth-site/dist/print-postprocessing.js
   function createPrintPostprocessing(renderer2) {
     const prepared = /* @__PURE__ */ new WeakSet();
+    const preparedObjects = /* @__PURE__ */ new WeakMap();
     function prepare(object) {
       if (!object.isMesh || !object.geometry.attributes.normal || object.userData.isEditorHelper) return;
+      if (preparedObjects.get(object) === object.material) return;
+      preparedObjects.set(object, object.material);
       const materials = Array.isArray(object.material) ? object.material : [object.material];
       for (const material of materials) {
         if (prepared.has(material) || material.isShaderMaterial || material.depthTest === false) continue;
@@ -39692,7 +39695,7 @@ void main() {
   var gsapWithCSS = gsap.registerPlugin(CSSPlugin) || gsap;
   var TweenMaxWithCSS = gsapWithCSS.core.Tween;
 
-  // planet-walker.js
+  // qa/smooth-site/dist/planet-walker.js
   var v = () => new Vector3();
   function tree(tris, depth = 0) {
     const box = new Box3();
@@ -40186,7 +40189,7 @@ void main() {
     } };
   }
 
-  // school-continuation.js
+  // qa/smooth-site/dist/school-continuation.js
   function createSchoolContinuation({ viewport: viewport2, onExit }) {
     const site = document.createElement("iframe");
     site.className = "school-sky-site";
@@ -40218,21 +40221,12 @@ void main() {
     video.disableRemotePlayback = true;
     video.setAttribute("aria-hidden", "true");
     viewport2.append(video);
-    let active = false, armed = false, ready = false, error = null, target = 0, position = 0, raf = 0, last = 0, seeking = false, painted = -1, touchY = null, blobURL = null, siteReady = false, handedOff = false;
+    let active = false, armed = false, ready = false, error = null, target = 0, position = 0, raf = 0, last = 0, seeking = false, painted = -1, touchY = null, siteReady = false, handedOff = false;
     let width = 0, height = 0, pixelRatio = 1;
     let openingFrame = null;
     const clamp4 = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
     const source = "./assets/space-editor/school-transition-continuous-20261011.mp4";
-    if (location.protocol === "file:") video.src = source;
-    else fetch(source).then((r) => {
-      if (!r.ok) throw Error("Scene media unavailable");
-      return r.blob();
-    }).then((blob) => {
-      blobURL = URL.createObjectURL(blob);
-      video.src = blobURL;
-    }).catch(() => {
-      video.src = source;
-    });
+    video.src = source;
     function resize() {
       const w = viewport2.clientWidth, h = viewport2.clientHeight, dpr = Math.min(devicePixelRatio || 1, 1920 / w, 1080 / h);
       width = w;
@@ -40302,7 +40296,7 @@ void main() {
         next = clamp4(next, position - dt * 18e-5, position + dt * 18e-5);
         position = next;
       }
-      const time = Math.round(position * 120) / 24;
+      const time = Math.min(Math.round(position * Math.max(0, video.duration - 1 / 24) * 24) / 24, Math.max(0, video.duration - 1 / 24));
       if (ready && !seeking) {
         if (Math.abs(video.currentTime - time) > 1 / 48) {
           seeking = true;
@@ -40419,7 +40413,7 @@ void main() {
     };
   }
 
-  // school-portal.js
+  // qa/smooth-site/dist/school-portal.js
   function createSchoolPortal({ scene: scene2, camera: camera2, canvas: canvas2, state: state2, controls, walker, invalidate, resetInteraction, captureFrame }) {
     const viewport2 = canvas2.parentElement;
     const star = document.createElement("button");
@@ -40648,7 +40642,7 @@ void main() {
     } };
   }
 
-  // scene-layout-link.js
+  // qa/smooth-site/dist/scene-layout-link.js
   function encodeLayout(layout) {
     const data = { v: 1, a: layout.assets.map(({ id, transform: t }) => [id, ...t.position, ...t.rotationDegrees, ...t.scale]), c: [layout.camera.position, layout.camera.target], w: [layout.viewerSettings.horizontalAngle, layout.viewerSettings.verticalAngle, layout.viewerSettings.zoomPercent] };
     return btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(data)))).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
@@ -40668,7 +40662,7 @@ void main() {
     return { schemaVersion: 1, scene: "crayon-space", assets, camera: { position: data.c[0], target: data.c[1] }, viewerSettings: { horizontalAngle: data.w[0], verticalAngle: data.w[1], zoomPercent: data.w[2] } };
   }
 
-  // assets/space-editor/default-layout.json
+  // qa/smooth-site/dist/assets/space-editor/default-layout.json
   var default_layout_default = {
     encoded: "eyJ2IjoxLCJhIjpbWyJlYXJ0aCIsMCwtMC44LDAsMCwxMiwwLDYuMyw2LjMsNi4zXSxbInNjaG9vbCIsMCwyLjcxNywwLjU1LDAsMCwwLDMuMzUsMy4zNSwzLjM1XSxbInN1biIsLTUuNzUsMy4xLDAuMTUsMCwtOCw0LDIuMSwyLjEsMi4xXSxbIm1vb24iLDUuNjUsLTMuNiwwLjEsMCwxNiwwLDEuNTUsMS41NSwxLjU1XSxbImNsb3VkLWEiLDQuNjUsMy40MDUsMC4xNSwwLC0xMiwwLDIuMDUsMi4wNSwyLjA1XSxbImNsb3VkLWIiLC01LjE1LDAuNDUsMC4xLDIzLjA3NiwyNS4xMSwxOC44MzQsMS44NSwxLjg1LDEuODVdLFsiYmlyZCIsNC45NSwxLDAuNjUsMCwtMTQsNCwxLjA1LDEuMDUsMS4wNV0sWyJhcHBsZS10cmVlIiwtMy4xNTEsMS44MjIsMC41NSwwLDEwLDU0LDIuMjE4LDIuMzAyLDIuMDI4XSxbImNhcnRvb24tdHJlZS1hIiwzLjE1MSwxLjgzLDAuNTUsMCwtMTIsLTU1LDIuMDE2LDIuMjMxLDEuNTVdLFsiY2FydG9vbi10cmVlLWIiLC0zLjgxOSwtMC4zLDAuMzUsMCwxMiw4OCwxLjU1LDEuNTUsMS41NV0sWyJzdHlsaXplZC10cmVlLWEiLDMuNjU5LC0wLjM1LDAuNCwwLC0xMCwtODgsMS41LDEuNSwxLjVdLFsic3R5bGl6ZWQtdHJlZS1iIiwyLjc1LC0zLjIsMC40NSwwLDgsLTEzNiwxLjQsMS40LDEuNF0sWyJzdGFyLTAxIiwtMy4yNSw0LjEsLTAuNywwLDEyLC04LDAuNzIsMC43MiwwLjcyXSxbInN0YXItMDIiLC02Ljc1LDIuMjUsLTAuOCwwLC0xNSwxNCwwLjUyLDAuNTIsMC41Ml0sWyJzdGFyLTAzIiwtNi4yLC0xLjgsLTAuNzUsMCw5LC0xMCwwLjU4LDAuNTgsMC41OF0sWyJzdGFyLTA0IiwtNS4xLC00LjIsLTAuOCwwLC04LDE2LDAuNzIsMC43MiwwLjcyXSxbInN0YXItMDUiLC0xLjc1LDMuOSwtMC44NSwwLDE4LDcsMC40NSwwLjQ1LDAuNDVdLFsic3Rhci0wNiIsMi40NSwzLjk1LC0wLjgsMCwtMTAsLTEyLDAuNDgsMC40OCwwLjQ4XSxbInN0YXItMDciLDYuNCwzLjI1LC0wLjc1LDAsMTIsMTAsMC42OCwwLjY4LDAuNjhdLFsic3Rhci0wOCIsNi41NSwtMC42LC0wLjgsMCwtMTYsLTYsMC41LDAuNSwwLjVdLFsic3Rhci0wOSIsNC42NSwtNC42LC0wLjgsMCwxMSwxMiwwLjYyLDAuNjIsMC42Ml0sWyJncmFzcy0wMSIsLTEuMjU4LDAuNywyLjUxNiwtMjQuMzIxLC0xNi42NjMsLTE2LjM4NCwwLjUyLDAuNTIsMC41Ml0sWyJncmFzcy0wMiIsLTAuNDIsMS4yNywyLjQ3NCwtMTkuNTU5LDEyLDQsMC40NywwLjQ3LDAuNDddLFsiZ3Jhc3MtMDMiLDEuNTUsMC42MywyLjQ2LC0xLjY4NywzMS4zOTUsLTEzLjE5OSwwLjUsMC41LDAuNV0sWyJncmFzcy0wNCIsLTEsLTAuMywyLjk3MiwtMC41NTksLTE3Ljk2OCwtMTMuMzM5LDAuNDgsMC40OCwwLjQ4XSxbImdyYXNzLTA1IiwwLjk1LC0wLjUsMy4wNDEsOC43MDcsMjAuNjY1LDQuMTMyLDAuNSwwLjUsMC41XSxbImdyYXNzLTA2IiwwLjMxOCwtMi4zNDMsMi44LDQ2Ljg1MSwtMi41ODgsLTIuNzksMC40OCwwLjQ4LDAuNDhdLFsiZ3Jhc3MtMDciLDEuODIsLTIuOTY5LDEuNCw2Mi43NjYsMjQuNDQ5LC0zNy4yNjQsMC41MiwwLjUyLDAuNTJdLFsiZ3Jhc3MtMDgiLDIuNzIxLC0wLjA3NCwxLjU0NCwtNS45MTMsNjAuNzY5LC0yLjY2MywwLjUsMC41LDAuNV1dLCJjIjpbWy0wLjEwOCwwLjM4MiwxMi40MTddLFswLjAwNywtMC4zNSwtMC4wMDNdXSwidyI6WzEwLDUsMTI1LjAyN119"
   };
@@ -41156,7 +41150,7 @@ void main() {
   };
   _getGSAP() && gsap2.registerPlugin(Observer);
 
-  // space-editor.source.js
+  // qa/smooth-site/dist/space-editor.source.js
   gsapWithCSS.registerPlugin(Observer);
   var archiveEmbedded = new URLSearchParams(location.search).get("embedded") === "archive";
   var archiveIntroProgress = 0;

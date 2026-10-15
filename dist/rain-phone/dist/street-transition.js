@@ -21,7 +21,17 @@
     if (street.hasAttribute('src')) return;
     street.src = '../../街道扫描-双击打开.html';
   }
-  street.addEventListener('load', () => { if(street.hasAttribute('src')) { loaded = true; wake(); } });
+  let readinessTimer=0;
+  street.addEventListener('load', () => {
+    clearTimeout(readinessTimer);
+    if(!street.hasAttribute('src'))return;
+    function check(){
+      // The document load event precedes asynchronous model decoding and GPU setup.
+      try{loaded=!!street.contentWindow.streetScan?.ready;}catch{loaded=false;}
+      if(loaded)wake();else readinessTimer=setTimeout(check,150);
+    }
+    check();
+  });
   video.addEventListener('error', () => {
     failed = true; target = position = 0; layer.hidden = true;
     document.querySelector('#hint').textContent = '转场视频未能加载，请刷新后重试。';

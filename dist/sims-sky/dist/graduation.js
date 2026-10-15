@@ -29,7 +29,7 @@
   layer.className = 'graduation-transition';layer.hidden = true;
   layer.setAttribute('aria-hidden','true');
   const video = document.createElement('video');
-  video.muted = true;video.playsInline = true;video.preload = 'auto';
+  video.muted = true;video.playsInline = true;video.preload = 'metadata';
   video.disablePictureInPicture = true;
   const canvas = document.createElement('canvas'),ctx = canvas.getContext('2d');
   layer.append(video,canvas);document.body.append(layer);
@@ -67,11 +67,12 @@
     if(event.data?.type==='rain:back')closeRain();
   });
   Promise.all(balloons.map(img => img.decode())).then(() => {assetsReady = true;wake();});
-  // File URLs can seek directly; a complete blob also supports servers without byte ranges.
+  // Warm the original video near its chapter, without competing with the opening scene.
   const src = 'assets/graduation/scene.mp4';
-  if(location.protocol === 'file:') video.src = src;
-  else fetch(src).then(r => {if(!r.ok)throw Error(r.status);return r.blob();})
-    .then(blob => {video.src = URL.createObjectURL(blob);}).catch(() => {video.src = src;});
+  video.src = src;
+  function warmMedia(){if(video.preload==='auto')return;video.preload='auto';video.load();}
+  const mediaObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){warmMedia();mediaObserver.disconnect();}},{rootMargin:'150% 0px'});
+  mediaObserver.observe(section);
   video.addEventListener('loadeddata',() => {mediaReady = true;wake();});
   function seek() {
     if(!mediaReady || video.seeking)return;
@@ -122,7 +123,7 @@
     if(!delta||document.querySelector('dialog[open]')||document.body.classList.contains('editing'))return false;
     const bottom = document.documentElement.scrollHeight-innerHeight;
     if(progress===0 && target===0 && (delta<0 || scrollY<bottom-3))return false;
-    prepareRain();
+    warmMedia();prepareRain();
     if(delta>0 && progress===END){rainRequested = true;enterRain();return true;}
     if(delta<0)rainRequested = false;
     scrollTo({top:bottom,behavior:'instant'});

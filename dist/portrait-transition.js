@@ -9,7 +9,7 @@
   dialog.innerHTML = `<iframe class="portrait-world" title="照片里的三维童年世界" tabindex="-1"></iframe>
     <img class="portrait-entry-image" src="./assets/lamp/portrait-entry.jpg" alt="粉色童年照片" draggable="false">
     <canvas width="1920" height="1080" aria-hidden="true"></canvas>
-    <video src="./assets/lamp/portrait-transition.mp4" preload="auto" muted playsinline disablepictureinpicture disableremoteplayback hidden></video>
+    <video src="./assets/lamp/portrait-transition.mp4" preload="metadata" muted playsinline disablepictureinpicture disableremoteplayback hidden></video>
     <p class="portrait-entry-hint" role="status">向下滚动，走进照片</p>
     <button type="button" class="portrait-entry-close" aria-label="返回档案">×</button>`;
   archive.append(dialog);
@@ -25,7 +25,10 @@
   let sceneReady=false, sceneFinished=false, resetting=true, lastScene=-1;
   video.muted=true; video.pause();
 
+  function warmVideo(){if(video.preload==='auto')return;video.preload='auto';video.load();}
+  archive.addEventListener('archive:open',warmVideo);
   function prepareWorld() {
+    warmVideo();
     if (world.hasAttribute('src')) return;
     world.src='./3D场景编辑器.html?embedded=archive';
   }
@@ -62,7 +65,8 @@
     frame=0;if(!dialog.open)return;
     const dt=Math.min(40,lastTime?now-lastTime:16);lastTime=now;
     // Stop at the last photograph frame if the 3D assets are still preparing.
-    const goal=sceneReady?target:Math.min(target,1);
+    const lastFrameReady=video.readyState>=2&&!seeking&&Math.abs(video.currentTime-(video.duration-.055))<.045;
+    const goal=sceneReady&&(position>1||lastFrameReady)?target:Math.min(target,1);
     position+=(goal-position)*(1-Math.exp(-dt/65));
     if(Math.abs(goal-position)<.001)position=goal;
     if(video.readyState>=2 && !seeking && (position<=1.18 || resetting)){
@@ -77,7 +81,7 @@
   function wake(){if(dialog.open&&!frame)frame=requestAnimationFrame(tick);}
   function advance(delta){
     if(!dialog.open||sceneFinished)return;
-    target=clamp(target+delta/PIXELS,0,sceneReady?END:1);
+    target=clamp(target+delta/PIXELS,0,END);
     wake();
   }
   function reset(){

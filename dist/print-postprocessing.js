@@ -1,8 +1,11 @@
 // Surface-bound ink: dots follow model transforms and skinned characters.
 export function createPrintPostprocessing(renderer) {
   const prepared = new WeakSet();
+  const preparedObjects = new WeakMap();
   function prepare(object) {
     if (!object.isMesh || !object.geometry.attributes.normal || object.userData.isEditorHelper) return;
+    if(preparedObjects.get(object)===object.material)return;
+    preparedObjects.set(object,object.material);
     const materials = Array.isArray(object.material) ? object.material : [object.material];
     for (const material of materials) {
       if (prepared.has(material) || material.isShaderMaterial || material.depthTest === false) continue;

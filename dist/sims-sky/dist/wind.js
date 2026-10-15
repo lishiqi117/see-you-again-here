@@ -36,7 +36,8 @@
     if(event.key==='Enter' || event.key===' ') { event.preventDefault(); if(!event.repeat) blow(); }
   });
   const editing = () => document.body.classList.contains('editing');
-  const active = () => !reduced.matches && !editing() && !document.hidden && !window.__skyHandoffHolding;
+  let inView=true;
+  const active = () => inView && !reduced.matches && !editing() && !document.hidden && !window.__skyHandoffHolding;
   const format = n => n.toFixed(3);
 
   // Interpolating cubic spline passes through every named hanging point exactly.
@@ -117,6 +118,7 @@
   scene.addEventListener('scene-layout-change',measure);
   scene.querySelectorAll('.object img').forEach(img=>img.addEventListener('load',measure));
   new ResizeObserver(measure).observe(scene);
+  new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;sync();}).observe(scene);
   new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});
   reduced.addEventListener('change',sync);
   document.addEventListener('visibilitychange',sync);

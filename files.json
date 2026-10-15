@@ -881,11 +881,11 @@
   },
   {
     "path": "portrait-transition.js",
-    "bytes": 6616
+    "bytes": 6912
   },
   {
     "path": "print-postprocessing.js",
-    "bytes": 4931
+    "bytes": 5081
   },
   {
     "path": "public/videos/girl-clean.webm",
@@ -1025,7 +1025,7 @@
   },
   {
     "path": "rain-phone/dist/street-transition.js",
-    "bytes": 5368
+    "bytes": 5685
   },
   {
     "path": "rain-phone/dist/style.css",
@@ -1037,7 +1037,7 @@
   },
   {
     "path": "school-continuation.js",
-    "bytes": 7331
+    "bytes": 7165
   },
   {
     "path": "school-portal.js",
@@ -1185,7 +1185,7 @@
   },
   {
     "path": "shared-assets/fetch-chunks.js",
-    "bytes": 1617
+    "bytes": 1700
   },
   {
     "path": "sims-sky/dist/assets/badge-detail-user.webp",
@@ -1449,7 +1449,7 @@
   },
   {
     "path": "sims-sky/dist/graduation.js",
-    "bytes": 8827
+    "bytes": 8922
   },
   {
     "path": "sims-sky/dist/index.html",
@@ -1489,7 +1489,7 @@
   },
   {
     "path": "sims-sky/dist/wind.js",
-    "bytes": 6633
+    "bytes": 6758
   },
   {
     "path": "sound-effects.js",
@@ -1505,7 +1505,7 @@
   },
   {
     "path": "space-editor.js",
-    "bytes": 1825184
+    "bytes": 1825291
   },
   {
     "path": "space-editor.source.js",
@@ -1525,7 +1525,7 @@
   },
   {
     "path": "street-scan/app.js",
-    "bytes": 12733
+    "bytes": 13089
   },
   {
     "path": "street-scan/archive-ending.js",
@@ -1693,7 +1693,7 @@
   },
   {
     "path": "street-scan/camera-model.js",
-    "bytes": 1262259
+    "bytes": 1264959
   },
   {
     "path": "street-scan/camera-model.source.js",
@@ -1768,12 +1768,16 @@
     "bytes": 229323
   },
   {
+    "path": "street-scan/memory-game.js",
+    "bytes": 1258395
+  },
+  {
     "path": "street-scan/memory-game.source.js",
-    "bytes": 44924
+    "bytes": 45640
   },
   {
     "path": "street-scan/memory-playback.js",
-    "bytes": 4239
+    "bytes": 4210
   },
   {
     "path": "street-scan/memory-reveal.glsl",
@@ -1805,7 +1809,7 @@
   },
   {
     "path": "street-scan/playback-scene.html",
-    "bytes": 3808258
+    "bytes": 3067392
   },
   {
     "path": "street-scan/preview.png",

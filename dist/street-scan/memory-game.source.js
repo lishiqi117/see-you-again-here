@@ -168,6 +168,9 @@ async function boot(){
  function syncCamera(){const c=viewer.global.camera;camera.matrix.fromArray(c.getWorldTransform().data);camera.matrix.decompose(camera.position,camera.quaternion,camera.scale);camera.projectionMatrix.fromArray(c.camera.projectionMatrix.data);camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();camera.updateMatrixWorld(true)}
  viewer.cameraManager.update=function(dt,frame){if(!state.active)return originalUpdate.call(this,dt,frame);const c=this.camera;if(!state.ending&&!state.transitioning&&!state.charging&&!state.dialog&&!state.inspect&&!state.album&&!state.drawer&&!state.editor&&!state.lensEditor){const f=(keys.has('KeyW')||keys.has('ArrowUp')?1:0)-(keys.has('KeyS')||keys.has('ArrowDown')?1:0);const r=(keys.has('KeyD')||keys.has('ArrowRight')?1:0)-(keys.has('KeyA')||keys.has('ArrowLeft')?1:0);const step=Math.min(dt,.05)*2.35/Math.max(1,Math.hypot(f,r));c.position.x+=(-Math.sin(yaw)*f+Math.cos(yaw)*r)*step;c.position.z+=(-Math.cos(yaw)*f-Math.sin(yaw)*r)*step; // Keep walking at the current street's eye height.
  c.position.y=startPosition.y;}
+ const pose=[c.position.x,c.position.y,c.position.z,yaw,pitch].join(',');
+ if(pose===this.lastGamePose)return;
+ this.lastGamePose=pose;
  const from=c.position.clone(),to=from.clone();to.x-=Math.sin(yaw)*Math.cos(pitch);to.y+=Math.sin(pitch);to.z-=Math.cos(yaw)*Math.cos(pitch);c.look(from,to);app.renderNextFrame=true;};
  function activate(){if(state.active)return;state.active=true;root.hidden=false;document.body.classList.add('game-active');const f=viewer.global.camera.forward;yaw=Math.atan2(-f.x,-f.z);pitch=Math.asin(f.y);bridge.enableDefaultLight();task();renderInventory();}
  const loads=['elder1','elder2','elder3','grandma','table','glasses','chess','student','box',...(ASSETS.girl?['girl']:[])].map(async name=>{const heights={elder1:1.25,elder2:1.62,elder3:1.25,grandma:1.50,girl:1.25,table:.73,glasses:.10,chess:.12,student:.22,box:.58};models[name]=await loadModel(name,heights[name]);});
@@ -183,10 +186,20 @@ async function boot(){
  const memoryStar=createMemoryStar({root,state,camera,app,bridge,reduced,layers:()=>[app.graphicsDevice.canvas,worldCanvas,pixelWorld.canvas],lock:()=>{keys.clear();rightDragging=false}});
  const archiveEnding=createArchiveEnding({state,assets:ASSETS,source:()=>memoryStar.pixel,lock:()=>{keys.clear();rightDragging=false}});
  initEditor();initLensEditor();state.ready=true;renderInventory();
+ let overlayKey='',overlayEmpty=false;
+ function renderOverlay(){
+  let hasColor=false;
+  scene.traverseVisible(o=>{if(o.isMesh&&(o.layers.mask&camera.layers.mask)){const m=Array.isArray(o.material)?o.material:[o.material];if(m.some(x=>x.visible&&x.colorWrite))hasColor=true;}});
+  if(!hasColor){if(!overlayEmpty){renderer.clear();overlayEmpty=true;}overlayKey='';return;}
+  overlayEmpty=false;
+  const key=[...camera.matrixWorld.elements,...camera.projectionMatrix.elements,innerWidth,innerHeight,state.glasses,state.hasGlasses].join(',');
+  const animated=state.editor||actors.some(a=>a.visible)||state.transitioning;
+  if(animated||key!==overlayKey){occlusion.update();renderer.render(scene,camera);overlayKey=key;}
+ }
  let last=0;function frame(ms){requestAnimationFrame(frame);const dt=Math.min(.05,(ms-last)/1000||0);last=ms;if(document.body.classList.contains('memory-entered')&&!state.active)activate();worldCanvas.hidden=!state.active;cameraCanvas.hidden=!state.active||state.mode!=='camera';if(!state.active||state.ending||document.hidden){handCamera.setState(false,false);return;}clock.value=reduced||state.editor?0:ms/1000;
  for(const a of actors){a.visible=(state.glasses||state.editor)&&a.position.distanceTo(camera.position)<24;}
  models.glasses.visible=state.editor||!state.hasGlasses;drawSelections();
- syncCamera();occlusion.update();renderer.render(scene,camera);pixelWorld.canvas.hidden=false;pixelWorld.render();memoryStar.update(ms);handCamera.setState(state.mode==='camera',keys.size>0,aim);
+ syncCamera();renderOverlay();pixelWorld.canvas.hidden=false;pixelWorld.render();memoryStar.update(ms);handCamera.setState(state.mode==='camera',keys.size>0,aim);
  if(!state.ending&&!state.transitioning&&!state.charging&&!state.dialog&&!state.inspect&&!state.album&&!state.drawer&&!state.editor&&!state.lensEditor){const n=nearest();const prompt=$('.game-prompt');if(!state.hasGlasses&&canPickGlasses()){prompt.hidden=false;prompt.textContent='';prompt.setAttribute('aria-label','Pick up glasses');prompt.classList.add('icon-prompt')}else if(state.glasses&&n&&n.d<n.e.radius+1){prompt.hidden=false;prompt.textContent='';prompt.setAttribute('aria-label','Talk');prompt.classList.add('icon-prompt');if(n.d<1.85&&camera.getWorldDirection(new THREE.Vector3()).dot(new THREE.Vector3(...n.e.position).sub(camera.position).normalize())>.1&&!state.items.includes(n.e.reward)&&lastAuto!==n.e.id&&ms>autoCooldown)startDialog(n.e)}else{prompt.hidden=true;if(n&&n.d>n.e.radius+2)lastAuto=null}}else $('.game-prompt').hidden=true;
  }
  requestAnimationFrame(frame);

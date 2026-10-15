@@ -9,14 +9,13 @@ export function createSchoolContinuation({viewport,onExit}) {
  ending.decode().then(()=>{referencesReady=true;draw();wake();}).catch(()=>{});
  const video=document.createElement('video');video.preload='auto';video.muted=true;video.playsInline=true;video.hidden=true;
  video.disablePictureInPicture=true;video.disableRemotePlayback=true;video.setAttribute('aria-hidden','true');viewport.append(video);
- let active=false,armed=false,ready=false,error=null,target=0,position=0,raf=0,last=0,seeking=false,painted=-1,touchY=null,blobURL=null,siteReady=false,handedOff=false;
+ let active=false,armed=false,ready=false,error=null,target=0,position=0,raf=0,last=0,seeking=false,painted=-1,touchY=null,siteReady=false,handedOff=false;
  let width=0,height=0,pixelRatio=1;
  let openingFrame=null;
  const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
  const source='./assets/space-editor/school-transition-continuous-20261011.mp4';
- // A fully buffered source also supports reverse seeking on simple local HTTP servers.
- if(location.protocol==='file:')video.src=source;
- else fetch(source).then(r=>{if(!r.ok)throw Error('Scene media unavailable');return r.blob()}).then(blob=>{blobURL=URL.createObjectURL(blob);video.src=blobURL}).catch(()=>{video.src=source});
+ // Native media loading preserves range requests and avoids a second full-file Blob.
+ video.src=source;
  function resize(){
   const w=viewport.clientWidth,h=viewport.clientHeight,dpr=Math.min(devicePixelRatio||1,1920/w,1080/h);
   width=w;height=h;pixelRatio=dpr;
@@ -73,7 +72,7 @@ export function createSchoolContinuation({viewport,onExit}) {
    position=next;
   }
   // Every scroll increment advances the video; there is no static lead-in.
-  const time=Math.round(position*120)/24;
+  const time=Math.min(Math.round(position*Math.max(0,video.duration-1/24)*24)/24,Math.max(0,video.duration-1/24));
   if(ready&&!seeking){
    if(Math.abs(video.currentTime-time)>1/48){seeking=true;video.currentTime=time;}
   }

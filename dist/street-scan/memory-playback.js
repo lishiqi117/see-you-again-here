@@ -51,9 +51,9 @@ export function createMemoryPlayback() {
       // Keep the loading frame visible before parsing the large embedded scene.
       await sleep(80);
       const embedded = document.querySelector('#memory-scene-source');
-      const source = embedded ? JSON.parse(embedded.textContent) : await fetch('./playback-scene.html').then(r=>{if(!r.ok)throw Error('Scene unavailable');return r.text()});
+      // Embedded offline exports still use srcdoc; hosted pages navigate directly.
       if(token!==run)return;
-      iframe.src = './playback-scene.html'; screen.append(iframe);
+      if(embedded)iframe.srcdoc=JSON.parse(embedded.textContent);else iframe.src='./playback-scene.html'; screen.append(iframe);
       const started = performance.now();
       let api;
       while(token===run) {
