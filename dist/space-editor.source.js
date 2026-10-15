@@ -16,6 +16,7 @@ gsap.registerPlugin(Observer);
 const archiveEmbedded = new URLSearchParams(location.search).get('embedded') === 'archive';
 let archiveIntroProgress = 0;
 let pendingArchiveProgress = null;
+let archiveVisible = !archiveEmbedded;
 function setArchiveIntroProgress(progress) {
   if (!archiveEmbedded || !introTimeline || state.introCompleted) return;
   archiveIntroProgress = Math.max(0, Math.min(1, Number(progress) || 0));
@@ -26,6 +27,10 @@ function setArchiveIntroProgress(progress) {
 window.addEventListener('message', event => {
   if (!archiveEmbedded || event.source !== parent) return;
   if (event.data?.type === 'archive:seek-scene') pendingArchiveProgress = event.data.progress;
+  if (event.data?.type === 'archive:visibility') {
+    archiveVisible = event.data.visible === true;
+    if (archiveVisible) invalidateRender();
+  }
 });
 
 const modelFile = (name) => `./assets/space-editor/models-optimized/${name}.glb`;
@@ -864,10 +869,11 @@ function playOpeningTimeline(restoredSavedLayout) {
   });
 
   const backgroundAt = 0;
-  const backgroundEnd = backgroundAt + 2.55;
+  const backgroundDuration = archiveEmbedded ? 0.65 : 2.55;
+  const backgroundEnd = backgroundAt + backgroundDuration;
   introTimeline.addLabel("draw", backgroundAt).to(paint, {
     progress: 1,
-    duration: 2.55,
+    duration: backgroundDuration,
     ease: "power1.inOut",
     onUpdate: () => introBackgroundPainter?.paint(paint.progress),
     onComplete: () => {
@@ -1972,7 +1978,7 @@ let previousRenderedFrameTime = 0;
 
 function renderLoop(frameTime = performance.now()) {
   requestAnimationFrame(renderLoop);
-  if (document.hidden || (archiveEmbedded && window.frameElement?.hidden)) {
+  if (document.hidden || (archiveEmbedded && (!archiveVisible || window.frameElement?.hidden))) {
     previousFrameTime = frameTime;
     return;
   }

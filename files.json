@@ -881,7 +881,7 @@
   },
   {
     "path": "portrait-transition.js",
-    "bytes": 6912
+    "bytes": 7563
   },
   {
     "path": "print-postprocessing.js",
@@ -1505,11 +1505,11 @@
   },
   {
     "path": "space-editor.js",
-    "bytes": 1825291
+    "bytes": 1825712
   },
   {
     "path": "space-editor.source.js",
-    "bytes": 81182
+    "bytes": 81479
   },
   {
     "path": "starfield-background.js",
@@ -1978,5 +1978,9 @@
   {
     "path": "街道扫描-双击打开.html",
     "bytes": 214
+  },
+  {
+    "path": "assets/lamp/portrait-scrub.mp4",
+    "bytes": 15337808
   }
 ]

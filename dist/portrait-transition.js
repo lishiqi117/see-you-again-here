@@ -9,7 +9,7 @@
   dialog.innerHTML = `<iframe class="portrait-world" title="照片里的三维童年世界" tabindex="-1"></iframe>
     <img class="portrait-entry-image" src="./assets/lamp/portrait-entry.jpg" alt="粉色童年照片" draggable="false">
     <canvas width="1920" height="1080" aria-hidden="true"></canvas>
-    <video src="./assets/lamp/portrait-transition.mp4" preload="metadata" muted playsinline disablepictureinpicture disableremoteplayback hidden></video>
+    <video src="./assets/lamp/portrait-scrub.mp4" preload="metadata" muted playsinline disablepictureinpicture disableremoteplayback hidden></video>
     <p class="portrait-entry-hint" role="status">向下滚动，走进照片</p>
     <button type="button" class="portrait-entry-close" aria-label="返回档案">×</button>`;
   archive.append(dialog);
@@ -20,9 +20,9 @@
   const ctx = canvas.getContext('2d', { alpha: false });
   const hint = dialog.querySelector('p');
   const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
-  const PIXELS = 1800, END = 3.8;
+  const PIXELS = 1200, END = 2.8;
   let target=0, position=0, frame=0, lastTime=0, touchY=null, seeking=false, paintedTime=-1;
-  let sceneReady=false, sceneFinished=false, resetting=true, lastScene=-1;
+  let sceneReady=false, sceneFinished=false, resetting=true, lastScene=-1, lastVisible=null;
   video.muted=true; video.pause();
 
   function warmVideo(){if(video.preload==='auto')return;video.preload='auto';video.load();}
@@ -40,6 +40,11 @@
     canvas.style.opacity=canvas.classList.contains('visible') ? String(1-blend) : '0';
     poster.style.opacity=canvas.classList.contains('visible') ? '0' : '1';
     world.style.opacity=sceneReady?'1':'0';
+    const visible=sceneReady && blend>0 && dialog.open && !document.hidden;
+    if(sceneReady && visible!==lastVisible){
+      world.contentWindow.postMessage({type:'archive:visibility',visible},'*');
+      lastVisible=visible;
+    }
     const progress=clamp((position-1.18)/(END-1.18),0,1);
     if(sceneReady && progress!==lastScene){
       world.contentWindow.postMessage({type:'archive:seek-scene',progress},'*');
@@ -62,7 +67,7 @@
     canvas.classList.add('visible');resetting=false;
   }
   function tick(now) {
-    frame=0;if(!dialog.open)return;
+    frame=0;if(!dialog.open||document.hidden)return;
     const dt=Math.min(40,lastTime?now-lastTime:16);lastTime=now;
     // Stop at the last photograph frame if the 3D assets are still preparing.
     const lastFrameReady=video.readyState>=2&&!seeking&&Math.abs(video.currentTime-(video.duration-.055))<.045;
@@ -91,11 +96,18 @@
     if(!dialog.open && world.hasAttribute('src'))world.removeAttribute('src');
     if(!world.hasAttribute('src')){sceneReady=false;sceneFinished=false;}
     paintedTime=-1;
-    lastScene=-1;syncLayers();
+    lastScene=-1;lastVisible=null;syncLayers();
   }
-  video.addEventListener('loadeddata',()=>{paint();wake();});
+  video.addEventListener('loadeddata',()=>{seeking=video.seeking;paint();wake();});
   video.addEventListener('seeked',()=>{seeking=false;paint();wake();});
-  video.addEventListener('error',()=>{hint.textContent='照片暂时无法展开，请关闭后重试';});
+  video.addEventListener('error',()=>{
+    // Some browsers cannot decode lossless H.264; retain the original movie as fallback.
+    if(!video.src.endsWith('/portrait-transition.mp4')){
+      seeking=false;video.src='./assets/lamp/portrait-transition.mp4';video.load();return;
+    }
+    hint.textContent='照片暂时无法展开，请关闭后重试';
+  });
+  document.addEventListener('visibilitychange',()=>{syncLayers();if(!document.hidden)wake();});
   window.addEventListener('message',event=>{
     if(event.source!==world.contentWindow||event.data?.type!=='archive:scene-ready')return;
     sceneReady=true;lastScene=-1;syncLayers();wake();
