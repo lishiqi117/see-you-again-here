@@ -5,6 +5,9 @@ import * as THREE from 'three';
 export function createPixelWorld(scene, sourceCamera, occlusion) {
  const canvas=document.createElement('canvas');canvas.id='game-pixel-world';canvas.hidden=true;document.body.append(canvas);
  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:false,preserveDrawingBuffer:true});renderer.setPixelRatio(1);
+ // clear() may run before the first render(). Three's initial GL clear alpha
+ // is 1 even with alpha:true; explicitly initialize this overlay as transparent.
+ renderer.setClearColor(0x000000,0);
  const target=new THREE.WebGLRenderTarget(1,1,{minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter,generateMipmaps:false});
  const camera=sourceCamera.clone();camera.layers.set(1);
  const viewport=new THREE.Vector2();
