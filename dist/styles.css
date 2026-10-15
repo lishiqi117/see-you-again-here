@@ -1597,3 +1597,5 @@ html.parallax-enabled .lamp-memory-screen .lamp-room-photo {
 .portrait-transition.entering .portrait-entry-close { opacity: .65; pointer-events: auto; }
 .portrait-entry-close:hover { opacity: 1; }
 .portrait-transition:focus { outline: none; }
+.portrait-load-retry{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);z-index:5;padding:8px 24px;border:1px solid #ddd;background:#222;color:#fff;border-radius:6px;cursor:pointer}
+.portrait-load-retry[hidden]{display:none}

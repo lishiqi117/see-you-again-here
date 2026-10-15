@@ -9,7 +9,7 @@
   dialog.innerHTML = `<iframe class="portrait-world" title="照片里的三维童年世界" tabindex="-1"></iframe>
     <img class="portrait-entry-image" src="./assets/lamp/portrait-entry.jpg" alt="粉色童年照片" draggable="false">
     <canvas width="1920" height="1080" aria-hidden="true"></canvas>
-    <video src="./assets/lamp/portrait-scrub.mp4" preload="metadata" muted playsinline disablepictureinpicture disableremoteplayback hidden></video>
+    <video src="./assets/lamp/portrait-scrub.mp4" preload="none" muted playsinline disablepictureinpicture disableremoteplayback hidden></video>
     <p class="portrait-entry-hint" role="status">向下滚动，走进照片</p>
     <button type="button" class="portrait-entry-close" aria-label="返回档案">×</button>`;
   archive.append(dialog);
@@ -22,11 +22,12 @@
   const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
   const PIXELS = 1200, END = 2.8;
   let target=0, position=0, frame=0, lastTime=0, touchY=null, seeking=false, paintedTime=-1;
+  let entryReady=false, entrySession=0;
   let sceneReady=false, sceneFinished=false, resetting=true, lastScene=-1, lastVisible=null;
   video.muted=true; video.pause();
 
   function warmVideo(){if(video.preload==='auto')return;video.preload='auto';video.load();}
-  archive.addEventListener('archive:open',warmVideo);
+  // The next-stage downloader owns video warming; avoid competing network requests.
   function prepareWorld() {
     warmVideo();
     if (world.hasAttribute('src')) return;
@@ -37,10 +38,10 @@
     if(sceneReady)return Promise.resolve();
     if(preparing)return preparing;
     preparing=new Promise((resolve,reject)=>{
-      archive.classList.add('preparing-scene');dialog.classList.add('preparing-scene');
+      if(!archive.open)archive.classList.add('preparing-scene');if(!dialog.open)dialog.classList.add('preparing-scene');
       const timer=setTimeout(()=>finish(new Error('3D 场景准备超时，请重试')),120000);
       function finish(error){
-        clearTimeout(timer);window.removeEventListener('message',onMessage);
+        clearTimeout(timer);window.removeEventListener('message',onMessage);dialog.removeEventListener('close',cancel);
         archive.classList.remove('preparing-scene');dialog.classList.remove('preparing-scene');
         if(error){world.removeAttribute('src');sceneReady=false;reject(error);}else resolve();
       }
@@ -49,6 +50,8 @@
         if(event.data?.type==='archive:scene-ready')finish();
         if(event.data?.type==='archive:scene-error')finish(new Error('3D 场景准备失败，请重试'));
       }
+      function cancel(){finish(new Error('照片已关闭'));}
+      dialog.addEventListener('close',cancel,{once:true});
       window.addEventListener('message',onMessage);prepareWorld();
     }).finally(()=>{preparing=null;});
     return preparing;
@@ -88,7 +91,7 @@
     canvas.classList.add('visible');resetting=false;
   }
   function tick(now) {
-    frame=0;if(!dialog.open||document.hidden)return;
+    frame=0;if(!dialog.open||document.hidden||!entryReady)return;
     const dt=Math.min(40,lastTime?now-lastTime:16);lastTime=now;
     // Stop at the last photograph frame if the 3D assets are still preparing.
     const lastFrameReady=video.readyState>=2&&!seeking&&Math.abs(video.currentTime-(video.duration-.055))<.045;
@@ -134,8 +137,20 @@
     if(event.source!==world.contentWindow||event.data?.type!=='archive:scene-ready')return;
     sceneReady=true;lastScene=-1;syncLayers();wake();
   });
+  const retry=document.createElement('button');retry.type='button';retry.className='portrait-load-retry';retry.textContent='重试';retry.hidden=true;dialog.append(retry);
+  async function enter(){
+    const session=++entrySession;entryReady=false;retry.hidden=true;hint.textContent='正在准备照片…';
+    try{
+      await window.prepareNextMemory();
+      if(!dialog.open||session!==entrySession)return;
+      entryReady=true;hint.textContent='向下滚动，走进照片';wake();
+    }catch(error){if(dialog.open&&session===entrySession){hint.textContent='照片还没准备好，请检查网络后重试';retry.hidden=false;}}
+  }
+  retry.addEventListener('click',enter);
+  window.addEventListener('portrait:preload',event=>{if(dialog.open&&!entryReady)hint.textContent=event.detail.message;});
   window.addEventListener('archive-portrait:open',()=>{
-    reset();document.body.classList.add('archive-world-active');dialog.showModal();dialog.focus({preventScroll:true});prepareWorld();wake();
+    reset();archive.classList.remove('preparing-scene');dialog.classList.remove('preparing-scene');
+    document.body.classList.add('archive-world-active');dialog.showModal();dialog.focus({preventScroll:true});enter();
   });
   dialog.querySelector('button').addEventListener('click',()=>dialog.close());
   for(const type of ['wheel','keydown','keyup','pointerdown','pointermove','pointerup','touchstart','touchmove','click'])
@@ -157,6 +172,6 @@
   },{passive:false});
   dialog.addEventListener('contextmenu',event=>event.preventDefault());
   dialog.addEventListener('close',event=>{
-    event.stopPropagation();document.body.classList.remove('archive-world-active');reset(true);archive.querySelector('[data-object="portrait"]')?.focus({preventScroll:true});
+    event.stopPropagation();entrySession++;entryReady=false;document.body.classList.remove('archive-world-active');reset(true);archive.querySelector('[data-object="portrait"]')?.focus({preventScroll:true});
   });
 })();

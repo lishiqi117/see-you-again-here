@@ -61,7 +61,7 @@
   },
   {
     "path": "app.js",
-    "bytes": 5292
+    "bytes": 5392
   },
   {
     "path": "archive-interaction.js",
@@ -881,7 +881,7 @@
   },
   {
     "path": "portrait-transition.js",
-    "bytes": 8682
+    "bytes": 9874
   },
   {
     "path": "print-postprocessing.js",
@@ -1037,7 +1037,7 @@
   },
   {
     "path": "school-continuation.js",
-    "bytes": 7165
+    "bytes": 7350
   },
   {
     "path": "school-portal.js",
@@ -1505,7 +1505,7 @@
   },
   {
     "path": "space-editor.js",
-    "bytes": 1826019
+    "bytes": 1826252
   },
   {
     "path": "space-editor.source.js",
@@ -1921,7 +1921,7 @@
   },
   {
     "path": "styles.css",
-    "bytes": 67259
+    "bytes": 67497
   },
   {
     "path": "vendor/gsap/gsap.min.js",
@@ -1981,11 +1981,11 @@
   },
   {
     "path": "assets/lamp/portrait-scrub.mp4",
-    "bytes": 15337808
+    "bytes": 9529299
   },
   {
     "path": "site-preload.js",
-    "bytes": 6445
+    "bytes": 7882
   },
   {
     "path": "site-cache-worker.js",
@@ -1993,6 +1993,6 @@
   },
   {
     "path": "precache-manifest.js",
-    "bytes": 63962
+    "bytes": 9642
   }
 ]

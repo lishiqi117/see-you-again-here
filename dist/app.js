@@ -80,6 +80,7 @@
         loader.destroy();
         memoryLoader.classList.remove('active');
         memoryLoader.setAttribute('aria-hidden', 'true');
+        window.prepareNextMemory().catch(error=>console.warn('照片预加载暂未完成',error));
       }
     });
     const status=document.createElement('p');status.className='site-loading-status';status.setAttribute('role','status');

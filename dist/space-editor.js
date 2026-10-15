@@ -40213,7 +40213,7 @@ void main() {
     }).catch(() => {
     });
     const video = document.createElement("video");
-    video.preload = "auto";
+    video.preload = "none";
     video.muted = true;
     video.playsInline = true;
     video.hidden = true;
@@ -40237,7 +40237,14 @@ void main() {
         layer.height = Math.round(h * dpr);
       }
     }
+    function warmVideo() {
+      if (video.preload === "auto") return;
+      video.preload = "auto";
+      video.load();
+    }
+    window.addEventListener("space-editor-intro-complete", warmVideo, { once: true });
     function prepare(captureInput = false) {
+      warmVideo();
       if (captureInput) armed = true;
       if (!site.hasAttribute("src")) site.src = "./sims-sky/dist/index.html?entry=school&v=20261009-continuous-layout";
       resize();

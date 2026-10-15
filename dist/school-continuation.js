@@ -7,7 +7,7 @@ export function createSchoolContinuation({viewport,onExit}) {
  ending.src='./assets/space-editor/school-transition-first-20261009.png';
  let referencesReady=false;
  ending.decode().then(()=>{referencesReady=true;draw();wake();}).catch(()=>{});
- const video=document.createElement('video');video.preload='auto';video.muted=true;video.playsInline=true;video.hidden=true;
+ const video=document.createElement('video');video.preload='none';video.muted=true;video.playsInline=true;video.hidden=true;
  video.disablePictureInPicture=true;video.disableRemotePlayback=true;video.setAttribute('aria-hidden','true');viewport.append(video);
  let active=false,armed=false,ready=false,error=null,target=0,position=0,raf=0,last=0,seeking=false,painted=-1,touchY=null,siteReady=false,handedOff=false;
  let width=0,height=0,pixelRatio=1;
@@ -21,7 +21,10 @@ export function createSchoolContinuation({viewport,onExit}) {
   width=w;height=h;pixelRatio=dpr;
   if(layer.width!==Math.round(w*dpr)||layer.height!==Math.round(h*dpr)){layer.width=Math.round(w*dpr);layer.height=Math.round(h*dpr);}
  }
+ function warmVideo(){if(video.preload==='auto')return;video.preload='auto';video.load();}
+ window.addEventListener('space-editor-intro-complete',warmVideo,{once:true});
  function prepare(captureInput=false){
+  warmVideo();
   if(captureInput)armed=true;
   if(!site.hasAttribute('src'))site.src='./sims-sky/dist/index.html?entry=school&v=20261009-continuous-layout';
   resize();
