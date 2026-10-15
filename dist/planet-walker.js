@@ -36,6 +36,7 @@ export async function createPlanetWalker({scene,camera,canvas,state,controls,toa
  const bounds=new T.Box3().setFromObject(gltf.scene),modelHeight=bounds.getSize(v()).y;
  gltf.scene.scale.setScalar(.70/modelHeight);gltf.scene.position.y=-bounds.min.y*(.70/modelHeight);visual.add(gltf.scene);
  gltf.scene.traverse(m=>{if(m.isMesh){m.frustumCulled=false;m.material.roughness=.85}});
+ let collisionBuilds=0,poseUpdates=0;
  let boneCount=0;gltf.scene.traverse(node=>{if(node.isBone)boneCount++});
  const mixer=new T.AnimationMixer(gltf.scene),walk=mixer.clipAction(gltf.animations[0]);walk.play();walk.setEffectiveWeight(0);
  const shadow=new T.Mesh(new T.CircleGeometry(.13,32),new T.MeshBasicMaterial({color:0x12333e,transparent:true,opacity:.26,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.009;root.add(shadow);
@@ -84,7 +85,7 @@ export async function createPlanetWalker({scene,camera,canvas,state,controls,toa
  function refresh(){
   const earthAsset=state.assetsById.get('earth');earthAsset.pivot.updateWorldMatrix(true,true);
   const next=earthAsset.pivot.matrixWorld.elements.join(',');if(next===signature){syncObstacles();return}
-  signature=next;const earth=state.assetsById.get('earth');ground=meshTree(earth.content);center=ground.box.getCenter(v());
+  collisionBuilds++;signature=next;const earth=state.assetsById.get('earth');ground=meshTree(earth.content);center=ground.box.getCenter(v());
   obstacles=state.assets.filter(a=>a.id!=='earth').map(asset=>({asset,tree:meshTree(asset.content),bind:asset.pivot.matrixWorld.clone(),previous:asset.pivot.matrixWorld.clone(),toBaked:new T.Matrix4(),radiusScale:1})).filter(o=>o.tree);graph=[];route=[];speed=0;
   if(blocked(normal)){
    let found=false;for(let i=0;i<500;i++){const n=new T.Vector3(Math.cos(i*2.4)*Math.sqrt(1-(1-2*i/500)**2),1-2*i/500,Math.sin(i*2.4)*Math.sqrt(1-(1-2*i/500)**2));if(!blocked(n)){normal=n;found=true;break}}
@@ -118,6 +119,7 @@ export async function createPlanetWalker({scene,camera,canvas,state,controls,toa
   line.geometry.dispose();line.geometry=new T.BufferGeometry().setFromPoints(pts);line.visible=true;status('正在走向你点击的位置');invalidate();return true;
  }
  function pose(dt){
+  poseUpdates++;
   const p=surface(normal);if(!p)return;
   forward.addScaledVector(normal,-forward.dot(normal));if(forward.lengthSq()<.001)forward.set(1,0,0).addScaledVector(normal,-normal.x);forward.normalize();
   const right=v().crossVectors(normal,forward).normalize();root.quaternion.setFromRotationMatrix(new T.Matrix4().makeBasis(right,normal,forward));root.position.copy(p).addScaledVector(normal,.008);
@@ -128,11 +130,11 @@ export async function createPlanetWalker({scene,camera,canvas,state,controls,toa
  }
  function stop(){route=[];target=null;speed=0;down=null;marker.visible=false;line.visible=false;if(ready)pose(0);invalidate()}
  function prepareIntro(){
-  refresh();if(!ready)return null;
+  refresh();if(!ready)return null;buildGraph();
   stop();introControlled=true;root.matrixAutoUpdate=true;root.updateMatrix();root.updateWorldMatrix(true,true);
   return {id:'walking-girl',name:'小女孩',model:'character',pivot:root,content:visual,introEase:'power2.out'};
  }
- function finishIntro(){introControlled=false;root.matrixAutoUpdate=false;signature='';refresh();root.visible=ready;invalidate()}
+ function finishIntro(){introControlled=false;root.matrixAutoUpdate=false;refresh();root.visible=ready;invalidate()}
  function tick(dt){
   if(introControlled){resetThought();marker.visible=false;line.visible=false;return false}
   const enabled=state.ready&&!state.introRunning&&!state.editorVisible;root.visible=enabled;marker.visible=enabled&&!!target;line.visible=enabled&&route.length>0;
@@ -144,6 +146,7 @@ export async function createPlanetWalker({scene,camera,canvas,state,controls,toa
    for(let ring=1;ring<=8&&!free;ring++)for(let i=0;i<16;i++){const a=i*Math.PI/8,n=normal.clone().addScaledVector(tangent,Math.cos(a)*ring*.025).addScaledVector(side,Math.sin(a)*ring*.025).normalize();if(!blocked(n)){free=n;break}}
    if(free){normal.copy(free);collisions++;stop();status('模型碰到人物，已让开并停下')}
   }
+  if(!obstaclesMoved&&!route.length&&speed===0){updateThought(dt);return false;}
   let remain=dt;while(remain>0){const step=Math.min(remain,1/90);remain-=step;
    if(route.length){const goal=route[0],r=root.position.distanceTo(center),distance=normal.angleTo(goal)*r;
     let remaining=distance;for(let i=1;i<route.length;i++)remaining+=route[i-1].angleTo(route[i])*r;
@@ -155,6 +158,7 @@ export async function createPlanetWalker({scene,camera,canvas,state,controls,toa
     }else{speed=0;collisions++;stuck+=step;if(stuck>.15){route=[];target=null;status('前方被挡住了，请重新选择位置')}}
    }else speed=T.MathUtils.damp(speed,0,14,step);
   }
+  if(!route.length&&speed<.0001)speed=0;
   pose(dt);updateThought(dt);return route.length>0||speed>.002;
  }
  let down=null;
@@ -166,5 +170,5 @@ export async function createPlanetWalker({scene,camera,canvas,state,controls,toa
   if(hit)plan(hit.sub(center).normalize());else status('请点击地球表面');
  },true);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!state.editorVisible){stop();status('已停下，点击地面继续')}});
- return {root,visual,get motionState(){return {ready:ready&&state.ready,normal:normal.toArray(),speed,route}},get groundCenter(){return center.clone()},tick,refresh,plan,blocked,stop,prepareIntro,finishIntro,get report(){return {ready:ready&&state.ready,introControlled,visible:root.visible,position:root.position.toArray(),normal:normal.toArray(),speed,route:route.map(n=>n.toArray()),target:target?.toArray()||null,collisions,bones:boneCount,groundError:ready?root.position.distanceTo(surface(normal))-.008:null,blocked:ready?blocked(normal):null}},screenPoint:n=>{const p=surface(new T.Vector3(...n).normalize()).project(camera),r=canvas.getBoundingClientRect();return {x:r.left+(p.x+1)*r.width/2,y:r.top+(1-p.y)*r.height/2}}};
+ return {root,visual,get motionState(){return {ready:ready&&state.ready,normal:normal.toArray(),speed,route}},get groundCenter(){return center.clone()},tick,refresh,plan,blocked,stop,prepareIntro,finishIntro,get report(){return {collisionBuilds,poseUpdates,ready:ready&&state.ready,introControlled,visible:root.visible,position:root.position.toArray(),normal:normal.toArray(),speed,route:route.map(n=>n.toArray()),target:target?.toArray()||null,collisions,bones:boneCount,groundError:ready?root.position.distanceTo(surface(normal))-.008:null,blocked:ready?blocked(normal):null}},screenPoint:n=>{const p=surface(new T.Vector3(...n).normalize()).project(camera),r=canvas.getBoundingClientRect();return {x:r.left+(p.x+1)*r.width/2,y:r.top+(1-p.y)*r.height/2}}};
 }

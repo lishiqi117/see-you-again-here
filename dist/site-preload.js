@@ -102,22 +102,25 @@
   window.prepareWholeSite = async function(report) {
     report(0,'正在准备开场…');
     await controlCache();
-    const opening=manifest.files.filter(file=>file.stage==='opening');
-    const summary=await downloadFiles(opening,report);
+    const opening=manifest.files;
+    const summary=await downloadFiles(opening,(value,message)=>report(value*.9,message));
     const cache=await caches.open(cacheName);
-    report(99,'开场已下载，正在准备画面…');
-    await Promise.all([
-      window.lampBackgroundReady,waitForLamp(),
+    report(90,'正在准备场景…');
+    const tasks=[
+      window.lampBackgroundReady,waitForLamp(),window.preparePortraitScene(),
       ...[...document.querySelectorAll('#lampMemory img[src]')].map(img=>img.decode()),
-      ...[...document.querySelectorAll('#archiveOpeningSource')].map(waitForMedia)
-    ]);
+      ...[...document.querySelectorAll('#lampMemory video')].map(waitForMedia)
+    ];
+    let prepared=0;
+    await Promise.all(tasks.map(task=>Promise.resolve(task).then(()=>report(90+(++prepared/tasks.length)*9,'正在准备场景…'))));
+    nextDownload=Promise.resolve();
     // Remove obsolete revisions only after the new set and opening scene succeed.
     const wanted=new Set(manifest.files.map(keyFor));
     const bootstrap=new URL('precache-manifest.js',base).href;
     await cache.put(bootstrap,new Response('globalThis.SITE_PRECACHE = '+JSON.stringify(manifest)+';', {headers:{'Content-Type':'text/javascript'}}));
     wanted.add(bootstrap);
     await Promise.all((await cache.keys()).filter(request=>!wanted.has(request.url)).map(request=>cache.delete(request)));
-    window.sitePreloadState={ready:true,...summary,version:manifest.version,portraitReady:false};
+    window.sitePreloadState={ready:true,...summary,version:manifest.version,portraitReady:true};
     report(100,'开场准备好了');
   };
   let nextDownload=null;

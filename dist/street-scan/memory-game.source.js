@@ -14,6 +14,7 @@ import publishedLayout from './published-layout.json';
 
 const wait = ms=>new Promise(r=>setTimeout(r,ms));
 async function boot(){
+ const loading=window.streetGameLoading={completed:0,total:ASSETS.girl?11:10,gpuReady:false};
  sounds.prepare(['click','drawer','shutter']);
  while(!window.memoryPlayback?.ready||!window.streetGameBridge)await wait(80);
  const viewer=window.memoryViewer,app=viewer.global.app,bridge=window.streetGameBridge;
@@ -173,8 +174,8 @@ async function boot(){
  this.lastGamePose=pose;
  const from=c.position.clone(),to=from.clone();to.x-=Math.sin(yaw)*Math.cos(pitch);to.y+=Math.sin(pitch);to.z-=Math.cos(yaw)*Math.cos(pitch);c.look(from,to);app.renderNextFrame=true;};
  function activate(){if(state.active)return;state.active=true;root.hidden=false;document.body.classList.add('game-active');const f=viewer.global.camera.forward;yaw=Math.atan2(-f.x,-f.z);pitch=Math.asin(f.y);bridge.enableDefaultLight();task();renderInventory();}
- const loads=['elder1','elder2','elder3','grandma','table','glasses','chess','student','box',...(ASSETS.girl?['girl']:[])].map(async name=>{const heights={elder1:1.25,elder2:1.62,elder3:1.25,grandma:1.50,girl:1.25,table:.73,glasses:.10,chess:.12,student:.22,box:.58};models[name]=await loadModel(name,heights[name]);});
- await Promise.all([...loads,createHandCamera(cameraCanvas,ASSETS.camera,{pixelArt:true}).then(x=>handCamera=x)]);
+ const loads=['elder1','elder2','elder3','grandma','table','glasses','chess','student','box',...(ASSETS.girl?['girl']:[])].map(async name=>{const heights={elder1:1.25,elder2:1.62,elder3:1.25,grandma:1.50,girl:1.25,table:.73,glasses:.10,chess:.12,student:.22,box:.58};models[name]=await loadModel(name,heights[name]);loading.completed++;});
+ await Promise.all([...loads,createHandCamera(cameraCanvas,ASSETS.camera,{pixelArt:true}).then(x=>{handCamera=x;loading.completed++;})]);
  const group=encounters[0].position;for(const [name,dx,dz,rotation,type] of [['elder1',.36,.72,-2.68,'nod'],['elder3',-.36,-.72,.46,'hand'],['elder2',-.9,.5,1.1,'fan'],['table',0,0,0,null]]){const o=models[name];o.position.set(group[0]+dx,group[1],group[2]+dz);o.rotation.y=rotation;scene.add(o);actors.push(o);if(type)animateMesh(o,type)}
  models.grandma.position.fromArray(encounters[1].position);models.grandma.rotation.y=1.1;scene.add(models.grandma);actors.push(models.grandma);
  models.box.position.copy(models.grandma.position).add(grandmaBoxOffset);models.box.rotation.y=1.1;flattenPixelModel(models.box);scene.add(models.box);actors.push(models.box);
@@ -185,7 +186,20 @@ async function boot(){
  const pixelWorld=createPixelWorld(scene,camera,occlusion);
  const memoryStar=createMemoryStar({root,state,camera,app,bridge,reduced,layers:()=>[app.graphicsDevice.canvas,worldCanvas,pixelWorld.canvas],lock:()=>{keys.clear();rightDragging=false}});
  const archiveEnding=createArchiveEnding({state,assets:ASSETS,source:()=>memoryStar.pixel,lock:()=>{keys.clear();rightDragging=false}});
- initEditor();initLensEditor();state.ready=true;renderInventory();
+ initEditor();initLensEditor();renderInventory();
+ // Warm the complete interactive layer behind the SD loader, including off-camera actors.
+ syncCamera();
+ const warmMeshes=[];scene.traverse(o=>{if(o.isMesh){warmMeshes.push([o,o.frustumCulled]);o.frustumCulled=false;}});
+ try{
+  await renderer.compileAsync(scene,camera);
+  occlusion.update();renderer.render(scene,camera);pixelWorld.render();
+  await handCamera.renderer.compileAsync(handCamera.scene,handCamera.camera);
+  handCamera.setState(true,false);
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+ }finally{
+  handCamera.setState(false,false);warmMeshes.forEach(([o,culled])=>o.frustumCulled=culled);renderer.clear();
+ }
+ loading.gpuReady=true;state.ready=true;
  let overlayKey='',overlayEmpty=false;
  function renderOverlay(){
   let hasColor=false;

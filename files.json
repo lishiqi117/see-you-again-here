@@ -61,7 +61,7 @@
   },
   {
     "path": "app.js",
-    "bytes": 5392
+    "bytes": 5384
   },
   {
     "path": "archive-interaction.js",
@@ -873,7 +873,7 @@
   },
   {
     "path": "planet-walker.js",
-    "bytes": 15684
+    "bytes": 15907
   },
   {
     "path": "portrait-entry-bridge.js",
@@ -1505,7 +1505,7 @@
   },
   {
     "path": "space-editor.js",
-    "bytes": 1826252
+    "bytes": 1826542
   },
   {
     "path": "space-editor.source.js",
@@ -1769,15 +1769,15 @@
   },
   {
     "path": "street-scan/memory-game.js",
-    "bytes": 1258395
+    "bytes": 1259138
   },
   {
     "path": "street-scan/memory-game.source.js",
-    "bytes": 45640
+    "bytes": 46473
   },
   {
     "path": "street-scan/memory-playback.js",
-    "bytes": 4210
+    "bytes": 4574
   },
   {
     "path": "street-scan/memory-reveal.glsl",
@@ -1805,7 +1805,7 @@
   },
   {
     "path": "street-scan/pixel-world.source.js",
-    "bytes": 3347
+    "bytes": 3649
   },
   {
     "path": "street-scan/playback-scene.html",
@@ -1985,7 +1985,7 @@
   },
   {
     "path": "site-preload.js",
-    "bytes": 7882
+    "bytes": 8072
   },
   {
     "path": "site-cache-worker.js",
@@ -1993,6 +1993,6 @@
   },
   {
     "path": "precache-manifest.js",
-    "bytes": 9642
+    "bytes": 11124
   }
 ]

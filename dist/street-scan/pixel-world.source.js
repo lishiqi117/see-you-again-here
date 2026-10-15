@@ -25,18 +25,19 @@ export function createPixelWorld(scene, sourceCamera, occlusion) {
  })));
  function resize(){const w=Math.max(1,Math.ceil(innerWidth/5)),h=Math.max(1,Math.ceil(innerHeight/5));renderer.setSize(w,h,false);target.setSize(w,h);viewport.set(w,h);}
  addEventListener('resize',resize);resize();
- let empty=false;
+ let empty=false,lastKey='';
  function render(){
   // A depth-only layer contributes no pixels. Clear its old image once when
   // its last color object disappears; keep all original passes when occupied.
-  let hasColor=false;
+  let hasColor=false;const parts=[innerWidth,innerHeight,...sourceCamera.matrixWorld.elements,...sourceCamera.projectionMatrix.elements];
+  scene.updateMatrixWorld();
   scene.traverseVisible(o=>{
    if(!o.isMesh || !(o.layers.mask & 2))return;
    const materials=Array.isArray(o.material)?o.material:[o.material];
-   if(materials.some(m=>m.visible && m.colorWrite))hasColor=true;
+   if(materials.some(m=>m.visible && m.colorWrite)){hasColor=true;parts.push(o.id,...o.matrixWorld.elements,...materials.map(m=>m.version));}
   });
   if(!hasColor){if(!empty){renderer.setRenderTarget(null);renderer.clear();empty=true;}return;}
-  empty=false;
+  const key=parts.join(',');if(!empty&&key===lastKey)return;lastKey=key;empty=false;
   camera.copy(sourceCamera);camera.layers.set(1);renderer.setRenderTarget(target);renderer.render(scene,camera);renderer.setRenderTarget(null);renderer.render(passScene,passCamera);
  }
  return {canvas,renderer,render};

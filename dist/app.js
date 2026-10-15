@@ -80,10 +80,10 @@
         loader.destroy();
         memoryLoader.classList.remove('active');
         memoryLoader.setAttribute('aria-hidden', 'true');
-        window.prepareNextMemory().catch(error=>console.warn('照片预加载暂未完成',error));
+
       }
     });
-    const status=document.createElement('p');status.className='site-loading-status';status.setAttribute('role','status');
+    const status=document.createElement('p');status.className='cat-loader-status';status.setAttribute('role','status');
     const retry=document.createElement('button');retry.className='site-loading-retry';retry.type='button';retry.textContent='重试加载';retry.hidden=true;
     loader.root.append(status,retry);
     async function prepare(){
@@ -92,7 +92,7 @@
         await loader.ready;
         await window.prepareWholeSite((value,message)=>{loader.setProgress(value);status.textContent=message;});
         loader.root.dataset.state='ready';
-      }catch(error){loader.root.dataset.state='error';status.textContent=error.message;retry.hidden=false;console.error(error);}
+      }catch(error){loader.root.dataset.state='error';status.textContent=error.message;loader.root.querySelector('.cat-loader-caption span').textContent='加载失败，请重试';retry.hidden=false;console.error(error);}
     }
     retry.addEventListener('click',prepare);prepare();
   }

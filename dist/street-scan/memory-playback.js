@@ -49,7 +49,7 @@ export function createMemoryPlayback() {
     iframe.setAttribute('allow','fullscreen'); iframe.tabIndex = -1;
     try {
       // Keep the loading frame visible before parsing the large embedded scene.
-      await sleep(80);
+      await new Promise(resolve=>requestAnimationFrame(resolve));
       const embedded = document.querySelector('#memory-scene-source');
       // Embedded offline exports still use srcdoc; hosted pages navigate directly.
       if(token!==run)return;
@@ -58,20 +58,24 @@ export function createMemoryPlayback() {
       let api;
       while(token===run) {
         api = iframe.contentWindow?.memoryPlayback;
-        const progress = api?.progress ?? iframe.contentWindow?.memoryProgress?.();
+        const child=iframe.contentWindow;
+        if(child?.streetGameError)throw Error(child.streetGameError);
+        const assets=child?.streetGameLoading;
+        const background=api?.progress ?? child?.memoryProgress?.();
+        const progress=api?.ready ? 70+25*(assets?.completed||0)/(assets?.total||1)+(assets?.gpuReady?4:0) : Math.min(70,(background||0)*.7);
         if(Number.isFinite(progress)) {
           const percent=Math.min(99,Math.max(0,Math.floor(progress)));
           fill.style.width=percent+'%';bar.setAttribute('aria-valuenow',String(percent));
-          status.textContent = percent>=99 ? 'Preparing street…' : `Loading ${percent}%`;
+          status.textContent = api?.ready ? 'Preparing characters and camera…' : `Loading ${percent}%`;
         }
-        if(api?.ready)break;
+        if(api?.ready&&child?.streetGame?.ready&&assets?.gpuReady)break;
         if(performance.now()-started>120000)throw Error('Scene load timed out');
         await sleep(100);
       }
       if(token!==run)return;
       api.reveal(0);
       fill.style.width='100%';bar.setAttribute('aria-valuenow','100');status.textContent='Memory ready';
-      await sleep(350);
+
       root.dataset.phase='revealing';
       const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
       await gsap.to(loader,{opacity:0,duration:reduced?.15:.35,ease:'power1.out'});

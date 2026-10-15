@@ -39773,6 +39773,7 @@ void main() {
         m.material.roughness = 0.85;
       }
     });
+    let collisionBuilds = 0, poseUpdates = 0;
     let boneCount = 0;
     gltf.scene.traverse((node) => {
       if (node.isBone) boneCount++;
@@ -39887,6 +39888,7 @@ void main() {
         syncObstacles();
         return;
       }
+      collisionBuilds++;
       signature = next;
       const earth = state2.assetsById.get("earth");
       ground = meshTree(earth.content);
@@ -40018,6 +40020,7 @@ void main() {
       return true;
     }
     function pose(dt) {
+      poseUpdates++;
       const p = surface(normal);
       if (!p) return;
       forward.addScaledVector(normal, -forward.dot(normal));
@@ -40048,6 +40051,7 @@ void main() {
     function prepareIntro() {
       refresh();
       if (!ready) return null;
+      buildGraph();
       stop();
       introControlled = true;
       root.matrixAutoUpdate = true;
@@ -40058,7 +40062,6 @@ void main() {
     function finishIntro() {
       introControlled = false;
       root.matrixAutoUpdate = false;
-      signature = "";
       refresh();
       root.visible = ready;
       invalidate();
@@ -40114,6 +40117,10 @@ void main() {
           status("\u6A21\u578B\u78B0\u5230\u4EBA\u7269\uFF0C\u5DF2\u8BA9\u5F00\u5E76\u505C\u4E0B");
         }
       }
+      if (!obstaclesMoved && !route.length && speed === 0) {
+        updateThought(dt);
+        return false;
+      }
       let remain = dt;
       while (remain > 0) {
         const step = Math.min(remain, 1 / 90);
@@ -40150,6 +40157,7 @@ void main() {
           }
         } else speed = MathUtils.damp(speed, 0, 14, step);
       }
+      if (!route.length && speed < 1e-4) speed = 0;
       pose(dt);
       updateThought(dt);
       return route.length > 0 || speed > 2e-3;
@@ -40182,7 +40190,7 @@ void main() {
     }, get groundCenter() {
       return center.clone();
     }, tick, refresh, plan, blocked, stop, prepareIntro, finishIntro, get report() {
-      return { ready: ready && state2.ready, introControlled, visible: root.visible, position: root.position.toArray(), normal: normal.toArray(), speed, route: route.map((n) => n.toArray()), target: target?.toArray() || null, collisions, bones: boneCount, groundError: ready ? root.position.distanceTo(surface(normal)) - 8e-3 : null, blocked: ready ? blocked(normal) : null };
+      return { collisionBuilds, poseUpdates, ready: ready && state2.ready, introControlled, visible: root.visible, position: root.position.toArray(), normal: normal.toArray(), speed, route: route.map((n) => n.toArray()), target: target?.toArray() || null, collisions, bones: boneCount, groundError: ready ? root.position.distanceTo(surface(normal)) - 8e-3 : null, blocked: ready ? blocked(normal) : null };
     }, screenPoint: (n) => {
       const p = surface(new Vector3(...n).normalize()).project(camera2), r = canvas2.getBoundingClientRect();
       return { x: r.left + (p.x + 1) * r.width / 2, y: r.top + (1 - p.y) * r.height / 2 };
