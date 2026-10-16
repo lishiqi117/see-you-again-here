@@ -881,7 +881,7 @@
   },
   {
     "path": "portrait-transition.js",
-    "bytes": 9874
+    "bytes": 14782
   },
   {
     "path": "print-postprocessing.js",
@@ -1985,7 +1985,7 @@
   },
   {
     "path": "site-preload.js",
-    "bytes": 8072
+    "bytes": 8161
   },
   {
     "path": "site-cache-worker.js",
@@ -1993,6 +1993,10 @@
   },
   {
     "path": "precache-manifest.js",
-    "bytes": 11124
+    "bytes": 11125
+  },
+  {
+    "path": "assets/lamp/portrait-compatible.mp4",
+    "bytes": 4866078
   }
 ]

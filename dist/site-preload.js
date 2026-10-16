@@ -27,6 +27,7 @@
     throw new Error('缓存服务尚未准备好，请重试');
   }
   function waitForMedia(video) {
+    if(video.matches('.portrait-transition video'))return window.preparePortraitVideo();
     if(video.readyState>=2)return Promise.resolve();
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => finish(new Error('视频准备超时，请重试')), 60000);

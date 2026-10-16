@@ -1,0 +1,146 @@
+{
+  "slowScene": true,
+  "hungDownload": true,
+  "missingSeeked": true,
+  "stalledSeekFallback": true,
+  "sceneFailureRetry": true,
+  "mediaFailureRetry": true,
+  "errors": [],
+  "events": [
+    {
+      "at": 1792117117341,
+      "kind": "scene",
+      "code": "load-start",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-scrub.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117117341,
+      "kind": "video",
+      "code": "load-start",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-scrub.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117117350,
+      "kind": "scene",
+      "code": "ready",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-scrub.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117118105,
+      "kind": "video",
+      "code": "load-no-progress",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-scrub.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117118105,
+      "kind": "video",
+      "code": "retry-source",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-scrub.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117118604,
+      "kind": "video",
+      "code": "load-no-progress",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-scrub.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117118605,
+      "kind": "video",
+      "code": "fallback-source",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-scrub.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117119098,
+      "kind": "video",
+      "code": "load-no-progress",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-compatible.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117119098,
+      "kind": "video",
+      "code": "retry-source",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-compatible.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117119595,
+      "kind": "video",
+      "code": "load-no-progress",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-compatible.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117119595,
+      "kind": "video",
+      "code": "fallback-source",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-compatible.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117120103,
+      "kind": "video",
+      "code": "load-no-progress",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-transition.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117120105,
+      "kind": "video",
+      "code": "retry-source",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-transition.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117120847,
+      "kind": "video",
+      "code": "load-no-progress",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-transition.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    },
+    {
+      "at": 1792117120847,
+      "kind": "video",
+      "code": "failed",
+      "source": "http://127.0.0.1:8890/assets/lamp/portrait-transition.mp4",
+      "time": 0,
+      "readyState": 0,
+      "nativeSeeking": false
+    }
+  ]
+}
